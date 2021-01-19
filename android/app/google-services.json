@@ -1,0 +1,39 @@
+{
+    "project_info": {
+      "project_number": "432938905742",
+      "project_id": "dday-notifier",
+      "storage_bucket": "dday-notifier.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:432938905742:android:b1fcefe6c826e61eacd9df",
+          "android_client_info": {
+            "package_name": "com.dday_notifier"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "432938905742-6oteu8v0i3j9kfhuo3g03mpmmv0nnakr.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyAqoLeXrpU6bOSHldobMtUcU0V36s4D5qk"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "432938905742-6oteu8v0i3j9kfhuo3g03mpmmv0nnakr.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
