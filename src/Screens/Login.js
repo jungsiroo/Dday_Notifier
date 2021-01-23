@@ -1,15 +1,39 @@
-import * as React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Button,
-  TextInput,
-  Dimensions,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, View, StyleSheet, Button, Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
+
+function LoginApp() {
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+
+  if (!user) {
+    return (
+      <View>
+        <Text>Login</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View>
+      <Text>Welcome {user.email}</Text>
+    </View>
+  );
+}
 
 function createUser() {
   auth()
@@ -18,7 +42,7 @@ function createUser() {
       'SuperSecretPassword!',
     )
     .then(() => {
-      console.log('User account created & signed in!');
+      Alert.alert('User account created & signed in!');
     })
     .catch((error) => {
       if (error.code === 'auth/email-already-in-use') {
@@ -41,8 +65,9 @@ let logoff = () => {
 
 export default function Login() {
   <View style={styles.container}>
-    <Button title="Create User" onPress={createUser} />
-    <Button title="Logoff" onPress={logoff} />
+    <LoginApp />
+    {/* <Button title="Create User" onPress={createUser} /> */}
+    {/* <Button title="Logoff" onPress={logoff} /> */}
   </View>;
 }
 
