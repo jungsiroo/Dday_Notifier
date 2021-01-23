@@ -34,40 +34,41 @@ function LoginApp() {
     </View>
   );
 }
-
-function createUser() {
-  auth()
-    .createUserWithEmailAndPassword(
-      'jane.doe@example.com',
-      'SuperSecretPassword!',
-    )
-    .then(() => {
-      Alert.alert('User account created & signed in!');
-    })
-    .catch((error) => {
-      if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
-
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
-
-      console.error(error);
-    });
-}
-
-let logoff = () => {
-  auth()
-    .signOut()
-    .then(() => console.log('User signed out!'));
-};
-
 export default class Login extends React.Component {
+  createUser() {
+    auth()
+      .createUserWithEmailAndPassword(
+        'jane.doe@example.com',
+        'SuperSecretPassword!',
+      )
+      .then(() => {
+        Alert.alert('User account created & signed in!');
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
+  }
+
+  logoff = () => {
+    auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <LoginApp />
+        <Button title="Create User" onPress={this.createUser} />
+        <Button title="Logoff" onPress={this.logoff} />
       </View>
     );
   }
