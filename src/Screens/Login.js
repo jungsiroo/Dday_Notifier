@@ -1,80 +1,82 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, Button, Alert} from 'react-native';
-import firebase from '@react-native-firebase/app';
-import auth from '@react-native-firebase/auth';
+import * as React from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  TextInput,
+  Dimensions,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 
-function LoginApp() {
-  // Set an initializing state whilst Firebase connects
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+const statusbarheight = StatusBar.currentHeight;
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+let bImage = require('../Components/images/loginbackground.jpg');
 
-  // Handle user state changes
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
+class LoginInfo extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      email: '',
+      pw: '',
+    };
   }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  });
-
-  if (initializing) return null;
-
-  if (!user) {
-    return (
-      <View>
-        <Text>Login</Text>
-      </View>
-    );
+  LoginCheck({navigation}) {
+    //alert('email : ' + this.state.email + ' pw : ' + this.state.pw);
+    navigation.navigate('Home');
   }
+}
 
+function signUp({navigation}) {
+  navigation.navigate('Signup');
+}
+
+function firebaseauth({navigation}) {
+  navigation.navigate('Firebase');
+}
+
+const loginInfo = new LoginInfo();
+
+export default function LoginScreen({navigation}) {
   return (
-    <View>
-      <Text>Welcome {user.email}</Text>
+    <View style={styles.container}>
+      <StatusBar backgroundColor="#FEEDBF" />
+      <ImageBackground source={bImage} style={styles.imageBackground}>
+        <Text style={styles.logo}>Dday-Notifier</Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Email..."
+            placeholderTextColor="white"
+            onChangeText={(text) => loginInfo.setState({email: text})}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            secureTextEntry
+            style={styles.inputText}
+            placeholder="Password..."
+            placeholderTextColor="white"
+            onChangeText={(text) => loginInfo.setState({pw: text})}
+          />
+        </View>
+        <TouchableOpacity onPress={() => firebaseauth({navigation})}>
+          <Text style={styles.forgot}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={() => loginInfo.LoginCheck({navigation})}>
+          <Text style={styles.loginText}>LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => signUp({navigation})}>
+          <Text style={styles.signupText}>Signup</Text>
+        </TouchableOpacity>
+      </ImageBackground>
     </View>
   );
-}
-export default class Login extends React.Component {
-  createUser() {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(
-        'jane.doe@example.com',
-        'SuperSecretPassword!',
-      )
-      .then(() => {
-        Alert.alert('User account created & signed in!');
-      })
-      .catch((error) => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
-  }
-
-  logoff = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <LoginApp />
-        <Button title="Create User" onPress={this.createUser} />
-        <Button title="Logoff" onPress={this.logoff} />
-      </View>
-    );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -82,5 +84,56 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  logo: {
+    fontSize: 35,
+    color: '#FFFDE4',
+    marginBottom: 40,
+    letterSpacing: 5,
+    fontFamily: 'DancingScript-Bold',
+  },
+  imageBackground: {
+    resizeMode: 'cover',
+    width: windowWidth,
+    height: windowHeight + statusbarheight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputView: {
+    width: '80%',
+    backgroundColor: '#373B44',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 20,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  inputText: {
+    height: 50,
+    color: 'white',
+  },
+  forgot: {
+    color: 'white',
+    fontSize: 11,
+  },
+  loginBtn: {
+    width: '80%',
+    backgroundColor: '#fb5b5a',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    marginBottom: 10,
+  },
+  loginText: {
+    fontSize: 15,
+    color: 'white',
+  },
+
+  signupText: {
+    fontSize: 15,
+    color: 'white',
+    paddingTop: 15,
   },
 });
