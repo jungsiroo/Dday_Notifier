@@ -16,7 +16,7 @@ function LoginApp() {
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
-  }, []);
+  });
 
   if (initializing) return null;
 
@@ -63,12 +63,14 @@ let logoff = () => {
     .then(() => console.log('User signed out!'));
 };
 
-export default function Login() {
-  <View style={styles.container}>
-    <LoginApp />
-    {/* <Button title="Create User" onPress={createUser} /> */}
-    {/* <Button title="Logoff" onPress={logoff} /> */}
-  </View>;
+export default class Login extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <LoginApp />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
