@@ -13,7 +13,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from '../Screens/Home';
 import Signup from '../Screens/Signup';
-import LoginS from '../Screens/Login';
+import LoginTest from '../Screens/Login';
+import Firebase from '../Screens/Firebase';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
@@ -39,8 +40,8 @@ function signUp({navigation}) {
   navigation.navigate('Signup');
 }
 
-function loginTest({navigation}) {
-  navigation.navigate('LoginTest');
+function firebaseauth({navigation}) {
+  navigation.navigate('Firebase');
 }
 
 const loginInfo = new LoginInfo();
@@ -68,7 +69,7 @@ function LoginScreen({navigation}) {
             onChangeText={(text) => loginInfo.setState({pw: text})}
           />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => firebaseauth({navigation})}>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -76,7 +77,7 @@ function LoginScreen({navigation}) {
           onPress={() => loginInfo.LoginCheck({navigation})}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => loginTest({navigation})}>
+        <TouchableOpacity onPress={() => signUp({navigation})}>
           <Text style={styles.signupText}>Signup</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -104,16 +105,22 @@ function InitialStack() {
         }}
       />
       <Stack.Screen
-        name="Signup"
-        component={Signup}
+        name="Firebase"
+        component={Firebase}
         options={{
           headerShown: false,
         }}
       />
-
       <Stack.Screen
         name="LoginTest"
-        component={LoginS}
+        component={LoginTest}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
         options={{
           headerShown: false,
         }}
