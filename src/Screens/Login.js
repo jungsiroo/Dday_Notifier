@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Button, Alert} from 'react-native';
+import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
 
 function LoginApp() {
@@ -36,7 +37,8 @@ function LoginApp() {
 }
 export default class Login extends React.Component {
   createUser() {
-    auth()
+    firebase
+      .auth()
       .createUserWithEmailAndPassword(
         'jane.doe@example.com',
         'SuperSecretPassword!',
@@ -58,7 +60,8 @@ export default class Login extends React.Component {
   }
 
   logoff = () => {
-    auth()
+    firebase
+      .auth()
       .signOut()
       .then(() => console.log('User signed out!'));
   };
