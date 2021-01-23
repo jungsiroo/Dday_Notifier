@@ -1,87 +1,44 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, Button, Alert} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Button} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-community/google-signin';
 
-function LoginApp() {
-  // Set an initializing state whilst Firebase connects
+async function onGoogleButtonPress() {
+  // Get the users ID token
+  const {idToken} = await GoogleSignin.signIn();
 
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-  // Handle user state changes
-  function onAuthStateChanged(User) {
-    setUser(User);
-    if (initializing) setInitializing(false);
-  }
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
+}
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+GoogleSignin.configure({
+  webClientId:
+    '785495869641-j19ml275qmevap403vsvjq2e74l1k9nd.apps.googleusercontent.com',
+});
 
-  if (initializing) return null;
-
-  if (!user) {
-    return (
-      <View>
-        <Text>Login</Text>
-      </View>
-    );
-  }
-
+function GoogleSignIn() {
   return (
-    <View>
-      <Text>Welcome {user.email}</Text>
-    </View>
+    <Button
+      title="Google Sign-In"
+      onPress={() =>
+        onGoogleButtonPress().then(() => console.log('Signed in with Google!'))
+      }
+    />
   );
 }
 
-export default class Login extends React.Component {
-  createUser() {
-    Alert.alert('is this working?');
-
-    auth()
-      .createUserWithEmailAndPassword(
-        'jane.doe@example.com',
-        'SuperSecretPassword!',
-      )
-      .then(() => {
-        Alert.alert('User account created & signed in!');
-      })
-      .catch((error) => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
-  }
-
-  logoff = () => {
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <LoginApp />
-        <Button title="Create User" onPress={this.createUser} />
-        <Button title="Logoff" onPress={this.logoff} />
-      </View>
-    );
-  }
+export default function Firebase() {
+  return (
+    <View style={styles.container}>
+      <GoogleSignIn />
+    </View>
+  );
 }
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
