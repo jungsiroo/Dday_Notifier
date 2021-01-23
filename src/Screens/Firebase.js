@@ -4,19 +4,21 @@ import auth from '@react-native-firebase/auth';
 
 function LoginApp() {
   // Set an initializing state whilst Firebase connects
+
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
+  // Handle user state changes
+  function onAuthStateChanged(User) {
+    setUser(User);
+    if (initializing) setInitializing(false);
+  }
+
   useEffect(() => {
-    function onAuthStateChanged(user) {
-      setUser(user);
-      if (initializing) {
-        setInitializing(false);
-      }
-    }
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
-  }, [initializing]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (initializing) return null;
 
@@ -34,8 +36,11 @@ function LoginApp() {
     </View>
   );
 }
+
 export default class Login extends React.Component {
   createUser() {
+    Alert.alert('is this working?');
+
     auth()
       .createUserWithEmailAndPassword(
         'jane.doe@example.com',
