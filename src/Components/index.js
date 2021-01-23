@@ -11,11 +11,9 @@ import {
 } from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-// import Home from '../Screens/Home';
-// import Signup from '../Screens/Signup';
-// import LoginS from '../Screens/Login';
-
-import {Home, Signup, LoginS} from '../Screens';
+import Home from '../Screens/Home';
+import Signup from '../Screens/Signup';
+import LoginS from '../Screens/Login';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
