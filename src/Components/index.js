@@ -13,6 +13,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from '../Screens/Home';
 import Signup from '../Screens/Signup';
+import LoginS from '../Screens/Login';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
@@ -36,6 +37,10 @@ class LoginInfo extends React.Component {
 
 function signUp({navigation}) {
   navigation.navigate('Signup');
+}
+
+function loginTest({navigation}) {
+  navigation.navigate('LoginTest');
 }
 
 const loginInfo = new LoginInfo();
@@ -71,7 +76,7 @@ function LoginScreen({navigation}) {
           onPress={() => loginInfo.LoginCheck({navigation})}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => signUp({navigation})}>
+        <TouchableOpacity onPress={() => loginTest({navigation})}>
           <Text style={styles.signupText}>Signup</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -101,6 +106,14 @@ function InitialStack() {
       <Stack.Screen
         name="Signup"
         component={Signup}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="LoginTest"
+        component={LoginS}
         options={{
           headerShown: false,
         }}

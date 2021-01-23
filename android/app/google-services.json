@@ -1,39 +1,47 @@
 {
-    "project_info": {
-      "project_number": "432938905742",
-      "project_id": "dday-notifier",
-      "storage_bucket": "dday-notifier.appspot.com"
-    },
-    "client": [
-      {
-        "client_info": {
-          "mobilesdk_app_id": "1:432938905742:android:b1fcefe6c826e61eacd9df",
-          "android_client_info": {
-            "package_name": "com.dday_notifier"
+  "project_info": {
+    "project_number": "785495869641",
+    "project_id": "ddaynotifier",
+    "storage_bucket": "ddaynotifier.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785495869641:android:1882eb4b99d1185850a518",
+        "android_client_info": {
+          "package_name": "com.dday_notifier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "785495869641-j19ml275qmevap403vsvjq2e74l1k9nd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dday_notifier",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
-        "oauth_client": [
-          {
-            "client_id": "432938905742-6oteu8v0i3j9kfhuo3g03mpmmv0nnakr.apps.googleusercontent.com",
-            "client_type": 3
-          }
-        ],
-        "api_key": [
-          {
-            "current_key": "AIzaSyAqoLeXrpU6bOSHldobMtUcU0V36s4D5qk"
-          }
-        ],
-        "services": {
-          "appinvite_service": {
-            "other_platform_oauth_client": [
-              {
-                "client_id": "432938905742-6oteu8v0i3j9kfhuo3g03mpmmv0nnakr.apps.googleusercontent.com",
-                "client_type": 3
-              }
-            ]
-          }
+        {
+          "client_id": "785495869641-uf1hbbaadokrdr42skgej9to7pt0p39k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuEuS0Urjo27eIj6X2tIHeICL1GeO0Qnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "785495869641-uf1hbbaadokrdr42skgej9to7pt0p39k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
-    ],
-    "configuration_version": "1"
-  }
+    }
+  ],
+  "configuration_version": "1"
+}
