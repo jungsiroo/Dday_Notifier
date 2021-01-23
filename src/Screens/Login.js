@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {
   Text,
   View,
@@ -6,6 +7,7 @@ import {
   StatusBar,
   TextInput,
   Dimensions,
+  Alert,
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
@@ -15,32 +17,22 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let bImage = require('../Components/images/loginbackground.jpg');
 
-class LoginInfo extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      email: '',
-      pw: '',
-    };
-  }
-  LoginCheck({navigation}) {
-    //alert('email : ' + this.state.email + ' pw : ' + this.state.pw);
-    navigation.navigate('Home');
-  }
+function LoginCheck({navigation}) {
+  navigation.navigate('Home');
 }
 
 function signUp({navigation}) {
   navigation.navigate('Signup');
 }
 
-function firebaseauth({navigation}) {
-  navigation.navigate('Firebase');
-}
-
-const loginInfo = new LoginInfo();
-
 export default function LoginScreen({navigation}) {
+  const [email, setEmail] = useState();
+  const [pw, setPw] = useState();
+
+  function alertText() {
+    Alert.alert('email : ' + email + ' pw : ' + pw);
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#FEEDBF" />
@@ -50,25 +42,30 @@ export default function LoginScreen({navigation}) {
           <TextInput
             style={styles.inputText}
             placeholder="Email..."
+            value={email}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
             placeholderTextColor="white"
-            onChangeText={(text) => loginInfo.setState({email: text})}
+            onChangeText={(text) => setEmail(text)}
           />
         </View>
         <View style={styles.inputView}>
           <TextInput
             secureTextEntry
+            value={pw}
             style={styles.inputText}
             placeholder="Password..."
             placeholderTextColor="white"
-            onChangeText={(text) => loginInfo.setState({pw: text})}
+            onChangeText={(text) => setPw(text)}
           />
         </View>
-        <TouchableOpacity onPress={() => firebaseauth({navigation})}>
+        <TouchableOpacity onPress={() => alertText()}>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => loginInfo.LoginCheck({navigation})}>
+          onPress={() => LoginCheck({navigation})}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => signUp({navigation})}>
