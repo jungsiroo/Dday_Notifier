@@ -27,8 +27,9 @@ const LoadingPage = ({navigation}) => {
   let isLogin = IsUserLogined;
 
   useEffect(() => {
+    isLogin ? navigation.navigate('Home') : navigation.navigate('Login');
+
     setTimeout(() => {
-      isLogin ? navigation.navigate('Home') : navigation.navigate('Login');
       SplashScreen.hide();
     }, 1500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
