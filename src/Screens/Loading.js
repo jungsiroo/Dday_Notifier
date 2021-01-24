@@ -24,7 +24,7 @@ function IsUserLogined() {
 }
 
 const LoadingPage = ({navigation}) => {
-  let isLogin = IsUserLogined;
+  let isLogin = IsUserLogined();
 
   useEffect(() => {
     isLogin ? navigation.navigate('Home') : navigation.navigate('Login');
