@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -23,17 +23,16 @@ function IsUserLogined() {
   return true;
 }
 
-const LoadingPage = ({navigation}) => {
-  let isLogin = IsUserLogined();
-
-  useEffect(() => {
-    isLogin ? navigation.navigate('Home') : navigation.navigate('Login');
+export default class LoadingPage extends React.Component {
+  componentDidMount() {
+    this.props.navigation.navigate(IsUserLogined() ? 'Home' : 'Login');
 
     setTimeout(() => {
       SplashScreen.hide();
     }, 1500);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-};
+  }
 
-export default LoadingPage;
+  render() {
+    return <></>;
+  }
+}
