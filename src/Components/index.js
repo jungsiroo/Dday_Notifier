@@ -5,7 +5,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 export default class StartPage extends React.Component {
   async componentDidMount() {
-    setTimeout(() => SplashScreen.hide(), 1000);
+    setTimeout(() => SplashScreen.hide(), 2000);
   }
 
   render() {
