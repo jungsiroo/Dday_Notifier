@@ -27,9 +27,9 @@ export default class LoadingPage extends React.Component {
   componentDidMount() {
     this.props.navigation.navigate(IsUserLogined() ? 'Home' : 'Login');
 
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1500);
+    // setTimeout(() => {
+    //   SplashScreen.hide();
+    // }, 1500);
   }
 
   render() {
