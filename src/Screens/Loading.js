@@ -4,8 +4,8 @@ import auth from '@react-native-firebase/auth';
 import {AuthContext} from '../Components/AuthProvider';
 import SplashScreen from 'react-native-splash-screen';
 
-import Login from './Login';
-import Home from './Home';
+import AppStack from '../Components/AppStack';
+import AuthStack from '../Components/AuthStack';
 
 const Loading = () => {
   const {user, setUser} = useContext(AuthContext);
@@ -27,7 +27,9 @@ const Loading = () => {
   if (initializing) return null;
 
   return (
-    <NavigationContainer>{user ? <Home /> : <Login />}</NavigationContainer>
+    <NavigationContainer>
+      {user ? <AppStack /> : <AuthStack />}
+    </NavigationContainer>
   );
 };
 
