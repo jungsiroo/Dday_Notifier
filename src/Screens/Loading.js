@@ -1,38 +1,34 @@
-import React, {useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {AuthContext} from '../Components/AuthProvider';
 import SplashScreen from 'react-native-splash-screen';
 
-async function IsUserLogined() {
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+import Login from './Login';
+import Home from './Home';
 
-  // Handle user state changes
-  function onAuthStateChanged(User) {
+const Loading = () => {
+  const {user, setUser} = useContext(AuthContext);
+  const [initializing, setInitializing] = useState(true);
+
+  const onAuthStateChanged = (user) => {
     setUser(user);
     if (initializing) setInitializing(false);
-  }
+  };
 
   useEffect(() => {
+    SplashScreen.hide();
+
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (initializing || !user) return false;
+  if (initializing) return null;
 
-  return true;
-}
+  return (
+    <NavigationContainer>{user ? <Home /> : <Login />}</NavigationContainer>
+  );
+};
 
-export default class LoadingPage extends React.Component {
-  async componentDidMount() {
-    this.props.navigation.navigate((await IsUserLogined()) ? 'Home' : 'Login');
-
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1500);
-  }
-
-  render() {
-    return <></>;
-  }
-}
+export default Loading;

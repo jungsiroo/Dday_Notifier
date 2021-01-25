@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import InitialStack from './InitialStack';
+import LoadingPage from '../Screens/Loading';
+import {AuthProvider} from './AuthProvider';
 
 export default class StartPage extends React.Component {
   render() {
     return (
-      <NavigationContainer>
-        <InitialStack />
-      </NavigationContainer>
+      <AuthProvider>
+        <LoadingPage />
+      </AuthProvider>
     );
   }
 }
