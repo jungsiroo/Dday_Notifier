@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Text,
   View,
@@ -11,15 +10,12 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import {AuthContext} from '../Components/AuthProvider';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let bImage = require('../Components/images/loginbackground.jpg');
-
-function LoginCheck({navigation}) {
-  navigation.navigate('Home');
-}
 
 function signUp({navigation}) {
   navigation.navigate('Signup');
@@ -28,6 +24,8 @@ function signUp({navigation}) {
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState();
   const [pw, setPw] = useState();
+
+  const {login} = useContext(AuthContext);
 
   function alertText() {
     Alert.alert('email : ' + email + ' pw : ' + pw);
@@ -65,7 +63,7 @@ export default function LoginScreen({navigation}) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => LoginCheck({navigation})}>
+          onPress={() => login(email, pw)}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => signUp({navigation})}>

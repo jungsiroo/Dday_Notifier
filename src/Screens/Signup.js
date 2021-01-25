@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Text,
   View,
@@ -7,17 +6,23 @@ import {
   StatusBar,
   TextInput,
   Dimensions,
-  Alert,
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import {AuthContext} from '../Components/AuthProvider';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let bImage = require('../Components/images/loginbackground.jpg');
 
-export default function SignupScreen({navigation}) {
+const SignupScreen = ({navigation}) => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPw, setConfirmPw] = useState();
+
+  const {register} = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#FEEDBF" />
@@ -27,36 +32,46 @@ export default function SignupScreen({navigation}) {
           <TextInput
             style={styles.inputText}
             placeholder="Email..."
+            value={email}
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}
             placeholderTextColor="white"
+            onChangeText={(text) => setEmail(text)}
           />
         </View>
         <View style={styles.inputView}>
           <TextInput
             secureTextEntry
+            value={password}
             style={styles.inputText}
             placeholder="Password..."
             placeholderTextColor="white"
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
         <View style={styles.inputView}>
           <TextInput
             secureTextEntry
+            value={confirmPw}
             style={styles.inputText}
             placeholder="Password Again..."
             placeholderTextColor="white"
+            onChangeText={(text) => setConfirmPw(text)}
           />
         </View>
 
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={() => register(email, password)}>
           <Text style={styles.loginText}>Signup</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
   );
-}
+};
+
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
