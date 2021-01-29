@@ -32,14 +32,14 @@ export const AuthProvider = ({children}) => {
             try {
               await auth().signInWithEmailAndPassword(email, password);
             } catch (e) {
-              ToastMsgHandler('Login', e);
+              ToastMsgHandler('Login', e.toString());
             }
           },
           register: async (email, password) => {
             try {
               await auth().createUserWithEmailAndPassword(email, password);
             } catch (e) {
-              ToastMsgHandler('Signup', e);
+              ToastMsgHandler('Signup', e.toString());
             }
           },
           logout: async () => {

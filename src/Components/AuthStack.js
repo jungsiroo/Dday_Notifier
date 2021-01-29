@@ -24,7 +24,7 @@ const AuthStack = () => {
 
   if (isFirstLaunch === null) {
     return null;
-  } else if (isFirstLaunch == true) {
+  } else if (isFirstLaunch === true) {
     routeName = 'Home';
   } else {
     routeName = 'Login';
