@@ -72,6 +72,7 @@ export default function LoginScreen({navigation}) {
             onChangeText={(text) => setPw(text)}
           />
         </View>
+        <Toast ref={(ref) => Toast.setRef(ref)} />
         <TouchableOpacity onPress={() => ToastMsgHandler('USER')}>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>

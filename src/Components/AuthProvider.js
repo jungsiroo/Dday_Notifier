@@ -21,36 +21,33 @@ export const AuthProvider = ({children}) => {
   };
 
   return (
-    <>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
-      <AuthContext.Provider
-        value={{
-          user,
-          setUser,
-          login: async (email, password) => {
-            try {
-              await auth().signInWithEmailAndPassword(email, password);
-            } catch (e) {
-              ToastMsgHandler('Login', e.toString());
-            }
-          },
-          register: async (email, password) => {
-            try {
-              await auth().createUserWithEmailAndPassword(email, password);
-            } catch (e) {
-              ToastMsgHandler('Signup', e.toString());
-            }
-          },
-          logout: async () => {
-            try {
-              await auth().signOut();
-            } catch (error) {
-              ToastMsgHandler('Logout');
-            }
-          },
-        }}>
-        {children}
-      </AuthContext.Provider>
-    </>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        login: async (email, password) => {
+          try {
+            await auth().signInWithEmailAndPassword(email, password);
+          } catch (e) {
+            ToastMsgHandler('Login', e.toString());
+          }
+        },
+        register: async (email, password) => {
+          try {
+            await auth().createUserWithEmailAndPassword(email, password);
+          } catch (e) {
+            ToastMsgHandler('Signup', e.toString());
+          }
+        },
+        logout: async () => {
+          try {
+            await auth().signOut();
+          } catch (error) {
+            ToastMsgHandler('Logout');
+          }
+        },
+      }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
