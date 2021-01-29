@@ -31,6 +31,8 @@ export const AuthProvider = ({children}) => {
             }
           } else if (!_checkEmail(email)) {
             _ErrorHandler('Login', 'Invalid Email Address');
+          } else {
+            _ErrorHandler('Login', 'Blank');
           }
         },
         register: async (email, password) => {
