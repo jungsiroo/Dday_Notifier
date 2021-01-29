@@ -11,6 +11,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
+import Toast from 'react-native-toast-message';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
@@ -19,6 +20,19 @@ let bImage = require('../Components/images/loginbackground.jpg');
 
 function signUp({navigation}) {
   navigation.navigate('Signup');
+}
+
+function ToastMsgHandler(user) {
+  Toast.show({
+    type: 'info',
+    position: 'top',
+    visibilityTime: 6000,
+    autoHide: true,
+    topOffset: 70,
+    bottomOffset: 40,
+    text1: 'Login Successed',
+    text2: 'Welcome' + user.toString(),
+  });
 }
 
 export default function LoginScreen({navigation}) {
@@ -58,7 +72,7 @@ export default function LoginScreen({navigation}) {
             onChangeText={(text) => setPw(text)}
           />
         </View>
-        <TouchableOpacity onPress={() => alertText()}>
+        <TouchableOpacity onPress={() => ToastMsgHandler('USER')}>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity

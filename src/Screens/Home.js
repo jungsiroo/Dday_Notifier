@@ -1,8 +1,7 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
 import Toast from 'react-native-toast-message';
-import {useEffect} from 'react';
 
 const HomeScreen = () => {
   const ToastMsgHandler = (user) => {
