@@ -6,9 +6,9 @@ import {
   StatusBar,
   TextInput,
   Dimensions,
-  Alert,
   TouchableOpacity,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
 import Toast from 'react-native-toast-message';
@@ -22,28 +22,11 @@ function signUp({navigation}) {
   navigation.navigate('Signup');
 }
 
-function ToastMsgHandler(user) {
-  Toast.show({
-    type: 'info',
-    position: 'top',
-    visibilityTime: 6000,
-    autoHide: true,
-    topOffset: 70,
-    bottomOffset: 40,
-    text1: 'Login Successed',
-    text2: 'Welcome' + user.toString(),
-  });
-}
-
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState();
   const [pw, setPw] = useState();
 
   const {login} = useContext(AuthContext);
-
-  function alertText() {
-    Alert.alert('email : ' + email + ' pw : ' + pw);
-  }
 
   return (
     <View style={styles.container}>
@@ -72,8 +55,7 @@ export default function LoginScreen({navigation}) {
             onChangeText={(text) => setPw(text)}
           />
         </View>
-        <Toast ref={(ref) => Toast.setRef(ref)} />
-        <TouchableOpacity onPress={() => ToastMsgHandler('USER')}>
+        <TouchableOpacity onPress={Alert.alert('hi')}>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity
