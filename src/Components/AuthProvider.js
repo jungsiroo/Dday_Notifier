@@ -8,6 +8,15 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
 
+  function _checkEmail(email) {
+    let reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+    if (!reg_email.test(email)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
   return (
     <AuthContext.Provider
       value={{
@@ -20,8 +29,8 @@ export const AuthProvider = ({children}) => {
             } catch (e) {
               _ErrorHandler('Login', e.toString());
             }
-          } else {
-            _ErrorHandler('Login', 'Blank');
+          } else if (!_checkEmail(email)) {
+            _ErrorHandler('Login', 'Invalid Email Address');
           }
         },
         register: async (email, password) => {

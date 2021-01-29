@@ -8,10 +8,8 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
-  Alert,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
-import Toast from 'react-native-toast-message';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
