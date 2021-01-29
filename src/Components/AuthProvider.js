@@ -14,17 +14,25 @@ export const AuthProvider = ({children}) => {
         user,
         setUser,
         login: async (email, password) => {
-          try {
-            await auth().signInWithEmailAndPassword(email, password);
-          } catch (e) {
-            _ErrorHandler('Login', e.toString());
+          if (email !== undefined && password !== undefined) {
+            try {
+              await auth().signInWithEmailAndPassword(email, password);
+            } catch (e) {
+              _ErrorHandler('Login', e.toString());
+            }
+          } else {
+            _ErrorHandler('Login', 'Blank');
           }
         },
         register: async (email, password) => {
-          try {
-            await auth().createUserWithEmailAndPassword(email, password);
-          } catch (e) {
-            _ErrorHandler('Signup', e.toString());
+          if (email !== undefined && password !== undefined) {
+            try {
+              await auth().createUserWithEmailAndPassword(email, password);
+            } catch (e) {
+              _ErrorHandler('Signup', e.toString());
+            }
+          } else {
+            _ErrorHandler('Signup', 'Blank');
           }
         },
         logout: async () => {

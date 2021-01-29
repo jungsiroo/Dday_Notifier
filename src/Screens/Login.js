@@ -55,7 +55,7 @@ export default function LoginScreen({navigation}) {
             onChangeText={(text) => setPw(text)}
           />
         </View>
-        <TouchableOpacity onPress={Alert.alert('hi')}>
+        <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity

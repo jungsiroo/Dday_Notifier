@@ -1,6 +1,13 @@
 import Toast from 'react-native-toast-message';
 
 export const _ErrorHandler = (status, Error) => {
+  function ErrorSelect(ErrorMsg) {
+    if (ErrorMsg.includes('user-not-found')) return 'User Not Found';
+    else if (ErrorMsg.includes('wrong-password'))
+      return 'Invalid Email or Wrong Password';
+    else return 'No Blank Allowed';
+  }
+
   Toast.show({
     type: 'error',
     position: 'top',
@@ -9,7 +16,7 @@ export const _ErrorHandler = (status, Error) => {
     topOffset: 70,
     bottomOffset: 40,
     text1: status + ' Error',
-    text2: Error.toString(),
+    text2: ErrorSelect(Error),
   });
 };
 
