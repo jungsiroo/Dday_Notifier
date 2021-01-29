@@ -21,7 +21,8 @@ const HomeScreen = () => {
   const {user, logout} = useContext(AuthContext);
 
   useEffect(() => {
-    ToastMsgHandler();
+    ToastMsgHandler(user.uid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
