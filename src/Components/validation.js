@@ -1,4 +1,4 @@
-function _isBlank(email, password) {
+export function _isBlank(email, password) {
   if (
     typeof email == 'undefined' ||
     email.length == 0 ||
