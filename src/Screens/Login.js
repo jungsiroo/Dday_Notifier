@@ -28,13 +28,11 @@ export default function LoginScreen({navigation}) {
   function LoginValidationCheck(email, password) {
     if (_isBlank(email, password)) {
       _ErrorHandler('Login', 'Blank');
-      return;
     } else if (!_checkEmail(email)) {
       _ErrorHandler('Login', 'Invalid');
-      return;
+    } else {
+      login(email, password);
     }
-
-    login(email, password);
   }
 
   return (
@@ -75,8 +73,8 @@ export default function LoginScreen({navigation}) {
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.signupText}>Signup</Text>
         </TouchableOpacity>
+        <Toast ref={(ref) => Toast.setRef(ref)} />
       </ImageBackground>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
 }
