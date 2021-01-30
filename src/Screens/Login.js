@@ -28,13 +28,9 @@ export default function LoginScreen({navigation}) {
   function LoginValidationCheck(email, password) {
     if (_isBlank(email, password)) {
       _ErrorHandler('Login', 'Blank');
-      return false;
     } else if (!_checkEmail(email)) {
       _ErrorHandler('Login', 'Invalid');
-      return false;
-    } else {
-      login(email, password);
-    }
+    } else login(email, password);
   }
 
   return (

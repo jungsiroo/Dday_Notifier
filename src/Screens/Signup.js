@@ -10,6 +10,13 @@ import {
   ImageBackground,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
+import {
+  _isBlank,
+  _checkEmail,
+  _arePasswordandconfirmPwSame,
+} from '../Components/validation';
+import {_ErrorHandler} from '../Components/ToastMsg';
+import Toast from 'react-native-toast-message';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
@@ -20,8 +27,15 @@ const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPw, setConfirmPw] = useState();
-
   const {register} = useContext(AuthContext);
+
+  function SignupValidationCheck(email, password, confirmPw) {
+    if (_isBlank(email, password)) _ErrorHandler('Signup', 'Blank');
+    else if (!_checkEmail(email)) _ErrorHandler('Signup', 'Invalid');
+    else if (!_arePasswordandconfirmPwSame(password, confirmPw))
+      _ErrorHandler('Signup');
+    else register(email, password);
+  }
 
   return (
     <View style={styles.container}>
@@ -63,12 +77,13 @@ const SignupScreen = ({navigation}) => {
 
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => register(email, password, confirmPw)}>
+          onPress={() => SignupValidationCheck(email, password, confirmPw)}>
           <Text style={styles.loginText}>Signup</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.signupText}>Go Back to Login</Text>
         </TouchableOpacity>
+        <Toast ref={(ref) => Toast.setRef(ref)} />
       </ImageBackground>
     </View>
   );
