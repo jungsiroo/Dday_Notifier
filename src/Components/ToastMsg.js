@@ -7,6 +7,8 @@ export const _ErrorHandler = (status, Error) => {
       return 'Invalid Email or Wrong Password';
     else if (ErrorMsg.includes('Blank')) return 'No Blank Allowed';
     else if (ErrorMsg.includes('Equal')) return 'Passwords are not Same!';
+    else if (ErrorMsg.includes('Short'))
+      return 'Passwords is too short (At least 6 letters)';
     else return 'Invalid Email Address';
   }
 

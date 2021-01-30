@@ -21,3 +21,7 @@ export const _checkEmail = (email) => {
 
   return reg_email.test(email);
 };
+
+export const _isPasswordLong = (password) => {
+  return password.length >= 6;
+};

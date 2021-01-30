@@ -14,6 +14,7 @@ import {
   _isBlank,
   _checkEmail,
   _arePasswordandconfirmPwSame,
+  _isPasswordLong,
 } from '../Components/validation';
 import {_ErrorHandler} from '../Components/ToastMsg';
 import Toast from 'react-native-toast-message';
@@ -33,7 +34,8 @@ const SignupScreen = ({navigation}) => {
     if (_isBlank(email, password)) _ErrorHandler('Signup', 'Blank');
     else if (!_checkEmail(email)) _ErrorHandler('Signup', 'Invalid');
     else if (!_arePasswordandconfirmPwSame(password, confirmPw))
-      _ErrorHandler('Signup');
+      _ErrorHandler('Signup', 'Eqaul');
+    else if (!_isPasswordLong(password)) _ErrorHandler('Signup', 'Short');
     else register(email, password);
   }
 
