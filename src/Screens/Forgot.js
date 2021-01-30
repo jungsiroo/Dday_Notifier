@@ -12,7 +12,7 @@ import {
 import Toast from 'react-native-toast-message';
 import {AuthContext} from '../Components/AuthProvider';
 import {_checkEmail} from '../Components/Validation';
-import {_ErrorHandler} from '../Components/ToastMsg';
+import {_ErrorHandler, _SuccessHandler} from '../Components/ToastMsg';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
@@ -24,8 +24,10 @@ const ForgotScreen = ({navigation}) => {
   const {forgot} = useContext(AuthContext);
 
   function ResetPassword(email) {
-    if (_checkEmail(email)) forgot(email);
-    else _ErrorHandler('Reset', 'Email');
+    if (_checkEmail(email)) {
+      forgot(email);
+      _SuccessHandler('Email Sent');
+    } else _ErrorHandler('Reset', 'Email');
   }
 
   return (
