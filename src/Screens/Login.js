@@ -10,21 +10,31 @@ import {
   ImageBackground,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
+import {_isBlank, _checkEmail} from '../Components/validation';
+import {_ErrorHandler} from '../Components/ToastMsg';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let bImage = require('../Components/images/loginbackground.jpg');
 
-function signUp({navigation}) {
-  navigation.navigate('Signup');
-}
-
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState();
   const [pw, setPw] = useState();
 
   const {login} = useContext(AuthContext);
+
+  function LoginValidationCheck(email, password) {
+    if (_isBlank(email, password)) {
+      _ErrorHandler('Login', 'Blank');
+      return;
+    } else if (!_checkEmail(email)) {
+      _ErrorHandler('Login', 'Invalid');
+      return;
+    }
+
+    login(email, password);
+  }
 
   return (
     <View style={styles.container}>
@@ -58,10 +68,10 @@ export default function LoginScreen({navigation}) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => login(email, pw)}>
+          onPress={() => LoginValidationCheck(email, pw)}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => signUp({navigation})}>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.signupText}>Signup</Text>
         </TouchableOpacity>
       </ImageBackground>
