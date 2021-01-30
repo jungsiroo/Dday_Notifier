@@ -5,8 +5,8 @@ export const _ErrorHandler = (status, Error) => {
     if (ErrorMsg.includes('user-not-found')) return 'User Not Found';
     else if (ErrorMsg.includes('wrong-password'))
       return 'Invalid Email or Wrong Password';
-    else if (ErrorMsg.contains('Blank')) return 'No Blank Allowed';
-    else if (ErrorMsg.contains('Equal')) return 'Passwords are not Same!';
+    else if (ErrorMsg.includes('Blank')) return 'No Blank Allowed';
+    else if (ErrorMsg.includes('Equal')) return 'Passwords are not Same!';
     else return 'Invalid Email Address';
   }
 

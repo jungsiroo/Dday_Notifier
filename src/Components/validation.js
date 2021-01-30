@@ -1,14 +1,14 @@
-export const _isBlank = (email, password) => {
+function _isBlank(email, password) {
   if (
-    email === undefined ||
-    password === undefined ||
-    email === '' ||
-    password === ''
+    typeof email == 'undefined' ||
+    email.length == 0 ||
+    typeof password == 'undefined' ||
+    password.length == 0
   )
     return true;
 
   return false;
-};
+}
 
 export const _arePasswordandconfirmPwSame = (password, confirmPw) => {
   if (password === confirmPw) return true;
