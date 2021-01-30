@@ -6,6 +6,7 @@ export const _ErrorHandler = (status, Error) => {
     else if (ErrorMsg.includes('wrong-password'))
       return 'Invalid Email or Wrong Password';
     else if (ErrorMsg.contains('Blank')) return 'No Blank Allowed';
+    else if (ErrorMsg.contains('Equal')) return 'Passwords are not Same!';
     else return 'Invalid Email Address';
   }
 
@@ -30,7 +31,6 @@ export const _SuccessHandler = (status) => {
     topOffset: 70,
     bottomOffset: 40,
     text1: status.toString() + ' Success',
-    text2: 'Welcome Back',
   });
 };
 

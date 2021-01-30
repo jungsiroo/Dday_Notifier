@@ -63,8 +63,11 @@ const SignupScreen = ({navigation}) => {
 
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => register(email, password)}>
+          onPress={() => register(email, password, confirmPw)}>
           <Text style={styles.loginText}>Signup</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.signupText}>Go Back to Login</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
