@@ -10,7 +10,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
-import {_isBlank, _checkEmail} from '../Components/validation';
+import {_isBlank, _checkEmail} from '../Components/Validation';
 import {_ErrorHandler} from '../Components/ToastMsg';
 import Toast from 'react-native-toast-message';
 

@@ -15,7 +15,7 @@ import {
   _checkEmail,
   _arePasswordandconfirmPwSame,
   _isPasswordLong,
-} from '../Components/validation';
+} from '../Components/Validation';
 import {_ErrorHandler} from '../Components/ToastMsg';
 import Toast from 'react-native-toast-message';
 

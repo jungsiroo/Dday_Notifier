@@ -39,7 +39,7 @@ export const AuthProvider = ({children}) => {
           try {
             await auth().sendPasswordResetEmail(email);
           } catch (e) {
-            _ErrorHandler('Forgot', e.toString());
+            _ErrorHandler('Reset Password', e.toString());
           }
         },
       }}>
