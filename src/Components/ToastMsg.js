@@ -5,9 +5,8 @@ export const _ErrorHandler = (status, Error) => {
     if (ErrorMsg.includes('user-not-found')) return 'User Not Found';
     else if (ErrorMsg.includes('wrong-password'))
       return 'Invalid Email or Wrong Password';
-    else if (ErrorMsg === 'Invalid Email Address')
-      return 'Invalid Email Address';
-    else return 'No Blank Allowed';
+    else if (ErrorMsg.contains('Blank')) return 'No Blank Allowed';
+    else return 'Invalid Email Address';
   }
 
   Toast.show({

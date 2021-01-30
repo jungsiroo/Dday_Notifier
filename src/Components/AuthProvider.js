@@ -24,13 +24,15 @@ export const AuthProvider = ({children}) => {
         setUser,
         login: async (email, password) => {
           if (email !== undefined && password !== undefined) {
-            try {
-              await auth().signInWithEmailAndPassword(email, password);
-            } catch (e) {
-              _ErrorHandler('Login', e.toString());
+            if (_checkEmail(email)) {
+              try {
+                await auth().signInWithEmailAndPassword(email, password);
+              } catch (e) {
+                _ErrorHandler('Login', e.toString());
+              }
+            } else {
+              _ErrorHandler('Login', 'Invalid');
             }
-          } else if (!_checkEmail(email)) {
-            _ErrorHandler('Login', 'Invalid Email Address');
           } else {
             _ErrorHandler('Login', 'Blank');
           }
