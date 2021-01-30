@@ -12,6 +12,7 @@ import {
 import {AuthContext} from '../Components/AuthProvider';
 import {_isBlank, _checkEmail} from '../Components/validation';
 import {_ErrorHandler} from '../Components/ToastMsg';
+import Toast from 'react-native-toast-message';
 
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
@@ -75,6 +76,7 @@ export default function LoginScreen({navigation}) {
           <Text style={styles.signupText}>Signup</Text>
         </TouchableOpacity>
       </ImageBackground>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
 }
