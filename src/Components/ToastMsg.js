@@ -36,7 +36,9 @@ export const _SuccessHandler = (status) => {
   });
 };
 
-export const _InfoHandler = () => {
+export const _InfoHandler = (user) => {
+  let userName = user.split('@')[0];
+
   Toast.show({
     type: 'info',
     position: 'top',
@@ -45,6 +47,6 @@ export const _InfoHandler = () => {
     topOffset: 70,
     bottomOffset: 40,
     text1: 'Login Success',
-    text2: 'Welcome Back',
+    text2: `Welcome Back ${userName}`,
   });
 };
