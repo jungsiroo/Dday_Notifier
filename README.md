@@ -2,15 +2,15 @@
 
 <img src="./src/Components/images/logo.png" width=400px>
 
-**_<span style="color:#7caecf">Keep it Organized</span>_**
-`This App will notice your important Dday!`
+**_<span style="color:#7caecf">Keep it Organized</span>_**<br>
+`This App will notice your important Dday!`<br>
 `You Can Set Your Dday Priority`
 
 ### My first React-Native App
 
-`My Goals`
+## `My Goals`
 
--
+<hr>
 - Control user using firebase
 - Learn basic things about react-native
 - Learn JavaScript
