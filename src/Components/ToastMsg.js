@@ -2,14 +2,19 @@ import Toast from 'react-native-toast-message';
 
 export const _ErrorHandler = (status, Error) => {
   function ErrorSelect(ErrorMsg) {
-    if (ErrorMsg.includes('user-not-found')) return 'User Not Found';
-    else if (ErrorMsg.includes('wrong-password'))
+    if (ErrorMsg.includes('user-not-found')) {
+      return 'User Not Found';
+    } else if (ErrorMsg.includes('wrong-password')) {
       return 'Invalid Email or Wrong Password';
-    else if (ErrorMsg.includes('Blank')) return 'No Blank Allowed';
-    else if (ErrorMsg.includes('Equal')) return 'Passwords are not Same!';
-    else if (ErrorMsg.includes('Short'))
+    } else if (ErrorMsg.includes('Blank')) {
+      return 'No Blank Allowed';
+    } else if (ErrorMsg.includes('Equal')) {
+      return 'Passwords are not Same!';
+    } else if (ErrorMsg.includes('Short')) {
       return 'Passwords is too short (At least 6 letters)';
-    else return 'Invalid Email Address';
+    } else {
+      return 'Invalid Email Address';
+    }
   }
 
   Toast.show({
@@ -36,7 +41,7 @@ export const _SuccessHandler = (status) => {
   });
 };
 
-export const _InfoHandler = () => {
+export const _InfoHandler = (email) => {
   Toast.show({
     type: 'info',
     position: 'top',
@@ -45,6 +50,6 @@ export const _InfoHandler = () => {
     topOffset: 70,
     bottomOffset: 40,
     text1: 'Login Success',
-    text2: 'Welcome Back',
+    text2: `Welcome Back ${email.split('@')[0]}`,
   });
 };

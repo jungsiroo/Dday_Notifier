@@ -2,36 +2,22 @@ import React, {useContext, useEffect} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
 import Toast from 'react-native-toast-message';
+import {_InfoHandler} from '../Components/ToastMsg';
 
 const HomeScreen = () => {
-  const ToastMsgHandler = (user) => {
-    Toast.show({
-      type: 'info',
-      position: 'top',
-      visibilityTime: 6000,
-      autoHide: true,
-      topOffset: 70,
-      bottomOffset: 40,
-      text1: 'Login Successed',
-      text2: 'Welcome' + user.toString(),
-    });
-  };
-
   const {user, logout} = useContext(AuthContext);
 
   useEffect(() => {
-    ToastMsgHandler(user.uid);
+    _InfoHandler(user.email);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <>
+    <View style={styles.container}>
+      <Text style={styles.text}>Welcome {user.uid}</Text>
+      <Button title="Logout" onPress={() => logout()} />
       <Toast ref={(ref) => Toast.setRef(ref)} />
-      <View style={styles.container}>
-        <Text style={styles.text}>Welcome {user.uid}</Text>
-        <Button title="Logout" onPress={() => logout()} />
-      </View>
-    </>
+    </View>
   );
 };
 
