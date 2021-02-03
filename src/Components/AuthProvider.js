@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) => {
             _ErrorHandler('Login', e.toString());
           }
         },
-        register: async (email, password, confirmPw) => {
+        register: async (email, password) => {
           try {
             await auth().createUserWithEmailAndPassword(email, password);
             _SuccessHandler('Signup');
