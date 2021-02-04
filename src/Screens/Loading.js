@@ -13,17 +13,21 @@ const Loading = () => {
 
   const onAuthStateChanged = (user) => {
     setUser(user);
-    if (initializing) setInitializing(false);
+    if (initializing) {
+      setInitializing(false);
+    }
   };
 
   useEffect(() => {
-    SplashScreen.hide();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    SplashScreen.hide();
     return subscriber; // unsubscribe on unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (initializing) return null;
+  if (initializing) {
+    return null;
+  }
 
   return (
     <NavigationContainer>

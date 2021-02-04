@@ -22,7 +22,7 @@ import Toast from 'react-native-toast-message';
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-let bImage = require('../Components/images/loginbackground.jpg');
+let bImage = require('../../assets/images/loginbackground.jpg');
 
 const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -31,12 +31,17 @@ const SignupScreen = ({navigation}) => {
   const {register} = useContext(AuthContext);
 
   function SignupValidationCheck(email, password, confirmPw) {
-    if (_isBlank(email, password)) _ErrorHandler('Signup', 'Blank');
-    else if (!_checkEmail(email)) _ErrorHandler('Signup', 'Invalid');
-    else if (!_arePasswordandconfirmPwSame(password, confirmPw))
+    if (_isBlank(email, password)) {
+      _ErrorHandler('Signup', 'Blank');
+    } else if (!_checkEmail(email)) {
+      _ErrorHandler('Signup', 'Invalid');
+    } else if (!_arePasswordandconfirmPwSame(password, confirmPw)) {
       _ErrorHandler('Signup', 'Eqaul');
-    else if (!_isPasswordLong(password)) _ErrorHandler('Signup', 'Short');
-    else register(email, password);
+    } else if (!_isPasswordLong(password)) {
+      _ErrorHandler('Signup', 'Short');
+    } else {
+      register(email, password);
+    }
   }
 
   return (

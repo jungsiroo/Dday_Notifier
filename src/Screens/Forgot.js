@@ -17,7 +17,7 @@ import {_ErrorHandler, _SuccessHandler} from '../Components/ToastMsg';
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-let bImage = require('../Components/images/forgot.jpg');
+let bImage = require('../../assets/images/forgot.jpg');
 
 const ForgotScreen = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -27,7 +27,9 @@ const ForgotScreen = ({navigation}) => {
     if (_checkEmail(email)) {
       forgot(email);
       _SuccessHandler('Email Sent');
-    } else _ErrorHandler('Reset', 'Email');
+    } else {
+      _ErrorHandler('Reset', 'Email');
+    }
   }
 
   return (

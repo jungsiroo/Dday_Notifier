@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
 
-const ProfileScreen = () => {
+const CalendarScreen = () => {
   const {user, logout} = useContext(AuthContext);
 
   return (
@@ -15,7 +15,7 @@ const ProfileScreen = () => {
   );
 };
 
-export default ProfileScreen;
+export default CalendarScreen;
 
 const styles = StyleSheet.create({
   container: {

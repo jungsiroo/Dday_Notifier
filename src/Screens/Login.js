@@ -17,7 +17,7 @@ import Toast from 'react-native-toast-message';
 const statusbarheight = StatusBar.currentHeight;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-let bImage = require('../Components/images/loginbackground.jpg');
+let bImage = require('../../assets/images/loginbackground.jpg');
 
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState();
@@ -30,7 +30,9 @@ export default function LoginScreen({navigation}) {
       _ErrorHandler('Login', 'Blank');
     } else if (!_checkEmail(email)) {
       _ErrorHandler('Login', 'Invalid');
-    } else login(email, password);
+    } else {
+      login(email, password);
+    }
   }
 
   return (
