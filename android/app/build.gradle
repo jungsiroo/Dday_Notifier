@@ -83,6 +83,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -194,6 +195,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     
     implementation project(':react-native-splash-screen')
+    implementation 'com.android.support:multidex:1.0.3'
 
     implementation 'com.google.firebase:firebase-auth'
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Image, View, TouchableOpacity} from 'react-native';
 
-export default function CustomTabBar({state, descriptors, navigation}) {
+export default function CustomTabBar({state, navigation}) {
   return (
     <View
       // eslint-disable-next-line react-native/no-inline-styles
@@ -14,7 +14,6 @@ export default function CustomTabBar({state, descriptors, navigation}) {
         alignItems: 'center',
       }}>
       {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
         const isFocused = state.index === index;
 
         let iconimg;
@@ -33,31 +32,15 @@ export default function CustomTabBar({state, descriptors, navigation}) {
         }
 
         const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
+          if (!isFocused) {
             navigation.navigate(route.name);
           }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
         };
 
         return (
           <TouchableOpacity
             accessibilityRole="button"
-            accessibilityStates={isFocused ? ['selected'] : []}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
             onPress={onPress}
-            onLongPress={onLongPress}
             style={{flex: 1, alignItems: 'center'}}>
             <Image source={iconimg} style={{height: 30, width: 30}} />
           </TouchableOpacity>

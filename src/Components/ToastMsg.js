@@ -20,7 +20,7 @@ export const _ErrorHandler = (status, Error) => {
   Toast.show({
     type: 'error',
     position: 'top',
-    visibilityTime: 6000,
+    visibilityTime: 3000,
     autoHide: true,
     topOffset: 70,
     bottomOffset: 40,
@@ -33,7 +33,7 @@ export const _SuccessHandler = (status) => {
   Toast.show({
     type: 'success',
     position: 'top',
-    visibilityTime: 6000,
+    visibilityTime: 3000,
     autoHide: true,
     topOffset: 70,
     bottomOffset: 40,
@@ -45,7 +45,7 @@ export const _InfoHandler = (email) => {
   Toast.show({
     type: 'info',
     position: 'top',
-    visibilityTime: 6000,
+    visibilityTime: 1000,
     autoHide: true,
     topOffset: 70,
     bottomOffset: 40,
