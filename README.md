@@ -1,6 +1,6 @@
 # <div align='center'>Dday-Notifier</div>
 
-<img  src="./src/Components/images/logo.png"  width=400px>
+<img  src="./assets/images/logo.png"  width=400px>
 
 **_<span  style="color:#7caecf">Keep it Organized</span>_**<br>
 
