@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
+  SafeAreaView,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
 import {
@@ -45,7 +46,7 @@ const SignupScreen = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#FEEDBF" />
       <ImageBackground source={bImage} style={styles.imageBackground}>
         <Text style={styles.logo}>Dday-Notifier</Text>
@@ -92,7 +93,7 @@ const SignupScreen = ({navigation}) => {
         </TouchableOpacity>
         <Toast ref={(ref) => Toast.setRef(ref)} />
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 };
 

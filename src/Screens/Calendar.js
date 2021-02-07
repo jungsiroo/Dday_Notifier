@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
 
 const CalendarScreen = () => {
@@ -7,10 +7,10 @@ const CalendarScreen = () => {
 
   return (
     <>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.text}>Calendar Screen</Text>
         <Button title="Logout" onPress={() => logout()} />
-      </View>
+      </SafeAreaView>
     </>
   );
 };

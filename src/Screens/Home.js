@@ -6,6 +6,7 @@ import {
   View,
   Dimensions,
   Image,
+  SafeAreaView,
   StatusBar,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
@@ -29,9 +30,9 @@ const HomeScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Toast ref={(ref) => Toast.setRef(ref)} />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -6,6 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import AppStack from '../Components/AppStack';
 import AuthStack from '../Components/AuthStack';
+import {SafeAreaView} from 'react-native';
 
 const Loading = () => {
   const {user, setUser} = useContext(AuthContext);

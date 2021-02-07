@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
+  SafeAreaView,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import {AuthContext} from '../Components/AuthProvider';
@@ -33,7 +34,7 @@ const ForgotScreen = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#88737c" />
       <ImageBackground source={bImage} style={styles.imageBackground}>
         <Text style={styles.logo}>Forgot Password</Text>
@@ -60,7 +61,7 @@ const ForgotScreen = ({navigation}) => {
 
         <Toast ref={(ref) => Toast.setRef(ref)} />
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 };
 

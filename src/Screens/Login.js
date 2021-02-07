@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
+  SafeAreaView,
 } from 'react-native';
 import {AuthContext} from '../Components/AuthProvider';
 import {_isBlank, _checkEmail} from '../Components/Validation';
@@ -36,7 +37,7 @@ export default function LoginScreen({navigation}) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#FEEDBF" />
       <ImageBackground source={bImage} style={styles.imageBackground}>
         <Text style={styles.logo}>Dday-Notifier</Text>
@@ -75,7 +76,7 @@ export default function LoginScreen({navigation}) {
         </TouchableOpacity>
         <Toast ref={(ref) => Toast.setRef(ref)} />
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 }
 
