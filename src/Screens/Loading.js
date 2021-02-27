@@ -6,7 +6,6 @@ import SplashScreen from 'react-native-splash-screen';
 
 import AppStack from '../Components/AppStack';
 import AuthStack from '../Components/AuthStack';
-import {SafeAreaView} from 'react-native';
 
 const Loading = () => {
   const {user, setUser} = useContext(AuthContext);
@@ -22,7 +21,6 @@ const Loading = () => {
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     SplashScreen.hide();
-    return subscriber; // unsubscribe on unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
