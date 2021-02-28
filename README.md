@@ -1,6 +1,6 @@
 # <div align='center'>Dday-Notifier</div>
 
-<img  src="./assets/images/logo.png"  width=400px>
+<div style="text-align:center;"><img src="./assets/images/logo.png" width=400px></div>
 
 **_<span  style="color:#7caecf">Keep it Organized</span>_**<br>
 
@@ -12,12 +12,10 @@
 
 ## `My Goals`
 
-- Control user using firebase
+- Control user & database using firebase
 
 - Learn basic things about react-native
 
 - Learn JavaScript
-
-- Maybe earn money with admob...?
 
 **For Now, you can download app only from this [link](https://github.com/alpha-src/Dday_Notifier/blob/main/Dday-Notifier.apk)**
