@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from "react";
 import {
   Modal,
   StyleSheet,
@@ -8,18 +8,16 @@ import {
   Image,
   SafeAreaView,
   StatusBar,
-} from 'react-native';
-import {AuthContext} from '../Components/AuthProvider';
-import AuthStack from '../Components/AuthStack';
-import Toast from 'react-native-toast-message';
-import {_InfoHandler} from '../Components/ToastMsg';
+} from "react-native";
+import { AuthContext, AuthStack, _InfoHandler } from "../Components/index";
+import Toast from "react-native-toast-message";
 
 const statusbarheight = StatusBar.currentHeight;
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const HomeScreen = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     _InfoHandler(user.email);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,19 +39,8 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f9fafd',
-  },
-  text: {
-    fontSize: 20,
-    color: '#333333',
-  },
-  imageBackground: {
-    resizeMode: 'cover',
-    width: windowWidth,
-    height: windowHeight + statusbarheight,
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f9fafd",
   },
 });

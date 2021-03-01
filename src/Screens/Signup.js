@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from "react";
 import {
   Text,
   View,
@@ -9,37 +9,37 @@ import {
   TouchableOpacity,
   ImageBackground,
   SafeAreaView,
-} from 'react-native';
-import {AuthContext} from '../Components/AuthProvider';
+} from "react-native";
 import {
+  AuthContext,
   _isBlank,
   _checkEmail,
   _arePasswordandconfirmPwSame,
   _isPasswordLong,
-} from '../Components/Validation';
-import {_ErrorHandler} from '../Components/ToastMsg';
-import Toast from 'react-native-toast-message';
+  _ErrorHandler,
+} from "../Components/index";
+import Toast from "react-native-toast-message";
 
 const statusbarheight = StatusBar.currentHeight;
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-let bImage = require('../../assets/images/loginbackground.jpg');
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+let bImage = require("../../assets/images/loginbackground.jpg");
 
-const SignupScreen = ({navigation}) => {
+const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPw, setConfirmPw] = useState();
-  const {register} = useContext(AuthContext);
+  const { register } = useContext(AuthContext);
 
   function SignupValidationCheck(email, password, confirmPw) {
     if (_isBlank(email, password)) {
-      _ErrorHandler('Signup', 'Blank');
+      _ErrorHandler("Signup", "Blank");
     } else if (!_checkEmail(email)) {
-      _ErrorHandler('Signup', 'Invalid');
+      _ErrorHandler("Signup", "Invalid");
     } else if (!_arePasswordandconfirmPwSame(password, confirmPw)) {
-      _ErrorHandler('Signup', 'Eqaul');
+      _ErrorHandler("Signup", "Eqaul");
     } else if (!_isPasswordLong(password)) {
-      _ErrorHandler('Signup', 'Short');
+      _ErrorHandler("Signup", "Short");
     } else {
       register(email, password);
     }
@@ -85,10 +85,11 @@ const SignupScreen = ({navigation}) => {
 
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => SignupValidationCheck(email, password, confirmPw)}>
+          onPress={() => SignupValidationCheck(email, password, confirmPw)}
+        >
           <Text style={styles.loginText}>Signup</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Text style={styles.signupText}>Go Back to Login</Text>
         </TouchableOpacity>
         <Toast ref={(ref) => Toast.setRef(ref)} />
@@ -102,58 +103,58 @@ export default SignupScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   logo: {
     fontSize: 35,
-    color: '#FFFDE4',
+    color: "#FFFDE4",
     marginBottom: 40,
     letterSpacing: 5,
-    fontFamily: 'DancingScript-Bold',
+    fontFamily: "DancingScript-Bold",
   },
   imageBackground: {
-    resizeMode: 'cover',
+    resizeMode: "cover",
     width: windowWidth,
     height: windowHeight + statusbarheight,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputView: {
-    width: '80%',
-    backgroundColor: '#373B44',
+    width: "80%",
+    backgroundColor: "#373B44",
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: 20,
   },
   inputText: {
     height: 50,
-    color: 'white',
+    color: "white",
   },
   forgot: {
-    color: 'white',
+    color: "white",
     fontSize: 11,
   },
   loginBtn: {
-    width: '80%',
-    backgroundColor: '#fb5b5a',
+    width: "80%",
+    backgroundColor: "#fb5b5a",
     borderRadius: 25,
     height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 40,
     marginBottom: 10,
   },
   loginText: {
     fontSize: 15,
-    color: 'white',
+    color: "white",
   },
 
   signupText: {
     fontSize: 15,
-    color: 'white',
+    color: "white",
     paddingTop: 15,
   },
 });

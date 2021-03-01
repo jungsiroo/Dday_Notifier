@@ -1,7 +1,7 @@
-import * as React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home, Profile, Calendar} from '../Screens/';
-import {Image} from 'react-native';
+import * as React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Home, Profile, Calendar } from "../Screens/";
+import { Image } from "react-native";
 import {
   homeCircleOutline,
   homeCircle,
@@ -9,7 +9,7 @@ import {
   accountCircleOutline,
   calendarCheck,
   calendarCheckOutline,
-} from './Icons';
+} from "./Icons";
 
 export const Tab = createBottomTabNavigator();
 
@@ -21,17 +21,17 @@ export default function AppStack() {
         style: {
           borderTopWidth: 0,
           borderBottomWidth: 0,
-          backgroundColor: '#f9fafd',
+          backgroundColor: "#f9fafd",
           elevation: 0,
         },
       }}
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
           let iconimg;
 
-          if (route.name === 'Home') {
+          if (route.name === "Home") {
             iconimg = focused ? homeCircle : homeCircleOutline;
-          } else if (route.name === 'Profile') {
+          } else if (route.name === "Profile") {
             iconimg = focused ? accountCircle : accountCircleOutline;
           } else {
             iconimg = focused ? calendarCheck : calendarCheckOutline;
@@ -44,12 +44,13 @@ export default function AppStack() {
               style={{
                 height: 24,
                 width: 24,
-                tintColor: focused ? '#74b7db' : 'gray',
+                tintColor: focused ? "#74b7db" : "gray",
               }}
             />
           );
         },
-      })}>
+      })}
+    >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Calendar" component={Calendar} />
       <Tab.Screen name="Profile" component={Profile} />

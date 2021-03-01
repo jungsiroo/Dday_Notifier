@@ -1,8 +1,8 @@
 export function _isBlank(email, password) {
   if (
-    typeof email == 'undefined' ||
+    typeof email == "undefined" ||
     email.length == 0 ||
-    typeof password == 'undefined' ||
+    typeof password == "undefined" ||
     password.length == 0
   )
     return true;

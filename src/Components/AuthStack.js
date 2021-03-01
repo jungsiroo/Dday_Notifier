@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import AsyncStorage from '@react-native-community/async-storage';
-import {Signup, Login, Forgot, Home} from '../Screens';
+import React, { useState, useEffect } from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import AsyncStorage from "@react-native-community/async-storage";
+import { Signup, Login, Forgot, Home } from "../Screens";
 
 const Stack = createStackNavigator();
 
@@ -10,9 +10,9 @@ const AuthStack = () => {
   let routeName;
 
   useEffect(() => {
-    AsyncStorage.getItem('alreadyLaunched').then((value) => {
+    AsyncStorage.getItem("alreadyLaunched").then((value) => {
       if (value == null) {
-        AsyncStorage.setItem('alreadyLaunched', 'true');
+        AsyncStorage.setItem("alreadyLaunched", "true");
         setIsFirstLaunch(true);
       } else {
         setIsFirstLaunch(false);
@@ -21,9 +21,9 @@ const AuthStack = () => {
   }, []);
 
   if (isFirstLaunch === true) {
-    routeName = 'Home';
+    routeName = "Home";
   } else {
-    routeName = 'Login';
+    routeName = "Login";
   }
 
   return (
