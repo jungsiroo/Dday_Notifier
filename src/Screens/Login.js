@@ -5,7 +5,6 @@ import {
   StyleSheet,
   StatusBar,
   TextInput,
-  Dimensions,
   TouchableOpacity,
   ImageBackground,
   SafeAreaView,
