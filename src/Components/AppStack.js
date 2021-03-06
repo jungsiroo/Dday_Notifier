@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home, Profile, Calendar } from "../Screens/";
-import { Image } from "react-native";
+import FastImage from "react-native-fast-image";
 import {
   homeCircleOutline,
   homeCircle,
@@ -38,8 +38,11 @@ export default function AppStack() {
           }
 
           return (
-            <Image
-              source={iconimg}
+            <FastImage
+              source={{
+                uri: iconimg,
+                priority: FastImage.priority.normal,
+              }}
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 height: 24,

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   StatusBar,
   TextInput,
-  Dimensions,
   TouchableOpacity,
   ImageBackground,
   SafeAreaView,
@@ -17,11 +16,12 @@ import {
   _ErrorHandler,
   _SuccessHandler,
 } from "../Components/index";
-
-const statusbarheight = StatusBar.currentHeight;
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-let bImage = require("../../assets/images/forgot.jpg");
+import {
+  statusbarheight,
+  windowWidth,
+  windowHeight,
+} from "../Components/Common";
+import ForgotBack from "../Components/Images";
 
 const ForgotScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -39,7 +39,7 @@ const ForgotScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#88737c" />
-      <ImageBackground source={bImage} style={styles.imageBackground}>
+      <ImageBackground source={ForgotBack} style={styles.imageBackground}>
         <Text style={styles.logo}>Forgot Password</Text>
         <View style={styles.inputView}>
           <TextInput

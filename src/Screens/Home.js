@@ -1,20 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Image,
-  SafeAreaView,
-  StatusBar,
-} from "react-native";
-import { AuthContext, AuthStack, _InfoHandler } from "../Components/index";
+import { StyleSheet, SafeAreaView } from "react-native";
+import { AuthContext, _InfoHandler } from "../Components/index";
 import Toast from "react-native-toast-message";
-
-const statusbarheight = StatusBar.currentHeight;
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 
 const HomeScreen = () => {
   const { user } = useContext(AuthContext);
@@ -22,10 +9,6 @@ const HomeScreen = () => {
     _InfoHandler(user.email);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (user == null) {
-    return <AuthStack />;
-  }
 
   return (
     <SafeAreaView style={styles.container}>

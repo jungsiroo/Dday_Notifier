@@ -19,11 +19,12 @@ import {
   _ErrorHandler,
 } from "../Components/index";
 import Toast from "react-native-toast-message";
-
-const statusbarheight = StatusBar.currentHeight;
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-let bImage = require("../../assets/images/loginbackground.jpg");
+import {
+  statusbarheight,
+  windowWidth,
+  windowHeight,
+} from "../Components/Common";
+import LoginBack from "../Components/Images";
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -48,7 +49,7 @@ const SignupScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#FEEDBF" />
-      <ImageBackground source={bImage} style={styles.imageBackground}>
+      <ImageBackground source={LoginBack} style={styles.imageBackground}>
         <Text style={styles.logo}>Dday-Notifier</Text>
         <View style={styles.inputView}>
           <TextInput
