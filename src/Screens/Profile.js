@@ -42,7 +42,9 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.header}>
             <Image style={styles.profileImg} source={userIcon} />
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>{userName}</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+              {user.displayName}
+            </Text>
             <TouchableOpacity onPress={toggleModal}>
               <Modal
                 style={styles.modalPopup}
