@@ -29,7 +29,7 @@ const ProfileScreen = () => {
   const { user, logout } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
 
-  let [userName, setUserName] = useState("User");
+  let userName = user.displayName != null ? user.displayName : "User";
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -43,7 +43,7 @@ const ProfileScreen = () => {
           <View style={styles.header}>
             <Image style={styles.profileImg} source={userIcon} />
             <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-              {user.displayName}
+              `${user.displayName}`
             </Text>
             <TouchableOpacity onPress={toggleModal}>
               <Modal
@@ -66,8 +66,7 @@ const ProfileScreen = () => {
                       autoCapitalize="none"
                       autoCorrect={false}
                       placeholderTextColor="white"
-                      value={userName}
-                      onChangeText={(text) => setUserName(text)}
+                      onChangeText={(text) => (userName = text)}
                     />
                   </View>
                   <TouchableOpacity
