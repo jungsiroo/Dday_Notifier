@@ -28,7 +28,7 @@ import { pencil, userIcon } from "../Components/Icons";
 const ProfileScreen = () => {
   const { user, logout } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [userName, setUserName] = useState();
+  const [userName, setUserName] = useState(user.displayName);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   nameCard: {
-    height: 200,
+    height: 170,
     width: "90%",
     backgroundColor: "#487494",
     borderRadius: 20,
