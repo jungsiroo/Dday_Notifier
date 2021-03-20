@@ -28,11 +28,17 @@ import { pencil, userIcon } from "../Components/Icons";
 const ProfileScreen = () => {
   const { user, logout } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
-
-  let userName = user.displayName != null ? user.displayName : "User";
+  const [userName, setUserName] = useState();
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  let newName;
+
+  const saveHandler = (name) => {
+    setUserName(name);
+    newName = name;
   };
 
   return (
@@ -66,14 +72,14 @@ const ProfileScreen = () => {
                       autoCapitalize="none"
                       autoCorrect={false}
                       placeholderTextColor="white"
-                      onChangeText={(text) => (userName = text)}
+                      onChangeText={(text) => saveHandler(text)}
                     />
                   </View>
                   <TouchableOpacity
                     onPress={() =>
                       user
                         .updateProfile({
-                          displayName: userName,
+                          displayName: newName,
                         })
                         .then(function () {
                           _SuccessHandler("Update");
