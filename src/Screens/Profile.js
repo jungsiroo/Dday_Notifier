@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Button,
+  StatusBar,
 } from "react-native";
 import { AuthContext } from "../Components/index";
 import Modal from "react-native-modal";
@@ -31,12 +32,13 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={styles.savContainer}>
+      <StatusBar backgroundColor="#299af4" />
       <ImageBackground source={ProfileBack} style={styles.imageBackground}>
         <View style={styles.card}>
           <View style={styles.header}>
             <Image style={styles.profileImg} source={userIcon} />
             <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-              {user.displayName}
+              `${user.uid}`
             </Text>
             <TouchableOpacity onPress={toggleModal}>
               <Modal
