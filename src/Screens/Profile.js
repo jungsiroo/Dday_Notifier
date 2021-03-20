@@ -7,11 +7,16 @@ import {
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
-  Button,
+  TextInput,
   StatusBar,
 } from "react-native";
-import { AuthContext } from "../Components/index";
+import {
+  AuthContext,
+  _ErrorHandler,
+  _SuccessHandler,
+} from "../Components/index";
 import Modal from "react-native-modal";
+import Toast from "react-native-toast-message";
 import {
   statusbarheight,
   windowWidth,
@@ -54,8 +59,40 @@ const ProfileScreen = () => {
                 backdropTransitionOutTiming={600}
               >
                 <View style={styles.nameCard}>
-                  <Text>Hello!</Text>
-                  <Button title="Hide modal" onPress={toggleModal} />
+                  <View style={styles.inputView}>
+                    <TextInput
+                      style={styles.inputText}
+                      placeholder="Change UserName"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      placeholderTextColor="white"
+                      value={userName}
+                      onChangeText={(text) => setUserName(text)}
+                    />
+                  </View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      user
+                        .updateProfile({
+                          displayName: userName,
+                        })
+                        .then(function () {
+                          _SuccessHandler("Update");
+                          toggleModal();
+                        })
+                        .catch(function (error) {
+                          _ErrorHandler("Update", error);
+                        })
+                    }
+                  >
+                    <Text style={{ color: "white" }}>SAVE</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={toggleModal}
+                    style={{ marginTop: 15 }}
+                  >
+                    <Text style={{ color: "white" }}>CANCLE</Text>
+                  </TouchableOpacity>
                 </View>
               </Modal>
               <Image source={pencil} style={styles.pencilIconStyle} />
@@ -71,6 +108,7 @@ const ProfileScreen = () => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </SafeAreaView>
   );
 };
@@ -100,13 +138,17 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   nameCard: {
-    height: 120,
-    width: "85%",
-    backgroundColor: "white",
-    borderRadius: 15,
+    height: 180,
+    width: "90%",
+    backgroundColor: "#487494",
+    borderRadius: 20,
     padding: 10,
     alignItems: "center",
     alignContent: "center",
+  },
+  inputText: {
+    height: 50,
+    color: "white",
   },
   modalPopup: {
     alignItems: "center",

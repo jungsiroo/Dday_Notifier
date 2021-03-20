@@ -12,8 +12,10 @@ export const _ErrorHandler = (status, Error) => {
       return "Passwords are not Same!";
     } else if (ErrorMsg.includes("Short")) {
       return "Passwords is too short (At least 6 letters)";
-    } else {
+    } else if (ErrorMsg.includes("Invalid")) {
       return "Invalid Email Address";
+    } else {
+      return `${status} Error`;
     }
   }
 
@@ -41,7 +43,9 @@ export const _SuccessHandler = (status) => {
   });
 };
 
-export const _InfoHandler = (email) => {
+export const _InfoHandler = (userName) => {
+  let displayName = userName != null ? userName : "User";
+
   Toast.show({
     type: "info",
     position: "top",
@@ -50,6 +54,6 @@ export const _InfoHandler = (email) => {
     topOffset: 70,
     bottomOffset: 40,
     text1: "Login Success",
-    text2: `Welcome Back ${email.split("@")[0]}`,
+    text2: `Welcome Back ${displayName}`,
   });
 };

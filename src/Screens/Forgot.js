@@ -21,7 +21,7 @@ import {
   windowWidth,
   windowHeight,
 } from "../Components/Common";
-import ForgotBack from "../Components/Images";
+import { ForgotBack } from "../Components/Images";
 
 const ForgotScreen = ({ navigation }) => {
   const [email, setEmail] = useState();

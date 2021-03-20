@@ -23,7 +23,7 @@ import {
   windowWidth,
   windowHeight,
 } from "../Components/Common";
-import LoginBack from "../Components/Images";
+import { LoginBack } from "../Components/Images";
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
