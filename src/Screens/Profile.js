@@ -29,9 +29,7 @@ const ProfileScreen = () => {
   const { user, logout } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
 
-  let [userName, setUserName] = useState();
-
-  userName = user.displayName != null ? user.displayName : "User";
+  let [userName, setUserName] = useState("User");
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -138,17 +136,13 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   nameCard: {
-    height: 180,
+    height: 200,
     width: "90%",
     backgroundColor: "#487494",
     borderRadius: 20,
     padding: 10,
     alignItems: "center",
     alignContent: "center",
-  },
-  inputText: {
-    height: 50,
-    color: "white",
   },
   modalPopup: {
     alignItems: "center",
@@ -163,6 +157,19 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
+  },
+  inputText: {
+    height: 50,
+    color: "white",
+  },
+  inputView: {
+    width: "100%",
+    backgroundColor: "#373B44",
+    borderRadius: 25,
+    height: 60,
+    marginBottom: 20,
+    justifyContent: "center",
+    padding: 20,
   },
   pencilIconStyle: {
     width: 16,
@@ -181,6 +188,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "white",
     paddingTop: 15,
-    fontWeight: "bold",
   },
 });
