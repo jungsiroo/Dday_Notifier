@@ -21,7 +21,7 @@ import {
   windowWidth,
   windowHeight,
 } from "../Components/Common";
-import LoginBack from "../Components/Images";
+import { LoginBack } from "../Components/Images";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState();
