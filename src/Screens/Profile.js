@@ -22,9 +22,11 @@ import { pencil, userIcon } from "../Components/Icons";
 
 const ProfileScreen = () => {
   const { user, logout } = useContext(AuthContext);
-
-  const [userName, setUserName] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
+
+  let [userName, setUserName] = useState();
+
+  userName = user.displayName != null ? user.displayName : "User";
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -37,9 +39,7 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.header}>
             <Image style={styles.profileImg} source={userIcon} />
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-              `${user.uid}`
-            </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18 }}>{userName}</Text>
             <TouchableOpacity onPress={toggleModal}>
               <Modal
                 style={styles.modalPopup}
