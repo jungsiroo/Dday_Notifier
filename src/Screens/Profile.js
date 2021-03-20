@@ -48,9 +48,7 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.header}>
             <Image style={styles.profileImg} source={userIcon} />
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-              {user.displayName}
-            </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18 }}>{userName}</Text>
             <TouchableOpacity onPress={toggleModal}>
               <Modal
                 style={styles.modalPopup}
@@ -72,7 +70,7 @@ const ProfileScreen = () => {
                       autoCapitalize="none"
                       autoCorrect={false}
                       placeholderTextColor="white"
-                      onChangeText={(text) => saveHandler(text)}
+                      onChangeText={(text) => (newName = text)}
                     />
                   </View>
                   <TouchableOpacity
@@ -82,6 +80,7 @@ const ProfileScreen = () => {
                           displayName: newName,
                         })
                         .then(function () {
+                          saveHandler(newName);
                           _SuccessHandler("Update");
                           toggleModal();
                         })
