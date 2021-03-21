@@ -28,6 +28,9 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { launchImageLibrary } from "react-native-image-picker";
 
 const ProfileScreen = () => {
+  let newName;
+  let profilePic;
+
   useEffect(() => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
       if (value == null) {
@@ -59,18 +62,23 @@ const ProfileScreen = () => {
         maxWidth: 200,
       },
       (response) => {
+        if (response.didCancel) setDidCancel(true);
         setResponse(response);
       }
     );
-  }
 
-  let newName;
+    if (response) {
+      if (!didCancel) profilePic = { uri: response.uri };
+      profilePic = userIcon;
+    }
+  }
 
   const { user, logout } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [response, setResponse] = useState(null);
+  const [didCancel, setDidCancel] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -88,7 +96,7 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image style={styles.profileImg} source={userIcon} />
+              <Image style={styles.profileImg} source={profilePic} />
             </TouchableOpacity>
           </View>
 
@@ -158,7 +166,7 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => alert(response.didCancel.toString())}>
+        <TouchableOpacity onPress={() => logout()}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
