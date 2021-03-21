@@ -31,7 +31,7 @@ const ProfileScreen = () => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
       if (value == null) {
         AsyncStorage.setItem("hasUserInfo", "false");
-        AsyncStorage.setItem("UserInfo", "Enter Your Information");
+        AsyncStorage.setItem("UserInfo", "");
       } else {
         AsyncStorage.setItem("hasUserInfo", "true");
         setData();
@@ -40,7 +40,8 @@ const ProfileScreen = () => {
   }, []);
 
   async function setData() {
-    setUserInfo(await AsyncStorage.getItem("UserInfo"));
+    const data = await AsyncStorage.getItem("UserInfo");
+    setUserInfo(data);
   }
 
   function handleInfo(text) {
@@ -128,6 +129,8 @@ const ProfileScreen = () => {
           <TextInput
             style={styles.descText}
             multiline={true}
+            autoCapitalize="none"
+            autoCorrect={false}
             placeholder="Enter Your Information"
             onChangeText={(text) => handleInfo(text)}
           >
