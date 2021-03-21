@@ -15,7 +15,7 @@ export const _ErrorHandler = (status, Error) => {
     } else if (ErrorMsg.includes("Invalid")) {
       return "Invalid Email Address";
     } else {
-      return `${status} Error`;
+      return `${Error}`;
     }
   }
 

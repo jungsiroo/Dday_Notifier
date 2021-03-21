@@ -63,12 +63,12 @@ const ProfileScreen = () => {
       {
         mediaType: "photo",
         includeBase64: false,
-        maxHeight: 200,
-        maxWidth: 200,
+        maxHeight: 300,
+        maxWidth: 300,
       },
       (response) => {
         if (response.didCancel) {
-          _ErrorHandler("Cancle", response.didCancel.valueOf());
+          _ErrorHandler("Profile Image Select", "You Canceled pick a image");
         } else setResponse(response);
       }
     );
