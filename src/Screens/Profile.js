@@ -29,14 +29,12 @@ import { launchImageLibrary } from "react-native-image-picker";
 
 const ProfileScreen = () => {
   let newName;
-  let profilePic;
 
   const { user, logout } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [response, setResponse] = useState(null);
-  const [didCancel, setDidCancel] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
@@ -69,12 +67,7 @@ const ProfileScreen = () => {
         maxWidth: 200,
       },
       (response) => {
-        if (response.didCancel) {
-          setDidCancel(true);
-          profilePic = userIcon;
-        }
-        profilePic = { uri: response.uri };
-
+        if (response.didCancel) setResponse(false);
         setResponse(response);
       }
     );
@@ -96,7 +89,10 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image style={styles.profileImg} source={profilePic} />
+              <Image
+                style={styles.profileImg}
+                source={response ? { uri: response.uri } : userIcon}
+              />
             </TouchableOpacity>
           </View>
 
