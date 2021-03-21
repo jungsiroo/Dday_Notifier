@@ -27,7 +27,7 @@ import { ProfileBack } from "../Components/Images";
 import { pencil, userIcon } from "../Components/Icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import { PERMISSIONS, RESULTS, request } from "react-native-permissions";
-import CameraRoll from "@react-native-community/cameraroll";
+import ImagePicker from "react-native-image-picker";
 
 const ProfileScreen = () => {
   useEffect(() => {
@@ -64,33 +64,46 @@ const ProfileScreen = () => {
     return status === "granted";
   }
 
-  const getPhotos = async () => {
+  const askPermission = async () => {
     try {
-      const { edges } = await CameraRoll.getPhotos({
-        first: 10,
-      });
+      const result = await request(PERMISSIONS.ANDROID.CAMERA);
+      if (result === RESULTS.GRANTED) {
+        // do something
+      }
     } catch (error) {
-      _ErrorHandler("Get Photos", error);
+      _ErrorHandler("Ask Permission", error);
     }
   };
 
-  function hasCameraPermission() {
-    const askPermission = async () => {
-      try {
-        const result = await request(PERMISSIONS.ANDROID.CAMERA);
-        if (result === RESULTS.GRANTED) {
-          // do something
-        }
-      } catch (error) {
-        _ErrorHandler("Ask Permission", error);
-      }
-    };
-  }
-
-  function cameraRollHandler() {
+  function pickImg() {
     hasAndroidPermission();
-    hasCameraPermission();
-    getPhotos();
+    askPermission();
+
+    const options = {
+      title: "Select Avatar",
+      takePhotoButtonTitle: "Camera",
+      chooseFromLibraryButtonTitle: "Library",
+      cancelButtonTitle: "Cancle",
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        _ErrorHandler("Cancle", "Cancle image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+        _ErrorHandler("ImagePicker Error", response.error);
+      } else if (response.customButton) {
+        console.log("User tapped custom button: ", response.customButton);
+      } else {
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+        setImageSource(response.uri); // 저는 여기서 uri 값을 저장 시킵니다 !
+      }
+    });
   }
 
   let newName;
@@ -99,6 +112,7 @@ const ProfileScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
+  const [img, setImageSource] = useState("");
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -115,9 +129,15 @@ const ProfileScreen = () => {
       <ImageBackground source={ProfileBack} style={styles.imageBackground}>
         <View style={styles.card}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image style={styles.profileImg} source={userIcon} />
-            </TouchableOpacity>
+            {img ? (
+              <TouchableOpacity onPress={() => pickImg()}>
+                <Image style={styles.profileImg} source={{ uri: img }} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => pickImg()}>
+                <Image style={styles.profileImg} source={userIcon} />
+              </TouchableOpacity>
+            )}
             <Text style={{ fontWeight: "bold", fontSize: 18 }}>{userName}</Text>
             <TouchableOpacity onPress={toggleModal}>
               <Modal
