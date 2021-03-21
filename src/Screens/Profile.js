@@ -31,6 +31,13 @@ const ProfileScreen = () => {
   let newName;
   let profilePic;
 
+  const { user, logout } = useContext(AuthContext);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [userName, setUserName] = useState(user.displayName);
+  const [userInfo, setUserInfo] = useState();
+  const [response, setResponse] = useState(null);
+  const [didCancel, setDidCancel] = useState(false);
+
   useEffect(() => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
       if (value == null) {
@@ -62,23 +69,16 @@ const ProfileScreen = () => {
         maxWidth: 200,
       },
       (response) => {
-        if (response.didCancel) setDidCancel(true);
+        if (response.didCancel) {
+          setDidCancel(true);
+          profilePic = userIcon;
+        }
+        profilePic = { uri: response.uri };
+
         setResponse(response);
       }
     );
-
-    if (response) {
-      if (!didCancel) profilePic = { uri: response.uri };
-      profilePic = userIcon;
-    }
   }
-
-  const { user, logout } = useContext(AuthContext);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [userName, setUserName] = useState(user.displayName);
-  const [userInfo, setUserInfo] = useState();
-  const [response, setResponse] = useState(null);
-  const [didCancel, setDidCancel] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
