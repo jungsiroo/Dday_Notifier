@@ -87,7 +87,11 @@ const ProfileScreen = () => {
       <ImageBackground source={ProfileBack} style={styles.imageBackground}>
         <View style={styles.card}>
           <View style={styles.profileImage}>
-            {!response ? (
+            <TouchableOpacity onPress={() => cameraRollHandler()}>
+              <Image style={styles.profileImg} source={userIcon} />
+            </TouchableOpacity>
+
+            {/* {!response ? (
               <TouchableOpacity onPress={() => cameraRollHandler()}>
                 <Image style={styles.profileImg} source={userIcon} />
               </TouchableOpacity>
@@ -98,7 +102,7 @@ const ProfileScreen = () => {
                   source={{ uri: response.uri }}
                 />
               </TouchableOpacity>
-            )}
+            )} */}
           </View>
 
           <View style={styles.header}>
