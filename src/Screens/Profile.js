@@ -68,7 +68,7 @@ const ProfileScreen = () => {
     try {
       const result = await request(PERMISSIONS.ANDROID.CAMERA);
       if (result === RESULTS.GRANTED) {
-        // do something
+        if (hasAndroidPermission()) pickImg();
       }
     } catch (error) {
       _ErrorHandler("Ask Permission", error);
@@ -76,9 +76,6 @@ const ProfileScreen = () => {
   };
 
   function pickImg() {
-    hasAndroidPermission();
-    askPermission();
-
     const options = {
       title: "Select Avatar",
       takePhotoButtonTitle: "Camera",
@@ -101,7 +98,7 @@ const ProfileScreen = () => {
       } else {
         // You can also display the image using data:
         // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        setImageSource(response.uri); // 저는 여기서 uri 값을 저장 시킵니다 !
+        setImageSource(response.uri);
       }
     });
   }
@@ -130,11 +127,11 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.header}>
             {img ? (
-              <TouchableOpacity onPress={() => pickImg()}>
+              <TouchableOpacity onPress={() => askPermission()}>
                 <Image style={styles.profileImg} source={{ uri: img }} />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={() => pickImg()}>
+              <TouchableOpacity onPress={() => askPermission()}>
                 <Image style={styles.profileImg} source={userIcon} />
               </TouchableOpacity>
             )}
