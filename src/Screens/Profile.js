@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
-  PermissionsAndroid,
   StatusBar,
 } from "react-native";
 import {
@@ -27,7 +26,8 @@ import { ProfileBack } from "../Components/Images";
 import { pencil, userIcon } from "../Components/Icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import { PERMISSIONS, RESULTS, request } from "react-native-permissions";
-import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import { launchImageLibrary } from "react-native-image-picker";
+import { divide } from "react-native-reanimated";
 
 const ProfileScreen = () => {
   useEffect(() => {
@@ -52,18 +52,6 @@ const ProfileScreen = () => {
     setData();
   }
 
-  async function hasAndroidPermission() {
-    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
-
-    const hasPermission = await PermissionsAndroid.check(permission);
-    if (hasPermission) {
-      return true;
-    }
-
-    const status = await PermissionsAndroid.request(permission);
-    return status === "granted";
-  }
-
   const askPermission = async () => {
     try {
       const result = await request(PERMISSIONS.ANDROID.CAMERA);
@@ -80,8 +68,8 @@ const ProfileScreen = () => {
       {
         mediaType: "photo",
         includeBase64: false,
-        maxHeight: 30,
-        maxWidth: 30,
+        maxHeight: 200,
+        maxWidth: 200,
       },
       (response) => {
         setResponse(response);
@@ -112,16 +100,16 @@ const ProfileScreen = () => {
       <ImageBackground source={ProfileBack} style={styles.imageBackground}>
         <View style={styles.card}>
           <View style={styles.header}>
-            {response ? (
+            {response.didCancle ? (
+              <TouchableOpacity onPress={() => askPermission()}>
+                <Image style={styles.profileImg} source={userIcon} />
+              </TouchableOpacity>
+            ) : (
               <TouchableOpacity onPress={() => askPermission()}>
                 <Image
                   style={styles.profileImg}
                   source={{ uri: response.uri }}
                 />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => askPermission()}>
-                <Image style={styles.profileImg} source={userIcon} />
               </TouchableOpacity>
             )}
             <Text style={{ fontWeight: "bold", fontSize: 18 }}>{userName}</Text>
