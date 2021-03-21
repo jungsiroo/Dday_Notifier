@@ -25,7 +25,6 @@ import {
 import { ProfileBack } from "../Components/Images";
 import { pencil, userIcon } from "../Components/Icons";
 import AsyncStorage from "@react-native-community/async-storage";
-import { PERMISSIONS, RESULTS, request } from "react-native-permissions";
 import { launchImageLibrary } from "react-native-image-picker";
 
 const ProfileScreen = () => {
@@ -50,17 +49,6 @@ const ProfileScreen = () => {
     AsyncStorage.setItem("UserInfo", text);
     setData();
   }
-
-  const askPermission = async () => {
-    try {
-      const result = await request(PERMISSIONS.ANDROID.CAMERA);
-      if (result === RESULTS.GRANTED) {
-        cameraRollHandler();
-      }
-    } catch (error) {
-      _ErrorHandler("Ask Permission", error);
-    }
-  };
 
   function cameraRollHandler() {
     launchImageLibrary(
@@ -98,72 +86,74 @@ const ProfileScreen = () => {
       <StatusBar backgroundColor="#299af4" />
       <ImageBackground source={ProfileBack} style={styles.imageBackground}>
         <View style={styles.card}>
-          <View style={styles.header}>
-            {!response ? (
-              <TouchableOpacity onPress={() => askPermission()}>
+          <View style={styles.profileImage}>
+            {!response.didCancel ? (
+              <TouchableOpacity onPress={() => cameraRollHandler()}>
                 <Image style={styles.profileImg} source={userIcon} />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={() => askPermission()}>
+              <TouchableOpacity onPress={() => cameraRollHandler()}>
                 <Image
                   style={styles.profileImg}
                   source={{ uri: response.uri }}
                 />
               </TouchableOpacity>
             )}
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>{userName}</Text>
-            <TouchableOpacity onPress={toggleModal}>
-              <Modal
-                style={styles.modalPopup}
-                isVisible={isModalVisible}
-                backdropColor="#B4B3DB"
-                backdropOpacity={0.8}
-                animationIn="zoomInDown"
-                animationOut="zoomOutUp"
-                animationInTiming={600}
-                animationOutTiming={600}
-                backdropTransitionInTiming={600}
-                backdropTransitionOutTiming={600}
-              >
-                <View style={styles.nameCard}>
-                  <View style={styles.inputView}>
-                    <TextInput
-                      style={styles.inputText}
-                      placeholder="Change UserName"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      placeholderTextColor="white"
-                      onChangeText={(text) => (newName = text)}
-                    />
-                  </View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      user
-                        .updateProfile({
-                          displayName: newName,
-                        })
-                        .then(function () {
-                          saveHandler(newName);
-                          _SuccessHandler("Update");
-                          toggleModal();
-                        })
-                        .catch(function (error) {
-                          _ErrorHandler("Update", error);
-                        })
-                    }
-                  >
-                    <Text style={{ color: "white" }}>SAVE</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={toggleModal}
-                    style={{ marginTop: 15 }}
-                  >
-                    <Text style={{ color: "white" }}>CANCLE</Text>
-                  </TouchableOpacity>
-                </View>
-              </Modal>
-              <Image source={pencil} style={styles.pencilIconStyle} />
+          </View>
+
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => toggleModal()}>
+              <Text style={styles.userNameStyle}>{userName} 🖊</Text>
             </TouchableOpacity>
+            <Modal
+              style={styles.modalPopup}
+              isVisible={isModalVisible}
+              backdropColor="#B4B3DB"
+              backdropOpacity={0.8}
+              animationIn="zoomInDown"
+              animationOut="zoomOutUp"
+              animationInTiming={600}
+              animationOutTiming={600}
+              backdropTransitionInTiming={600}
+              backdropTransitionOutTiming={600}
+            >
+              <View style={styles.nameCard}>
+                <View style={styles.inputView}>
+                  <TextInput
+                    style={styles.inputText}
+                    placeholder="Change UserName"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    placeholderTextColor="white"
+                    onChangeText={(text) => (newName = text)}
+                  />
+                </View>
+                <TouchableOpacity
+                  onPress={() =>
+                    user
+                      .updateProfile({
+                        displayName: newName,
+                      })
+                      .then(function () {
+                        saveHandler(newName);
+                        _SuccessHandler("Update");
+                        toggleModal();
+                      })
+                      .catch(function (error) {
+                        _ErrorHandler("Update", error);
+                      })
+                  }
+                >
+                  <Text style={{ color: "white" }}>SAVE</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={toggleModal}
+                  style={{ marginTop: 15 }}
+                >
+                  <Text style={{ color: "white" }}>CANCLE</Text>
+                </TouchableOpacity>
+              </View>
+            </Modal>
           </View>
           <TextInput
             style={styles.descText}
@@ -207,8 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 15,
     padding: 10,
-    alignItems: "center",
-    alignContent: "center",
+    flexDirection: "row",
   },
   nameCard: {
     height: 170,
@@ -225,13 +214,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   profileImg: {
-    width: 30,
-    height: 30,
+    width: 85,
+    height: 85,
     borderRadius: 50,
     marginRight: 10,
   },
   header: {
-    flexDirection: "row",
+    flex: 2,
   },
   inputText: {
     height: 50,
@@ -256,8 +245,13 @@ const styles = StyleSheet.create({
   descText: {
     color: "gray",
     alignItems: "center",
-    paddingLeft: 20,
-    paddingTop: 10,
+    padding: 10,
+    textAlign: "center",
+  },
+  userNameStyle: {
+    fontWeight: "bold",
+    fontSize: 18,
+    textAlign: "center",
   },
   logoutText: {
     fontSize: 15,
