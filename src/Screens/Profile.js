@@ -67,8 +67,9 @@ const ProfileScreen = () => {
         maxWidth: 200,
       },
       (response) => {
-        if (response.didCancel) setResponse(false);
-        setResponse(response);
+        if (response.didCancel) {
+          _ErrorHandler("Cancle", response.didCancel.valueOf());
+        } else setResponse(response);
       }
     );
   }
