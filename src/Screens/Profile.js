@@ -27,7 +27,7 @@ import { ProfileBack } from "../Components/Images";
 import { pencil, userIcon } from "../Components/Icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import { PERMISSIONS, RESULTS, request } from "react-native-permissions";
-import ImagePicker from "react-native-image-picker";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 const ProfileScreen = () => {
   useEffect(() => {
@@ -68,39 +68,25 @@ const ProfileScreen = () => {
     try {
       const result = await request(PERMISSIONS.ANDROID.CAMERA);
       if (result === RESULTS.GRANTED) {
-        if (hasAndroidPermission()) pickImg();
+        cameraRollHandler();
       }
     } catch (error) {
       _ErrorHandler("Ask Permission", error);
     }
   };
 
-  function pickImg() {
-    const options = {
-      title: "Select Avatar",
-      takePhotoButtonTitle: "Camera",
-      chooseFromLibraryButtonTitle: "Library",
-      cancelButtonTitle: "Cancle",
-      storageOptions: {
-        skipBackup: true,
-        path: "images",
+  function cameraRollHandler() {
+    launchImageLibrary(
+      {
+        mediaType: "photo",
+        includeBase64: false,
+        maxHeight: 30,
+        maxWidth: 30,
       },
-    };
-
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-        _ErrorHandler("Cancle", "Cancle image picker");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-        _ErrorHandler("ImagePicker Error", response.error);
-      } else if (response.customButton) {
-        console.log("User tapped custom button: ", response.customButton);
-      } else {
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        setImageSource(response.uri);
+      (response) => {
+        setResponse(response);
       }
-    });
+    );
   }
 
   let newName;
@@ -109,7 +95,7 @@ const ProfileScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
-  const [img, setImageSource] = useState("");
+  const [response, setResponse] = useState(null);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -126,9 +112,12 @@ const ProfileScreen = () => {
       <ImageBackground source={ProfileBack} style={styles.imageBackground}>
         <View style={styles.card}>
           <View style={styles.header}>
-            {img ? (
+            {response ? (
               <TouchableOpacity onPress={() => askPermission()}>
-                <Image style={styles.profileImg} source={{ uri: img }} />
+                <Image
+                  style={styles.profileImg}
+                  source={{ uri: response.uri }}
+                />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity onPress={() => askPermission()}>
