@@ -27,7 +27,6 @@ import { pencil, userIcon } from "../Components/Icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import { PERMISSIONS, RESULTS, request } from "react-native-permissions";
 import { launchImageLibrary } from "react-native-image-picker";
-import { divide } from "react-native-reanimated";
 
 const ProfileScreen = () => {
   useEffect(() => {
