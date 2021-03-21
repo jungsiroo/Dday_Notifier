@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -24,17 +24,43 @@ import {
 } from "../Components/Common";
 import { ProfileBack } from "../Components/Images";
 import { pencil, userIcon } from "../Components/Icons";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const ProfileScreen = () => {
+  useEffect(() => {
+    AsyncStorage.getItem("hasUserInfo").then((value) => {
+      if (value == null) {
+        AsyncStorage.setItem("hasUserInfo", "false");
+        AsyncStorage.setItem("UserInfo", "Enter Your Information");
+      } else {
+        AsyncStorage.setItem("hasUserInfo", "true");
+        setData();
+      }
+    });
+  }, []);
+
+  async function setData() {
+    const info = await AsyncStorage.getItem("UserInfo");
+
+    if (info === null || info === "") setUserInfo("Enter Your Information");
+    else setUserInfo(info);
+  }
+
+  function handleInfo(text) {
+    AsyncStorage.setItem("UserInfo", text);
+    setData();
+  }
+
+  let newName;
+
   const { user, logout } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
+  const [userInfo, setUserInfo] = useState();
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  let newName;
 
   const saveHandler = (name) => {
     setUserName(name);
@@ -102,10 +128,13 @@ const ProfileScreen = () => {
               <Image source={pencil} style={styles.pencilIconStyle} />
             </TouchableOpacity>
           </View>
-          <Text style={styles.descText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-            gravida, metus eleifend vulputate fringilla, liguladsfad
-          </Text>
+          <TextInput
+            style={styles.descText}
+            multiline={true}
+            onChangeText={(text) => handleInfo(text)}
+          >
+            {userInfo}
+          </TextInput>
         </View>
 
         <TouchableOpacity onPress={() => logout()}>
