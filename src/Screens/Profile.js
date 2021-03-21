@@ -99,7 +99,7 @@ const ProfileScreen = () => {
       <ImageBackground source={ProfileBack} style={styles.imageBackground}>
         <View style={styles.card}>
           <View style={styles.header}>
-            {response.didCancle ? (
+            {!response ? (
               <TouchableOpacity onPress={() => askPermission()}>
                 <Image style={styles.profileImg} source={userIcon} />
               </TouchableOpacity>
