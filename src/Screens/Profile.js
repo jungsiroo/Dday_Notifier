@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
+  PermissionsAndroid,
   StatusBar,
 } from "react-native";
 import {
@@ -25,6 +26,8 @@ import {
 import { ProfileBack } from "../Components/Images";
 import { pencil, userIcon } from "../Components/Icons";
 import AsyncStorage from "@react-native-community/async-storage";
+import { PERMISSIONS, RESULTS, request } from "react-native-permissions";
+import CameraRoll from "@react-native-community/cameraroll";
 
 const ProfileScreen = () => {
   useEffect(() => {
@@ -49,6 +52,47 @@ const ProfileScreen = () => {
     setData();
   }
 
+  async function hasAndroidPermission() {
+    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+
+    const hasPermission = await PermissionsAndroid.check(permission);
+    if (hasPermission) {
+      return true;
+    }
+
+    const status = await PermissionsAndroid.request(permission);
+    return status === "granted";
+  }
+
+  const getPhotos = async () => {
+    try {
+      const { edges } = await CameraRoll.getPhotos({
+        first: 10,
+      });
+    } catch (error) {
+      _ErrorHandler("Get Photos", error);
+    }
+  };
+
+  function hasCameraPermission() {
+    const askPermission = async () => {
+      try {
+        const result = await request(PERMISSIONS.ANDROID.CAMERA);
+        if (result === RESULTS.GRANTED) {
+          // do something
+        }
+      } catch (error) {
+        _ErrorHandler("Ask Permission", error);
+      }
+    };
+  }
+
+  function cameraRollHandler() {
+    hasAndroidPermission();
+    hasCameraPermission();
+    getPhotos();
+  }
+
   let newName;
 
   const { user, logout } = useContext(AuthContext);
@@ -71,7 +115,9 @@ const ProfileScreen = () => {
       <ImageBackground source={ProfileBack} style={styles.imageBackground}>
         <View style={styles.card}>
           <View style={styles.header}>
-            <Image style={styles.profileImg} source={userIcon} />
+            <TouchableOpacity onPress={() => cameraRollHandler()}>
+              <Image style={styles.profileImg} source={userIcon} />
+            </TouchableOpacity>
             <Text style={{ fontWeight: "bold", fontSize: 18 }}>{userName}</Text>
             <TouchableOpacity onPress={toggleModal}>
               <Modal
