@@ -23,7 +23,7 @@ import {
   windowHeight,
 } from "../Components/Common";
 import { ProfileBack } from "../Components/Images";
-import { pencil, userIcon } from "../Components/Icons";
+import { userIcon } from "../Components/Icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import { launchImageLibrary } from "react-native-image-picker";
 
@@ -88,10 +88,7 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image
-                style={styles.profileImg}
-                source={response.didCancel ? userIcon : { uri: response.uri }}
-              />
+              <Image style={styles.profileImg} source={userIcon} />
             </TouchableOpacity>
           </View>
 
@@ -161,7 +158,7 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => logout()}>
+        <TouchableOpacity onPress={() => alert(response.didCancel.toString())}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
