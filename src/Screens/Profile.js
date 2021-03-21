@@ -88,21 +88,11 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image style={styles.profileImg} source={userIcon} />
+              <Image
+                style={styles.profileImg}
+                source={response.didCancel ? userIcon : { uri: response.uri }}
+              />
             </TouchableOpacity>
-
-            {/* {!response ? (
-              <TouchableOpacity onPress={() => cameraRollHandler()}>
-                <Image style={styles.profileImg} source={userIcon} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => cameraRollHandler()}>
-                <Image
-                  style={styles.profileImg}
-                  source={{ uri: response.uri }}
-                />
-              </TouchableOpacity>
-            )} */}
           </View>
 
           <View style={styles.header}>
@@ -158,17 +148,17 @@ const ProfileScreen = () => {
                 </TouchableOpacity>
               </View>
             </Modal>
+            <TextInput
+              style={styles.descText}
+              multiline={true}
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholder="Enter Your Information"
+              onChangeText={(text) => handleInfo(text)}
+            >
+              {userInfo}
+            </TextInput>
           </View>
-          <TextInput
-            style={styles.descText}
-            multiline={true}
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder="Enter Your Information"
-            onChangeText={(text) => handleInfo(text)}
-          >
-            {userInfo}
-          </TextInput>
         </View>
 
         <TouchableOpacity onPress={() => logout()}>
@@ -194,6 +184,11 @@ const styles = StyleSheet.create({
     height: windowHeight + statusbarheight,
     justifyContent: "center",
     alignItems: "center",
+  },
+  profileImage: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   card: {
     height: 120,
@@ -226,6 +221,11 @@ const styles = StyleSheet.create({
   header: {
     flex: 2,
   },
+  userNameStyle: {
+    fontWeight: "bold",
+    fontSize: 18,
+    textAlign: "center",
+  },
   inputText: {
     height: 50,
     color: "white",
@@ -239,22 +239,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
   },
-  pencilIconStyle: {
-    width: 16,
-    height: 16,
-    alignItems: "flex-end",
-    marginLeft: 10,
-    marginTop: 5,
-  },
   descText: {
     color: "gray",
     alignItems: "center",
     padding: 10,
-    textAlign: "center",
-  },
-  userNameStyle: {
-    fontWeight: "bold",
-    fontSize: 18,
     textAlign: "center",
   },
   logoutText: {
