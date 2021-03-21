@@ -40,10 +40,7 @@ const ProfileScreen = () => {
   }, []);
 
   async function setData() {
-    const info = await AsyncStorage.getItem("UserInfo");
-
-    if (info === null || info === "") setUserInfo("Enter Your Information");
-    else setUserInfo(info);
+    setUserInfo(await AsyncStorage.getItem("UserInfo"));
   }
 
   function handleInfo(text) {
@@ -131,6 +128,7 @@ const ProfileScreen = () => {
           <TextInput
             style={styles.descText}
             multiline={true}
+            placeholder="Enter Your Information"
             onChangeText={(text) => handleInfo(text)}
           >
             {userInfo}
