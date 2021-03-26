@@ -68,8 +68,32 @@ const ProfileScreen = () => {
       },
       (response) => {
         if (response.didCancel) {
-          _ErrorHandler("Profile Image Select", "You Canceled pick a image");
-        } else setResponse(response);
+          user
+            .updateProfile({
+              photoURL: userIcon,
+            })
+            .then(function () {
+              _ErrorHandler(
+                "Profile Image Select",
+                "You Canceled pick a image"
+              );
+            })
+            .catch(function (error) {
+              _ErrorHandler(error, "Error");
+            });
+        } else {
+          setResponse(response);
+          user
+            .updateProfile({
+              photoURL: response.uri,
+            })
+            .then(function () {
+              _SuccessHandler("Update Profile Image");
+            })
+            .catch(function (error) {
+              _ErrorHandler(error, "Error");
+            });
+        }
       }
     );
   }
@@ -90,10 +114,7 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image
-                style={styles.profileImg}
-                source={response ? { uri: response.uri } : userIcon}
-              />
+              <Image style={styles.profileImg} source={user.photoURL} />
             </TouchableOpacity>
           </View>
 
