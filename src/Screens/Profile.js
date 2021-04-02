@@ -26,8 +26,6 @@ import { ProfileBack } from "../Components/Images";
 import AsyncStorage from "@react-native-community/async-storage";
 import { launchImageLibrary } from "react-native-image-picker";
 import storage from "@react-native-firebase/storage";
-import { utils } from "@react-native-firebase/app";
-import { firebase } from "@react-native-firebase/auth";
 
 const ProfileScreen = () => {
   let newName;
@@ -63,11 +61,18 @@ const ProfileScreen = () => {
 
   async function uploadProfilePic(imageUri) {
     const fileName = imageUri.split("temp_")[1];
-    const imageRef = firebase
-      .storage()
-      .ref(`UserProfileImage/${user.displayName}/${fileName}`);
+    const imageRef = storage().ref(
+      `UserProfileImage/${user.displayName}/${fileName}`
+    );
 
     await imageRef.putFile(fileName);
+  }
+
+  async function getProfilePic(curretUser, imageUri) {
+    const fileName = imageUri.split("temp_")[1];
+    return await storage()
+      .ref(`UserProfileImage/${curretUser}/fileName`)
+      .getDownloadURL();
   }
 
   function cameraRollHandler() {
@@ -105,6 +110,7 @@ const ProfileScreen = () => {
               _SuccessHandler("Update Profile Image");
               setProfileImage(user.photoURL);
               uploadProfilePic(response.uri);
+              setProfileImage(getProfilePic(user.displayName, response.uri));
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
@@ -130,7 +136,7 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image style={styles.profileImg} source={user.photoURL} />
+              <Image style={styles.profileImg} source={profileImage} />
             </TouchableOpacity>
           </View>
 
