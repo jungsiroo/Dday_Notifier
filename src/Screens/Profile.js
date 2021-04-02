@@ -75,13 +75,11 @@ const ProfileScreen = () => {
     task.then(() => {
       _SuccessHandler("Update Profile Image");
     });
-
-    setProfileImage(null);
   };
 
   async function getProfilePic(curretUser, imageUri) {
     const fileName = imageUri.split("temp_")[1];
-    return await storage().ref(`UserProfileImage/${fileName}`).getDownloadURL();
+    return await storage().ref(`user.png`).getDownloadURL();
   }
 
   function cameraRollHandler() {
@@ -118,7 +116,6 @@ const ProfileScreen = () => {
               const source = { uri: response.uri };
               setProfileImage(source);
               uploadImage();
-              setProfileImage(getProfilePic(user.displayName, response.uri));
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
@@ -214,7 +211,9 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => logout()}>
+        <TouchableOpacity
+          onPress={() => alert(getProfilePic(user, profileImage))}
+        >
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
