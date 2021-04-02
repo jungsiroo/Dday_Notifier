@@ -35,7 +35,6 @@ const ProfileScreen = () => {
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [profileImage, setProfileImage] = useState();
-  const [response, setResponse] = useState(null);
 
   useEffect(() => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
@@ -68,6 +67,18 @@ const ProfileScreen = () => {
     });
   }
 
+  const uploadImage = async () => {
+    const { uri } = profileImage;
+    const filename = uri.substring(uri.lastIndexOf("/") + 1);
+    const task = storage().ref(filename).putFile(uri);
+
+    task.then(() => {
+      _SuccessHandler("Update Profile Image");
+    });
+
+    setProfileImage(null);
+  };
+
   async function getProfilePic(curretUser, imageUri) {
     const fileName = imageUri.split("temp_")[1];
     return await storage().ref(`UserProfileImage/${fileName}`).getDownloadURL();
@@ -99,14 +110,14 @@ const ProfileScreen = () => {
               _ErrorHandler(error, "Error");
             });
         } else {
-          setResponse(response);
           user
             .updateProfile({
               photoURL: response.uri,
             })
             .then(function () {
-              setProfileImage(user.photoURL);
-              uploadProfilePic(user.displayName, response.uri);
+              const source = { uri: response.uri };
+              setProfileImage(source);
+              uploadImage();
               setProfileImage(getProfilePic(user.displayName, response.uri));
             })
             .catch(function (error) {
