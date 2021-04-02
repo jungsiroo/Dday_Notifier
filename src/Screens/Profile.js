@@ -59,19 +59,17 @@ const ProfileScreen = () => {
     setData();
   }
 
-  async function uploadProfilePic(imageUri) {
+  async function uploadProfilePic(curretUser, imageUri) {
     const fileName = imageUri.split("temp_")[1];
-    const imageRef = storage().ref(
-      `UserProfileImage/${user.displayName}/${fileName}`
-    );
+    const imageRef = storage().ref(fileName);
 
-    await imageRef.putFile(fileName);
+    await imageRef.putFile(`UserProfileImage/${curretUser}/fileName`);
   }
 
   async function getProfilePic(curretUser, imageUri) {
     const fileName = imageUri.split("temp_")[1];
     return await storage()
-      .ref(`UserProfileImage/${curretUser}/fileName`)
+      .ref(`UserProfileImage/${curretUser}/${fileName}`)
       .getDownloadURL();
   }
 
@@ -109,7 +107,7 @@ const ProfileScreen = () => {
             .then(function () {
               _SuccessHandler("Update Profile Image");
               setProfileImage(user.photoURL);
-              uploadProfilePic(response.uri);
+              uploadProfilePic(user.displayName, response.uri);
               setProfileImage(getProfilePic(user.displayName, response.uri));
             })
             .catch(function (error) {
