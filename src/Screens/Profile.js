@@ -63,14 +63,14 @@ const ProfileScreen = () => {
     const fileName = imageUri.split("temp_")[1];
     const imageRef = storage().ref(fileName);
 
-    await imageRef.putFile(`UserProfileImage/${curretUser}/fileName`);
+    await imageRef.putFile(`UserProfileImage/fileName`).then(() => {
+      _SuccessHandler("Update Profile Image");
+    });
   }
 
   async function getProfilePic(curretUser, imageUri) {
     const fileName = imageUri.split("temp_")[1];
-    return await storage()
-      .ref(`UserProfileImage/${curretUser}/${fileName}`)
-      .getDownloadURL();
+    return await storage().ref(`UserProfileImage/${fileName}`).getDownloadURL();
   }
 
   function cameraRollHandler() {
@@ -105,7 +105,6 @@ const ProfileScreen = () => {
               photoURL: response.uri,
             })
             .then(function () {
-              _SuccessHandler("Update Profile Image");
               setProfileImage(user.photoURL);
               uploadProfilePic(user.displayName, response.uri);
               setProfileImage(getProfilePic(user.displayName, response.uri));
