@@ -23,9 +23,11 @@ import {
   windowHeight,
 } from "../Components/Common";
 import { ProfileBack } from "../Components/Images";
-import { userIcon } from "../Components/Icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import { launchImageLibrary } from "react-native-image-picker";
+import storage from "@react-native-firebase/storage";
+import { utils } from "@react-native-firebase/app";
+import { firebase } from "@react-native-firebase/auth";
 
 const ProfileScreen = () => {
   let newName;
@@ -34,6 +36,7 @@ const ProfileScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
+  const [profileImage, setProfileImage] = useState();
   const [response, setResponse] = useState(null);
 
   useEffect(() => {
@@ -58,6 +61,15 @@ const ProfileScreen = () => {
     setData();
   }
 
+  async function uploadProfilePic(imageUri) {
+    const fileName = imageUri.split("temp_")[1];
+    const imageRef = firebase
+      .storage()
+      .ref(`UserProfileImage/${user.displayName}/${fileName}`);
+
+    await imageRef.putFile(fileName);
+  }
+
   function cameraRollHandler() {
     launchImageLibrary(
       {
@@ -71,13 +83,14 @@ const ProfileScreen = () => {
           user
             .updateProfile({
               photoURL:
-                "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/user.png",
+                "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png",
             })
             .then(function () {
               _ErrorHandler(
                 "Profile Image Select",
                 "You Canceled pick a image"
               );
+              setProfileImage(user.photoURL);
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
@@ -90,6 +103,8 @@ const ProfileScreen = () => {
             })
             .then(function () {
               _SuccessHandler("Update Profile Image");
+              setProfileImage(user.photoURL);
+              uploadProfilePic(response.uri);
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
