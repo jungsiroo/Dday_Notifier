@@ -70,7 +70,8 @@ const ProfileScreen = () => {
         if (response.didCancel) {
           user
             .updateProfile({
-              photoURL: userIcon,
+              photoURL:
+                "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/user.png",
             })
             .then(function () {
               _ErrorHandler(
