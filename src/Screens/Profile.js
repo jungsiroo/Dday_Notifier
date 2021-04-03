@@ -48,9 +48,6 @@ const ProfileScreen = () => {
         setData();
       }
     });
-
-    // if (picURL) setProfileImage(picURL);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function setData() {
@@ -90,23 +87,23 @@ const ProfileScreen = () => {
     }
   }
 
-  function listFiles(curretUser) {
-    let imageArr = [];
-    const listRef = storage().ref().child(`UserProfileImage/${curretUser}`);
+  // function listFiles(curretUser) {
+  //   let imageArr = [];
+  //   const listRef = storage().ref().child(`UserProfileImage/${curretUser}`);
 
-    listRef
-      .listAll()
-      .then(function (res) {
-        res.items.forEach(function (itemRef) {
-          imageArr.push(itemRef.getDownloadURL);
-        });
-      })
-      .catch(function (error) {
-        alert(error);
-      });
+  //   listRef
+  //     .listAll()
+  //     .then(function (res) {
+  //       res.items.forEach(function (itemRef) {
+  //         imageArr.push(itemRef.getDownloadURL);
+  //       });
+  //     })
+  //     .catch(function (error) {
+  //       alert(error);
+  //     });
 
-    alert(imageArr);
-  }
+  //   alert(imageArr);
+  // }
 
   function cameraRollHandler() {
     launchImageLibrary(
@@ -230,7 +227,7 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => listFiles(user.uid)}>
+        <TouchableOpacity onPress={() => logout()}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
