@@ -36,7 +36,7 @@ const ProfileScreen = () => {
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [profileImage, setProfileImage] = useState();
-  // const [picURL, setPicURL] = getProfilePic(user.uid);
+  const [picURL, setPicURL] = getProfilePic(user.uid);
 
   useEffect(() => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
@@ -64,7 +64,7 @@ const ProfileScreen = () => {
     setProfileImage(source);
 
     const picDate = moment().format("YYYY-MM-DD-HH-MM");
-    const { uri } = profileImage;
+    const { uri } = source;
     const filename = `UserProfileImage/${curretUser}/${picDate}`;
 
     const task = storage().ref(filename).putFile(uri);
@@ -87,23 +87,23 @@ const ProfileScreen = () => {
     }
   }
 
-  // function listFiles(curretUser) {
-  //   let imageArr = [];
-  //   const listRef = storage().ref().child(`UserProfileImage/${curretUser}`);
+  function listFiles(curretUser) {
+    let imageArr = [];
+    const listRef = storage().ref(`UserProfileImage/${curretUser}`);
 
-  //   listRef
-  //     .listAll()
-  //     .then(function (res) {
-  //       res.items.forEach(function (itemRef) {
-  //         imageArr.push(itemRef.getDownloadURL);
-  //       });
-  //     })
-  //     .catch(function (error) {
-  //       alert(error);
-  //     });
+    listRef
+      .listAll()
+      .then(function (res) {
+        res.items.forEach(function (itemRef) {
+          imageArr.push(itemRef.getDownloadURL);
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
-  //   alert(imageArr);
-  // }
+    alert(imageArr);
+  }
 
   function cameraRollHandler() {
     launchImageLibrary(
@@ -131,7 +131,7 @@ const ProfileScreen = () => {
               _ErrorHandler(error, "Error");
             });
         } else {
-          const source = { uri: response.uri };
+          let source = { uri: response.uri };
           uploadImage(source, user.uid);
         }
       }
@@ -227,7 +227,7 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => logout()}>
+        <TouchableOpacity onPress={() => listFiles(user.uid)}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
