@@ -15,6 +15,7 @@ import {
   _ErrorHandler,
   _SuccessHandler,
 } from "../Components/index";
+import moment from "moment";
 import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
 import {
@@ -35,6 +36,7 @@ const ProfileScreen = () => {
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [profileImage, setProfileImage] = useState();
+  const [picURL, setPicURL] = getProfilePic(user.uid);
 
   useEffect(() => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
@@ -47,12 +49,8 @@ const ProfileScreen = () => {
       }
     });
 
-    AsyncStorage.getItem("hasProfileImage").then((value) => {
-      if (value == null) {
-        AsyncStorage.setItem("hasProfileImage", "false");
-        AsyncStorage.setItem("profileImage", "");
-      }
-    });
+    if (picURL) setProfileImage(picURL);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function setData() {
@@ -68,8 +66,9 @@ const ProfileScreen = () => {
   const uploadImage = async (source, curretUser) => {
     setProfileImage(source);
 
+    let picDate = moment().format("DD/MM/YYYY");
     const { uri } = profileImage;
-    const filename = `UserProfileImage/${curretUser}/${uri.split("temp_")[1]}`;
+    const filename = `UserProfileImage/${curretUser}/${picDate}`;
 
     const task = storage().ref(filename).putFile(uri);
 
@@ -85,8 +84,28 @@ const ProfileScreen = () => {
         uri.split("temp_")[1]
       }`;
 
-      return await storage().ref(`user.png`).getDownloadURL();
-    } catch (err) {}
+      return await storage().ref(filename).getDownloadURL();
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function listFiles(curretUser) {
+    let imageArr = [];
+    const listRef = storage().ref().child(`UserProfileImage/${curretUser}`);
+
+    listRef
+      .listAll()
+      .then(function (res) {
+        res.items.forEach(function (itemRef) {
+          imageArr.push(itemRef.getDownloadURL);
+        });
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+
+    alert(imageArr);
   }
 
   function cameraRollHandler() {
@@ -116,7 +135,7 @@ const ProfileScreen = () => {
             });
         } else {
           const source = { uri: response.uri };
-          uploadImage(source, user.displayName);
+          uploadImage(source, user.uid);
         }
       }
     );
@@ -211,9 +230,7 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity
-          onPress={() => alert(getProfilePic(user, profileImage))}
-        >
+        <TouchableOpacity onPress={() => listFiles(user.uid)}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
