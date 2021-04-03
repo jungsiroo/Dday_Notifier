@@ -48,9 +48,6 @@ const ProfileScreen = () => {
         setData();
       }
     });
-
-    if (picURL) setProfileImage(picURL);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function setData() {
