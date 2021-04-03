@@ -58,18 +58,12 @@ const ProfileScreen = () => {
     setData();
   }
 
-  async function uploadProfilePic(curretUser, imageUri) {
-    const fileName = imageUri.split("temp_")[1];
-    const imageRef = storage().ref(fileName);
+  const uploadImage = async (source) => {
+    setProfileImage(source);
 
-    await imageRef.putFile(`UserProfileImage/fileName`).then(() => {
-      _SuccessHandler("Update Profile Image");
-    });
-  }
-
-  const uploadImage = async () => {
     const { uri } = profileImage;
-    const filename = uri.substring(uri.lastIndexOf("/") + 1);
+    const filename = uri.split("temp_")[1];
+    alert(filename);
     const task = storage().ref(filename).putFile(uri);
 
     task.then(() => {
@@ -114,8 +108,7 @@ const ProfileScreen = () => {
             })
             .then(function () {
               const source = { uri: response.uri };
-              setProfileImage(source);
-              uploadImage();
+              uploadImage(source);
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
