@@ -15,7 +15,6 @@ import {
   _ErrorHandler,
   _SuccessHandler,
 } from "../Components/index";
-import moment from "moment";
 import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
 import {
@@ -65,9 +64,8 @@ const ProfileScreen = () => {
   }
 
   const uploadImage = async (source, curretUser) => {
-    const picDate = moment().format("YYYY-MM-DD-HH-MM-SS");
     const { uri } = source;
-    const filename = `UserProfileImage/${curretUser}/${picDate}`;
+    const filename = `UserProfileImage/${curretUser}/profileImage`;
 
     const task = storage().ref(filename).putFile(uri);
 
@@ -91,24 +89,18 @@ const ProfileScreen = () => {
   }
 
   function getProfileImage(curretUser) {
-    const listRef = storage().ref(`UserProfileImage/${curretUser}`);
+    const profileRef = storage().ref(
+      `UserProfileImage/${curretUser}/profileImage`
+    );
 
     try {
-      listRef
-        .listAll()
-        .then(function (res) {
-          res.items[res.items.length - 1]
-            .getDownloadURL()
-            .then(function (url) {
-              updateProfilePic(url);
-            })
-            .catch(function (error) {
-              _ErrorHandler(error, "Error");
-            });
+      profileRef
+        .getDownloadURL()
+        .then(function (url) {
+          updateProfilePic(url);
         })
         .catch(function (error) {
           _ErrorHandler(error, "Error");
-          setPicURL(null);
         });
     } catch (err) {
       _ErrorHandler(err, "Error");
