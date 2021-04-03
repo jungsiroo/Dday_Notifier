@@ -15,6 +15,7 @@ import {
   _ErrorHandler,
   _SuccessHandler,
 } from "../Components/index";
+import moment from "moment";
 import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
 import {
@@ -35,7 +36,7 @@ const ProfileScreen = () => {
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [profileImage, setProfileImage] = useState();
-  const [picURL, setPicURL] = getProfilePic(user.uid);
+  // const [picURL, setPicURL] = getProfilePic(user.uid);
 
   useEffect(() => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
@@ -48,7 +49,7 @@ const ProfileScreen = () => {
       }
     });
 
-    if (picURL) setProfileImage(picURL);
+    // if (picURL) setProfileImage(picURL);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -65,7 +66,7 @@ const ProfileScreen = () => {
   const uploadImage = async (source, curretUser) => {
     setProfileImage(source);
 
-    const picDate = "2021-04-03";
+    const picDate = moment().format("YYYY-MM-DD-HH-MM");
     const { uri } = profileImage;
     const filename = `UserProfileImage/${curretUser}/${picDate}`;
 
