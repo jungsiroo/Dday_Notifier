@@ -46,6 +46,13 @@ const ProfileScreen = () => {
         setData();
       }
     });
+
+    AsyncStorage.getItem("hasProfileImage").then((value) => {
+      if (value == null) {
+        AsyncStorage.setItem("hasProfileImage", "false");
+        AsyncStorage.setItem("profileImage", "");
+      }
+    });
   }, []);
 
   async function setData() {
@@ -58,12 +65,12 @@ const ProfileScreen = () => {
     setData();
   }
 
-  const uploadImage = async (source) => {
+  const uploadImage = async (source, curretUser) => {
     setProfileImage(source);
 
     const { uri } = profileImage;
-    const filename = uri.split("temp_")[1];
-    alert(filename);
+    const filename = `UserProfileImage/${curretUser}/${uri.split("temp_")[1]}`;
+
     const task = storage().ref(filename).putFile(uri);
 
     task.then(() => {
@@ -71,9 +78,15 @@ const ProfileScreen = () => {
     });
   };
 
-  async function getProfilePic(curretUser, imageUri) {
-    const fileName = imageUri.split("temp_")[1];
-    return await storage().ref(`user.png`).getDownloadURL();
+  async function getProfilePic(curretUser) {
+    try {
+      const { uri } = profileImage;
+      const filename = `UserProfileImage/${curretUser}/${
+        uri.split("temp_")[1]
+      }`;
+
+      return await storage().ref(`user.png`).getDownloadURL();
+    } catch (err) {}
   }
 
   function cameraRollHandler() {
@@ -96,23 +109,14 @@ const ProfileScreen = () => {
                 "Profile Image Select",
                 "You Canceled pick a image"
               );
-              setProfileImage(user.photoURL);
+              setProfileImage("cancle");
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
             });
         } else {
-          user
-            .updateProfile({
-              photoURL: response.uri,
-            })
-            .then(function () {
-              const source = { uri: response.uri };
-              uploadImage(source);
-            })
-            .catch(function (error) {
-              _ErrorHandler(error, "Error");
-            });
+          const source = { uri: response.uri };
+          uploadImage(source, user.displayName);
         }
       }
     );
@@ -134,7 +138,10 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image style={styles.profileImg} source={profileImage} />
+              <Image
+                style={styles.profileImg}
+                source={profileImage == "cancle" ? user.photoURL : profileImage}
+              />
             </TouchableOpacity>
           </View>
 
