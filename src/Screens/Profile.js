@@ -65,7 +65,7 @@ const ProfileScreen = () => {
   }
 
   const uploadImage = async (source, curretUser) => {
-    const picDate = moment().format("YYYY-MM-DD-HH-MM");
+    const picDate = moment().format("YYYY-MM-DD-HH-MM-SS");
     const { uri } = source;
     const filename = `UserProfileImage/${curretUser}/${picDate}`;
 
@@ -97,7 +97,7 @@ const ProfileScreen = () => {
       listRef
         .listAll()
         .then(function (res) {
-          res.items[0]
+          res.items[res.items.length - 1]
             .getDownloadURL()
             .then(function (url) {
               updateProfilePic(url);
