@@ -30,13 +30,14 @@ import storage from "@react-native-firebase/storage";
 
 const ProfileScreen = () => {
   let newName;
+  const userIcon =
+    "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png";
 
   const { user, logout } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
-  const [profileImage, setProfileImage] = useState();
-  const [picURL, setPicURL] = getProfilePic(user.uid);
+  const [picURL, setPicURL] = useState(getProfileImage(user.uid)); // set pic url (uri)
 
   useEffect(() => {
     AsyncStorage.getItem("hasUserInfo").then((value) => {
@@ -48,6 +49,9 @@ const ProfileScreen = () => {
         setData();
       }
     });
+
+    if (picURL == null) updateProfilePic(userIcon);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function setData() {
@@ -61,8 +65,6 @@ const ProfileScreen = () => {
   }
 
   const uploadImage = async (source, curretUser) => {
-    setProfileImage(source);
-
     const picDate = moment().format("YYYY-MM-DD-HH-MM");
     const { uri } = source;
     const filename = `UserProfileImage/${curretUser}/${picDate}`;
@@ -70,39 +72,48 @@ const ProfileScreen = () => {
     const task = storage().ref(filename).putFile(uri);
 
     task.then(() => {
+      getProfileImage(user.uid);
       _SuccessHandler("Update Profile Image");
     });
   };
 
-  async function getProfilePic(curretUser) {
-    try {
-      const { uri } = profileImage;
-      const filename = `UserProfileImage/${curretUser}/${
-        uri.split("temp_")[1]
-      }`;
-
-      return await storage().ref(filename).getDownloadURL();
-    } catch (err) {
-      return null;
-    }
-  }
-
-  function listFiles(curretUser) {
-    let imageArr = [];
-    const listRef = storage().ref(`UserProfileImage/${curretUser}`);
-
-    listRef
-      .listAll()
-      .then(function (res) {
-        res.items.forEach(function (itemRef) {
-          imageArr.push(itemRef.getDownloadURL);
-        });
+  function updateProfilePic(source) {
+    user
+      .updateProfile({
+        photoURL: source,
+      })
+      .then(function () {
+        setPicURL(source);
       })
       .catch(function (error) {
-        console.log(error);
+        _ErrorHandler(error, "Error");
       });
+  }
 
-    alert(imageArr);
+  function getProfileImage(curretUser) {
+    const listRef = storage().ref(`UserProfileImage/${curretUser}`);
+
+    try {
+      listRef
+        .listAll()
+        .then(function (res) {
+          res.items[0]
+            .getDownloadURL()
+            .then(function (url) {
+              updateProfilePic(url);
+            })
+            .catch(function (error) {
+              _ErrorHandler(error, "Error");
+            });
+        })
+        .catch(function (error) {
+          _ErrorHandler(error, "Error");
+          setPicURL(null);
+        });
+    } catch (err) {
+      _ErrorHandler(err, "Error");
+      setPicURL(null);
+    }
   }
 
   function cameraRollHandler() {
@@ -117,15 +128,14 @@ const ProfileScreen = () => {
         if (response.didCancel) {
           user
             .updateProfile({
-              photoURL:
-                "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png",
+              photoURL: userIcon,
             })
             .then(function () {
               _ErrorHandler(
                 "Profile Image Select",
                 "You Canceled pick a image"
               );
-              setProfileImage("cancle");
+              updateProfilePic(userIcon);
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
@@ -154,10 +164,7 @@ const ProfileScreen = () => {
         <View style={styles.card}>
           <View style={styles.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image
-                style={styles.profileImg}
-                source={profileImage == "cancle" ? user.photoURL : profileImage}
-              />
+              <Image style={styles.profileImg} source={{ uri: picURL }} />
             </TouchableOpacity>
           </View>
 
@@ -227,7 +234,7 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => listFiles(user.uid)}>
+        <TouchableOpacity onPress={() => logout()}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
