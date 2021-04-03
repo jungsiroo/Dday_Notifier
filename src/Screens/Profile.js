@@ -15,7 +15,6 @@ import {
   _ErrorHandler,
   _SuccessHandler,
 } from "../Components/index";
-import moment from "moment";
 import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
 import {
@@ -48,6 +47,9 @@ const ProfileScreen = () => {
         setData();
       }
     });
+
+    if (picURL) setProfileImage(picURL);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function setData() {
@@ -63,7 +65,7 @@ const ProfileScreen = () => {
   const uploadImage = async (source, curretUser) => {
     setProfileImage(source);
 
-    let picDate = moment().format("DD/MM/YYYY");
+    const picDate = "2021-04-03";
     const { uri } = profileImage;
     const filename = `UserProfileImage/${curretUser}/${picDate}`;
 
