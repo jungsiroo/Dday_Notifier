@@ -103,7 +103,6 @@ const ProfileScreen = () => {
           _ErrorHandler(error, "Error");
         });
     } catch (err) {
-      _ErrorHandler(err, "Error");
       setPicURL(null);
     }
   }
