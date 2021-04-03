@@ -14,6 +14,7 @@ import {
   AuthContext,
   _ErrorHandler,
   _SuccessHandler,
+  _NotiHandler,
 } from "../Components/index";
 import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
@@ -100,7 +101,10 @@ const ProfileScreen = () => {
           updateProfilePic(url);
         })
         .catch(function (error) {
-          _ErrorHandler(error, "Error");
+          _NotiHandler(
+            "Profile Picture",
+            "You can select your Profile Picture"
+          );
         });
     } catch (err) {
       setPicURL(null);

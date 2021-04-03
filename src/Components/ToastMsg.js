@@ -57,3 +57,16 @@ export const _InfoHandler = (userName) => {
     text2: `Welcome Back ${displayName}`,
   });
 };
+
+export const _NotiHandler = (status, noti) => {
+  Toast.show({
+    type: "info",
+    position: "top",
+    visibilityTime: 1000,
+    autoHide: true,
+    topOffset: 70,
+    bottomOffset: 40,
+    text1: status,
+    text2: noti,
+  });
+};

@@ -5,7 +5,12 @@ import {
   _checkEmail,
   _isPasswordLong,
 } from "./Validation";
-import { _ErrorHandler, _SuccessHandler, _InfoHandler } from "./ToastMsg";
+import {
+  _ErrorHandler,
+  _SuccessHandler,
+  _InfoHandler,
+  _NotiHandler,
+} from "./ToastMsg";
 import AuthStack from "./AuthStack";
 import AppStack from "./AppStack";
 
@@ -17,6 +22,7 @@ export {
   _isPasswordLong,
   _ErrorHandler,
   _SuccessHandler,
+  _NotiHandler,
   _InfoHandler,
   AuthStack,
   AppStack,
