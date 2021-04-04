@@ -59,9 +59,18 @@ const ProfileScreen = () => {
     setUserInfo(data);
   }
 
-  function handleInfo(text) {
-    AsyncStorage.setItem("UserInfo", text);
-    setData();
+  async function handleUserInfo(text, currentUser) {
+    const task = storage()
+      .ref(`UserProfile/${currentUser}/UserInfo.txt`)
+      .putString(text);
+
+    task.then(() => {
+      _SuccessHandler("Update User Info Success");
+      AsyncStorage.setItem("UserInfo", text);
+    });
+
+    const data = await AsyncStorage.getItem("UserInfo");
+    setUserInfo(data);
   }
 
   const uploadImage = async (source, curretUser) => {
@@ -222,7 +231,7 @@ const ProfileScreen = () => {
               autoCapitalize="none"
               autoCorrect={false}
               placeholder="Enter Your Information"
-              onChangeText={(text) => handleInfo(text)}
+              onChangeText={(text) => handleUserInfo(text, user.uid)}
             >
               {userInfo}
             </TextInput>
