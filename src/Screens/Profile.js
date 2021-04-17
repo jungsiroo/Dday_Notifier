@@ -29,7 +29,7 @@ import { launchImageLibrary } from "react-native-image-picker";
 import storage from "@react-native-firebase/storage";
 
 const ProfileScreen = () => {
-  let newName;
+  let newName, newInfo;
   const userIcon =
     "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png";
 
@@ -42,22 +42,24 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     readUserInfo(user.uid);
-    if (picURL == null) updateProfilePic(userIcon);
+    if (picURL == null) {
+      updateProfilePic(userIcon);
+      _NotiHandler("Profile Image", "You can pick your profile image");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function handleUserInfo(text, currentUser) {
+  function handleUserInfo(text, currentUser) {
     const task = storage()
       .ref(`UserProfile/${currentUser}/UserInfo.txt`)
       .putString(text);
 
     task.then(() => {
       _SuccessHandler("Update User Info Success");
-      AsyncStorage.setItem("UserInfo", text);
     });
 
-    const data = await AsyncStorage.getItem("UserInfo");
-    setUserInfo(data);
+    setUserInfo(text);
+    modalHandler();
   }
 
   function readUserInfo(user) {
@@ -109,17 +111,9 @@ const ProfileScreen = () => {
     const profileRef = storage().ref(`UserProfile/${curretUser}/profileImage`);
 
     try {
-      profileRef
-        .getDownloadURL()
-        .then(function (url) {
-          updateProfilePic(url);
-        })
-        .catch(function (error) {
-          _NotiHandler(
-            "Profile Picture",
-            "You can select your Profile Picture"
-          );
-        });
+      profileRef.getDownloadURL().then(function (url) {
+        updateProfilePic(url);
+      });
     } catch (err) {
       setPicURL(null);
     }
@@ -180,7 +174,14 @@ const ProfileScreen = () => {
 
           <View style={styles.header}>
             <TouchableOpacity onPress={() => modalHandler("username")}>
-              <Text style={styles.userNameStyle}>{userName} 🖊</Text>
+              {userName == null || userName == "" ? (
+                <TextInput
+                  style={styles.userNameStyle}
+                  placeholder="Enter Your Name 🖊"
+                ></TextInput>
+              ) : (
+                <Text style={styles.userNameStyle}>{userName} 🖊</Text>
+              )}
             </TouchableOpacity>
             <Modal
               style={styles.modalPopup}
@@ -231,14 +232,54 @@ const ProfileScreen = () => {
                 </TouchableOpacity>
               </View>
             </Modal>
-            {userInfo == null ? (
-              <TextInput
-                style={styles.descText}
-                placeholder="Enter Your Info"
-              ></TextInput>
-            ) : (
-              <Text style={styles.descText}>{userInfo}</Text>
-            )}
+            <TouchableOpacity style={styles.descText} onPress={modalHandler()}>
+              {userInfo == null ? (
+                <TextInput
+                  style={styles.descText}
+                  placeholder="Enter Your Info"
+                ></TextInput>
+              ) : (
+                <Text style={styles.descText}>{userInfo}</Text>
+              )}
+            </TouchableOpacity>
+
+            <Modal
+              style={styles.modalPopup}
+              isVisible={isUserInfoModalVisible}
+              backdropColor="#B4B3DB"
+              backdropOpacity={0.8}
+              animationIn="zoomInDown"
+              animationOut="zoomOutUp"
+              animationInTiming={600}
+              animationOutTiming={600}
+              backdropTransitionInTiming={600}
+              backdropTransitionOutTiming={600}
+            >
+              <View style={styles.infoCard}>
+                <View style={styles.infoInputView}>
+                  <TextInput
+                    style={styles.infoText}
+                    placeholder="Change User Info"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    placeholderTextColor="white"
+                    multiline={true}
+                    onChangeText={(text) => (text = newInfo)}
+                  />
+                </View>
+                <TouchableOpacity
+                  onPress={() => handleUserInfo(user.uid, newInfo)}
+                >
+                  <Text style={{ color: "white" }}>SAVE</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ marginTop: 15 }}
+                  onPress={() => modalHandler()}
+                >
+                  <Text style={{ color: "white" }}>CANCLE</Text>
+                </TouchableOpacity>
+              </View>
+            </Modal>
           </View>
         </View>
 
@@ -288,6 +329,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
   },
+  infoCard: {
+    height: 250,
+    width: "90%",
+    backgroundColor: "#487494",
+    borderRadius: 20,
+    padding: 10,
+    alignItems: "center",
+    alignContent: "center",
+  },
   modalPopup: {
     alignItems: "center",
     alignContent: "center",
@@ -320,6 +370,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
   },
+  infoText: {
+    height: 100,
+    color: "white",
+    textAlign: "center",
+  },
   descText: {
     color: "gray",
     alignItems: "center",
@@ -330,5 +385,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "white",
     paddingTop: 15,
+  },
+  infoInputView: {
+    width: "100%",
+    backgroundColor: "#373B44",
+    borderRadius: 25,
+    height: 150,
+    marginBottom: 20,
+    justifyContent: "center",
+    padding: 20,
   },
 });
