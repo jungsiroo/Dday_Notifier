@@ -55,9 +55,13 @@ const ProfileScreen = () => {
       .ref(`UserProfile/${currentUser}/UserInfo.txt`)
       .putString(text);
 
-    task.then(() => {
-      _SuccessHandler("Update User Info");
-    });
+    task
+      .then(() => {
+        _SuccessHandler("Update User Info");
+      })
+      .catch(function (err) {
+        alert(err);
+      });
 
     setUserInfo(text);
     modalHandler();

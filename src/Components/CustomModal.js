@@ -1,17 +1,11 @@
 import Modal from "react-native-modal";
-import React, { useEffect, useState } from "react";
+import * as React from "react";
 import {
   Text,
   View,
   StyleSheet,
   Image,
-  ScrollView,
-  StatusBar,
-  ImageBackground,
-  SafeAreaView,
-  Dimensions,
   TouchableOpacity,
-  PermissionsAndroid,
   Button,
   TextInput,
 } from "react-native";
