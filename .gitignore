@@ -58,5 +58,7 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
+__tests__/
+
 roadmap.jpg
 google-services.json
