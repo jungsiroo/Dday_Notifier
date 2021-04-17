@@ -55,15 +55,15 @@ const ProfileScreen = () => {
       .putString(text);
 
     task.then(() => {
-      _SuccessHandler("Update User Info Success");
+      _SuccessHandler("Update User Info");
     });
 
     setUserInfo(text);
     modalHandler();
   }
 
-  function readUserInfo(user) {
-    const stringRef = storage().ref(`UserProfile/${user}/UserInfo.txt`);
+  function readUserInfo(currentUser) {
+    const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo.txt`);
 
     stringRef
       .getDownloadURL()
@@ -81,7 +81,6 @@ const ProfileScreen = () => {
         setUserInfo(null);
       });
   }
-
   const uploadImage = async (source, curretUser) => {
     const { uri } = source;
     const filename = `UserProfile/${curretUser}/profileImage`;
@@ -269,11 +268,11 @@ const ProfileScreen = () => {
                     autoCorrect={false}
                     placeholderTextColor="white"
                     multiline={true}
-                    onChangeText={(text) => (text = newInfo)}
+                    onChangeText={(text) => (newInfo = text)}
                   />
                 </View>
                 <TouchableOpacity
-                  onPress={() => handleUserInfo(user.uid, newInfo)}
+                  onPress={() => handleUserInfo(newInfo, user.uid)}
                 >
                   <Text style={{ color: "white" }}>SAVE</Text>
                 </TouchableOpacity>
