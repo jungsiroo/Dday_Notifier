@@ -179,6 +179,7 @@ const ProfileScreen = () => {
                 <TextInput
                   style={styles.userNameStyle}
                   placeholder="Enter Your Name 🖊"
+                  editable={false}
                 ></TextInput>
               ) : (
                 <Text style={styles.userNameStyle}>{userName} 🖊</Text>
@@ -241,6 +242,7 @@ const ProfileScreen = () => {
                 <TextInput
                   style={styles.descText}
                   placeholder="Enter Your Info"
+                  editable={false}
                 ></TextInput>
               ) : (
                 <Text style={styles.descText}>{userInfo}</Text>
