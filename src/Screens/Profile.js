@@ -26,6 +26,7 @@ import {
 import { ProfileBack } from "../Components/Images";
 import { launchImageLibrary } from "react-native-image-picker";
 import storage from "@react-native-firebase/storage";
+import { CustomNameModal, CustomInfoModal } from "../Components/CustomModal";
 
 const ProfileScreen = () => {
   let newName, newInfo;
@@ -150,6 +151,21 @@ const ProfileScreen = () => {
     );
   }
 
+  function nameSaveHandler() {
+    user
+      .updateProfile({
+        displayName: newName,
+      })
+      .then(function () {
+        saveHandler(newName);
+        _SuccessHandler("Update");
+        modalHandler("username");
+      })
+      .catch(function (error) {
+        _ErrorHandler("Update", error);
+      });
+  }
+
   const saveHandler = (name) => {
     setUserName(name);
     newName = name;
@@ -183,55 +199,14 @@ const ProfileScreen = () => {
                 <Text style={styles.userNameStyle}>{userName} 🖊</Text>
               )}
             </TouchableOpacity>
-            <Modal
-              style={styles.modalPopup}
-              isVisible={isUserNameModalVisible}
-              backdropColor="#B4B3DB"
-              backdropOpacity={0.8}
-              animationIn="zoomInDown"
-              animationOut="zoomOutUp"
-              animationInTiming={600}
-              animationOutTiming={600}
-              backdropTransitionInTiming={600}
-              backdropTransitionOutTiming={600}
-            >
-              <View style={styles.nameCard}>
-                <View style={styles.inputView}>
-                  <TextInput
-                    style={styles.inputText}
-                    placeholder="Change UserName"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholderTextColor="white"
-                    onChangeText={(text) => (newName = text)}
-                  />
-                </View>
-                <TouchableOpacity
-                  onPress={() =>
-                    user
-                      .updateProfile({
-                        displayName: newName,
-                      })
-                      .then(function () {
-                        saveHandler(newName);
-                        _SuccessHandler("Update");
-                        modalHandler("username");
-                      })
-                      .catch(function (error) {
-                        _ErrorHandler("Update", error);
-                      })
-                  }
-                >
-                  <Text style={{ color: "white" }}>SAVE</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => modalHandler("username")}
-                  style={{ marginTop: 15 }}
-                >
-                  <Text style={{ color: "white" }}>CANCLE</Text>
-                </TouchableOpacity>
-              </View>
-            </Modal>
+
+            <CustomNameModal
+              modalType={isUserNameModalVisible}
+              modalVisible={() => modalHandler("username")}
+              onChangeText={(text) => (newName = text)}
+              onSaveName={() => nameSaveHandler()}
+            />
+
             <TouchableOpacity
               style={styles.descText}
               onPress={() => modalHandler()}
@@ -247,43 +222,12 @@ const ProfileScreen = () => {
               )}
             </TouchableOpacity>
 
-            <Modal
-              style={styles.modalPopup}
-              isVisible={isUserInfoModalVisible}
-              backdropColor="#B4B3DB"
-              backdropOpacity={0.8}
-              animationIn="zoomInDown"
-              animationOut="zoomOutUp"
-              animationInTiming={600}
-              animationOutTiming={600}
-              backdropTransitionInTiming={600}
-              backdropTransitionOutTiming={600}
-            >
-              <View style={styles.infoCard}>
-                <View style={styles.infoInputView}>
-                  <TextInput
-                    style={styles.infoText}
-                    placeholder="Change User Info"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholderTextColor="white"
-                    multiline={true}
-                    onChangeText={(text) => (newInfo = text)}
-                  />
-                </View>
-                <TouchableOpacity
-                  onPress={() => handleUserInfo(newInfo, user.uid)}
-                >
-                  <Text style={{ color: "white" }}>SAVE</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{ marginTop: 15 }}
-                  onPress={() => modalHandler()}
-                >
-                  <Text style={{ color: "white" }}>CANCLE</Text>
-                </TouchableOpacity>
-              </View>
-            </Modal>
+            <CustomInfoModal
+              modalType={isUserInfoModalVisible}
+              modalVisible={() => modalHandler()}
+              onChangeText={(text) => (newInfo = text)}
+              onSaveInfo={() => handleUserInfo(newInfo, user.uid)}
+            />
           </View>
         </View>
 
@@ -324,29 +268,6 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
   },
-  nameCard: {
-    height: 170,
-    width: "90%",
-    backgroundColor: "#487494",
-    borderRadius: 20,
-    padding: 10,
-    alignItems: "center",
-    alignContent: "center",
-  },
-  infoCard: {
-    height: 250,
-    width: "90%",
-    backgroundColor: "#487494",
-    borderRadius: 20,
-    padding: 10,
-    alignItems: "center",
-    alignContent: "center",
-  },
-  modalPopup: {
-    alignItems: "center",
-    alignContent: "center",
-    justifyContent: "center",
-  },
   profileImg: {
     width: 85,
     height: 85,
@@ -361,24 +282,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
   },
-  inputText: {
-    height: 50,
-    color: "white",
-  },
-  inputView: {
-    width: "100%",
-    backgroundColor: "#373B44",
-    borderRadius: 25,
-    height: 60,
-    marginBottom: 20,
-    justifyContent: "center",
-    padding: 20,
-  },
-  infoText: {
-    height: 100,
-    color: "white",
-    textAlign: "center",
-  },
   descText: {
     color: "gray",
     alignItems: "center",
@@ -389,14 +292,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "white",
     paddingTop: 15,
-  },
-  infoInputView: {
-    width: "100%",
-    backgroundColor: "#373B44",
-    borderRadius: 25,
-    height: 150,
-    marginBottom: 20,
-    justifyContent: "center",
-    padding: 20,
   },
 });
