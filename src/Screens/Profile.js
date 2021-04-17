@@ -24,7 +24,6 @@ import {
   windowHeight,
 } from "../Components/Common";
 import { ProfileBack } from "../Components/Images";
-import AsyncStorage from "@react-native-community/async-storage";
 import { launchImageLibrary } from "react-native-image-picker";
 import storage from "@react-native-firebase/storage";
 
@@ -37,11 +36,10 @@ const ProfileScreen = () => {
   const [isUserNameModalVisible, setUserNameModalVisible] = useState(false);
   const [isUserInfoModalVisible, setUserInfoModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState(readUserInfo(user.uid));
   const [picURL, setPicURL] = useState(getProfileImage(user.uid)); // set pic url (uri)
 
   useEffect(() => {
-    readUserInfo(user.uid);
     if (picURL == null) {
       updateProfilePic(userIcon);
       _NotiHandler("Profile Image", "You can pick your profile image");
@@ -64,6 +62,7 @@ const ProfileScreen = () => {
 
   function readUserInfo(user) {
     const stringRef = storage().ref(`UserProfile/${user}/UserInfo.txt`);
+    let UserInfo;
 
     stringRef
       .getDownloadURL()
@@ -71,8 +70,8 @@ const ProfileScreen = () => {
         let XMLHttp = new XMLHttpRequest();
         XMLHttp.onreadystatechange = function () {
           if (XMLHttp.readyState === 4 && XMLHttp.status === 200)
-            setUserInfo(XMLHttp.responseText);
-          else setUserInfo(null);
+            UserInfo = XMLHttp.responseText;
+          else UserInfo = null;
         };
         XMLHttp.open("GET", url, true); // true for asynchronous
         XMLHttp.send(null);
@@ -80,6 +79,8 @@ const ProfileScreen = () => {
       .catch(function (error) {
         setUserInfo(null);
       });
+
+    return UserInfo;
   }
 
   const uploadImage = async (source, curretUser) => {
