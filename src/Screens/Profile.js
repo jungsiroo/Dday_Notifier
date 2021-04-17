@@ -34,30 +34,17 @@ const ProfileScreen = () => {
     "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png";
 
   const { user, logout } = useContext(AuthContext);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isUserNameModalVisible, setUserNameModalVisible] = useState(false);
+  const [isUserInfoModalVisible, setUserInfoModalVisible] = useState(false);
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [picURL, setPicURL] = useState(getProfileImage(user.uid)); // set pic url (uri)
 
   useEffect(() => {
-    AsyncStorage.getItem("hasUserInfo").then((value) => {
-      if (value == null) {
-        AsyncStorage.setItem("hasUserInfo", "false");
-        AsyncStorage.setItem("UserInfo", "");
-      } else {
-        AsyncStorage.setItem("hasUserInfo", "true");
-        setData();
-      }
-    });
-
+    readUserInfo(user.uid);
     if (picURL == null) updateProfilePic(userIcon);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  async function setData() {
-    const data = await AsyncStorage.getItem("UserInfo");
-    setUserInfo(data);
-  }
 
   async function handleUserInfo(text, currentUser) {
     const task = storage()
@@ -73,9 +60,29 @@ const ProfileScreen = () => {
     setUserInfo(data);
   }
 
+  function readUserInfo(user) {
+    const stringRef = storage().ref(`UserProfile/${user}/UserInfo.txt`);
+
+    stringRef
+      .getDownloadURL()
+      .then(function (url) {
+        let XMLHttp = new XMLHttpRequest();
+        XMLHttp.onreadystatechange = function () {
+          if (XMLHttp.readyState === 4 && XMLHttp.status === 200)
+            setUserInfo(XMLHttp.responseText);
+          else setUserInfo(null);
+        };
+        XMLHttp.open("GET", url, true); // true for asynchronous
+        XMLHttp.send(null);
+      })
+      .catch(function (error) {
+        setUserInfo(null);
+      });
+  }
+
   const uploadImage = async (source, curretUser) => {
     const { uri } = source;
-    const filename = `UserProfileImage/${curretUser}/profileImage`;
+    const filename = `UserProfile/${curretUser}/profileImage`;
 
     const task = storage().ref(filename).putFile(uri);
 
@@ -99,9 +106,7 @@ const ProfileScreen = () => {
   }
 
   function getProfileImage(curretUser) {
-    const profileRef = storage().ref(
-      `UserProfileImage/${curretUser}/profileImage`
-    );
+    const profileRef = storage().ref(`UserProfile/${curretUser}/profileImage`);
 
     try {
       profileRef
@@ -152,14 +157,15 @@ const ProfileScreen = () => {
     );
   }
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
   const saveHandler = (name) => {
     setUserName(name);
     newName = name;
   };
+
+  function modalHandler(data = "") {
+    if (data === "username") setUserNameModalVisible(!isUserNameModalVisible);
+    else setUserInfoModalVisible(!isUserInfoModalVisible);
+  }
 
   return (
     <SafeAreaView style={styles.savContainer}>
@@ -173,12 +179,12 @@ const ProfileScreen = () => {
           </View>
 
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => toggleModal()}>
+            <TouchableOpacity onPress={() => modalHandler("username")}>
               <Text style={styles.userNameStyle}>{userName} 🖊</Text>
             </TouchableOpacity>
             <Modal
               style={styles.modalPopup}
-              isVisible={isModalVisible}
+              isVisible={isUserNameModalVisible}
               backdropColor="#B4B3DB"
               backdropOpacity={0.8}
               animationIn="zoomInDown"
@@ -208,7 +214,7 @@ const ProfileScreen = () => {
                       .then(function () {
                         saveHandler(newName);
                         _SuccessHandler("Update");
-                        toggleModal();
+                        modalHandler("username");
                       })
                       .catch(function (error) {
                         _ErrorHandler("Update", error);
@@ -218,23 +224,21 @@ const ProfileScreen = () => {
                   <Text style={{ color: "white" }}>SAVE</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={toggleModal}
+                  onPress={() => modalHandler("username")}
                   style={{ marginTop: 15 }}
                 >
                   <Text style={{ color: "white" }}>CANCLE</Text>
                 </TouchableOpacity>
               </View>
             </Modal>
-            <TextInput
-              style={styles.descText}
-              multiline={true}
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="Enter Your Information"
-              onChangeText={(text) => handleUserInfo(text, user.uid)}
-            >
-              {userInfo}
-            </TextInput>
+            {userInfo == null ? (
+              <TextInput
+                style={styles.descText}
+                placeholder="Enter Your Info"
+              ></TextInput>
+            ) : (
+              <Text style={styles.descText}>{userInfo}</Text>
+            )}
           </View>
         </View>
 
@@ -268,7 +272,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   card: {
-    height: 120,
+    height: 150,
     width: "85%",
     backgroundColor: "white",
     borderRadius: 15,
