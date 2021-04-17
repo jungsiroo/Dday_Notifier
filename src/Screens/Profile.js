@@ -232,7 +232,10 @@ const ProfileScreen = () => {
                 </TouchableOpacity>
               </View>
             </Modal>
-            <TouchableOpacity style={styles.descText} onPress={modalHandler()}>
+            <TouchableOpacity
+              style={styles.descText}
+              onPress={() => modalHandler()}
+            >
               {userInfo == null ? (
                 <TextInput
                   style={styles.descText}
