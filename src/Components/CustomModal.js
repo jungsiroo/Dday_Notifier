@@ -36,7 +36,7 @@ export const CustomNameModal = ({
             placeholder="Change UserName"
             autoCapitalize="none"
             autoCorrect={false}
-            placeholderTextColor="white"
+            placeholderTextColor="#a8a8a8"
             onChangeText={onChangeText}
           />
         </View>
@@ -77,7 +77,7 @@ export const CustomInfoModal = ({
             placeholder="Change User Info"
             autoCapitalize="none"
             autoCorrect={false}
-            placeholderTextColor="white"
+            placeholderTextColor="#a8a8a8"
             multiline={true}
             onChangeText={onChangeText}
           />

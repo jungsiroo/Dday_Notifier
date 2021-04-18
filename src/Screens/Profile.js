@@ -16,7 +16,6 @@ import {
   _SuccessHandler,
   _NotiHandler,
 } from "../Components/index";
-import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
 import {
   statusbarheight,
@@ -51,6 +50,8 @@ const ProfileScreen = () => {
   }, []);
 
   function handleUserInfo(text, currentUser) {
+    alert(text);
+
     const task = storage()
       .ref(`UserProfile/${currentUser}/UserInfo.txt`)
       .putString(text);
