@@ -53,7 +53,7 @@ const ProfileScreen = () => {
     alert(text);
 
     const task = storage()
-      .ref(`UserProfile/${currentUser}/UserInfo.txt`)
+      .ref(`UserProfile/${currentUser}/UserInfo`)
       .putString(text);
 
     task
@@ -69,7 +69,7 @@ const ProfileScreen = () => {
   }
 
   function readUserInfo(currentUser) {
-    const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo.txt`);
+    const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo`);
 
     stringRef
       .getDownloadURL()
