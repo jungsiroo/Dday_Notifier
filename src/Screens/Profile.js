@@ -54,7 +54,7 @@ const ProfileScreen = () => {
 
     const task = storage()
       .ref(`UserProfile/${currentUser}/UserInfo`)
-      .putString(text);
+      .putString(text, "raw");
 
     task
       .then(() => {
