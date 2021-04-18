@@ -50,18 +50,20 @@ const ProfileScreen = () => {
   }, []);
 
   function handleUserInfo(text, currentUser) {
-    alert(text);
+    const Blob = require("node-fetch");
+    const obj = { text };
+    const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
 
     const task = storage()
-      .ref(`UserProfile/${currentUser}/UserInfo`)
-      .putString(text, "raw");
+      .ref(`UserProfile/${currentUser}/UserInfo.json`)
+      .put(blob);
 
     task
       .then(() => {
         _SuccessHandler("Update User Info");
       })
       .catch(function (err) {
-        alert(err);
+        alert(err.code);
       });
 
     setUserInfo(text);
@@ -69,7 +71,7 @@ const ProfileScreen = () => {
   }
 
   function readUserInfo(currentUser) {
-    const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo`);
+    const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo.json`);
 
     stringRef
       .getDownloadURL()
