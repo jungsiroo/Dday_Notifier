@@ -16,7 +16,6 @@ import {
   _SuccessHandler,
   _NotiHandler,
   _convertToAscii,
-  _isEnglish,
   _exportFromAscii,
 } from "../Components/index";
 import Toast from "react-native-toast-message";
@@ -53,9 +52,7 @@ const ProfileScreen = () => {
   }, []);
 
   function handleUserInfo(text, currentUser) {
-    let passedInfo = text;
-
-    if (!_isEnglish(text)) passedInfo = _convertToAscii(text);
+    let passedInfo = _convertToAscii(text);
 
     const task = storage()
       .ref(`UserProfile/${currentUser}/UserInfo`)
@@ -69,7 +66,7 @@ const ProfileScreen = () => {
         alert(err.code);
       });
 
-    setUserInfo(_exportFromAscii(String.raw`${passedInfo}`));
+    setUserInfo(text);
     modalHandler();
   }
 
@@ -82,12 +79,7 @@ const ProfileScreen = () => {
         let XMLHttp = new XMLHttpRequest();
         XMLHttp.onreadystatechange = function () {
           if (XMLHttp.readyState === 4 && XMLHttp.status === 200) {
-            if (_isEnglish(XMLHttp.responseText))
-              setUserInfo(XMLHttp.responseText);
-            else
-              setUserInfo(
-                _exportFromAscii(String.raw`${XMLHttp.responseText}`)
-              );
+            setUserInfo(_exportFromAscii(String.raw`${XMLHttp.responseText}`));
           } else setUserInfo(null);
         };
         XMLHttp.open("GET", url, true); // true for asynchronous

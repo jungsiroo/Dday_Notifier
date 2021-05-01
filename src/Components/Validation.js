@@ -26,16 +26,7 @@ export const _isPasswordLong = (password) => {
   return password.length >= 6;
 };
 
-export const _isEnglish = (text) => {
-  let pattern_eng = /[a-zA-Z]/;
-
-  if (pattern_eng.test(text)) return true;
-  else return false;
-};
-
 export const _convertToAscii = (text) => {
-  if (_isEnglish(text)) return text;
-
   let unicode = "";
   for (let i = 0, l = text.length; i < l; i++) {
     unicode += "\\" + text[i].charCodeAt(0).toString(16);
@@ -44,8 +35,6 @@ export const _convertToAscii = (text) => {
 };
 
 export const _exportFromAscii = (text) => {
-  if (_isEnglish(text)) return text;
-
   let result = "";
 
   let uniArr = text.split("\\");

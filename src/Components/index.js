@@ -5,7 +5,6 @@ import {
   _checkEmail,
   _isPasswordLong,
   _convertToAscii,
-  _isEnglish,
   _exportFromAscii,
 } from "./Validation";
 import {
@@ -30,6 +29,5 @@ export {
   AuthStack,
   AppStack,
   _convertToAscii,
-  _isEnglish,
   _exportFromAscii,
 };
