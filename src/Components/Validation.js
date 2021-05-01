@@ -44,6 +44,8 @@ export const _convertToAscii = (text) => {
 };
 
 export const _exportFromAscii = (text) => {
+  if (_isEnglish(text)) return text;
+
   let result = "";
 
   let uniArr = text.split("\\");

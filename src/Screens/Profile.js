@@ -69,7 +69,7 @@ const ProfileScreen = () => {
         alert(err.code);
       });
 
-    setUserInfo(passedInfo);
+    setUserInfo(_exportFromAscii(String.raw`${passedInfo}`));
     modalHandler();
   }
 
