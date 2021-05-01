@@ -4,6 +4,9 @@ import {
   _arePasswordandconfirmPwSame,
   _checkEmail,
   _isPasswordLong,
+  _convertToAscii,
+  _isEnglish,
+  _exportFromAscii,
 } from "./Validation";
 import {
   _ErrorHandler,
@@ -26,4 +29,7 @@ export {
   _InfoHandler,
   AuthStack,
   AppStack,
+  _convertToAscii,
+  _isEnglish,
+  _exportFromAscii,
 };

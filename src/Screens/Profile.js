@@ -15,6 +15,9 @@ import {
   _ErrorHandler,
   _SuccessHandler,
   _NotiHandler,
+  _convertToAscii,
+  _isEnglish,
+  _exportFromAscii,
 } from "../Components/index";
 import Toast from "react-native-toast-message";
 import {
@@ -50,13 +53,13 @@ const ProfileScreen = () => {
   }, []);
 
   function handleUserInfo(text, currentUser) {
-    const Blob = require("node-fetch");
-    const obj = { text };
-    const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
+    let passedInfo = text;
+
+    if (!_isEnglish(text)) passedInfo = _convertToAscii(text);
 
     const task = storage()
-      .ref(`UserProfile/${currentUser}/UserInfo.json`)
-      .put(blob);
+      .ref(`UserProfile/${currentUser}/UserInfo`)
+      .putString(passedInfo);
 
     task
       .then(() => {
@@ -66,21 +69,26 @@ const ProfileScreen = () => {
         alert(err.code);
       });
 
-    setUserInfo(text);
+    setUserInfo(passedInfo);
     modalHandler();
   }
 
   function readUserInfo(currentUser) {
-    const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo.json`);
+    const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo`);
 
     stringRef
       .getDownloadURL()
       .then(function (url) {
         let XMLHttp = new XMLHttpRequest();
         XMLHttp.onreadystatechange = function () {
-          if (XMLHttp.readyState === 4 && XMLHttp.status === 200)
-            setUserInfo(XMLHttp.responseText);
-          else setUserInfo(null);
+          if (XMLHttp.readyState === 4 && XMLHttp.status === 200) {
+            if (_isEnglish(XMLHttp.responseText))
+              setUserInfo(XMLHttp.responseText);
+            else
+              setUserInfo(
+                _exportFromAscii(String.raw`${XMLHttp.responseText}`)
+              );
+          } else setUserInfo(null);
         };
         XMLHttp.open("GET", url, true); // true for asynchronous
         XMLHttp.send(null);
