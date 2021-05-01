@@ -1,5 +1,5 @@
 import Modal from "react-native-modal";
-import * as React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -10,16 +10,40 @@ import {
   TextInput,
 } from "react-native";
 
-export const CustomNameModal = ({
-  modalType,
-  modalVisible,
-  onChangeText,
-  onSaveName,
-}) => {
+export const ModalVisibleHook = () => {
+  const [isUserNameModalVisible, setUserNameModalVisible] = useState(false);
+  const [isUserInfoModalVisible, setUserInfoModalVisible] = useState(false);
+
+  return {
+    isUserInfoModalVisible,
+    setUserInfoModalVisible,
+    isUserNameModalVisible,
+    setUserNameModalVisible,
+  };
+};
+
+export const UserModalHandler = (data = "") => {
+  const {
+    isUserInfoModalVisible,
+    setUserInfoModalVisible,
+    isUserNameModalVisible,
+    setUserNameModalVisible,
+  } = ModalVisibleHook();
+
+  if (data === "username") setUserNameModalVisible(!isUserNameModalVisible);
+  else setUserInfoModalVisible(!isUserInfoModalVisible);
+};
+
+export const CustomNameModal = ({ onChangeText, onSaveName }) => {
+  const {
+    isUserNameModalVisible,
+    setUserNameModalVisible,
+  } = ModalVisibleHook();
+
   return (
     <Modal
       style={styles.modalPopup}
-      isVisible={modalType}
+      isVisible={isUserNameModalVisible}
       backdropColor="#B4B3DB"
       backdropOpacity={0.8}
       animationIn="zoomInDown"
@@ -43,7 +67,10 @@ export const CustomNameModal = ({
         <TouchableOpacity onPress={onSaveName}>
           <Text style={{ color: "white" }}>SAVE</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={modalVisible} style={{ marginTop: 15 }}>
+        <TouchableOpacity
+          onPress={() => UserModalHandler("username")}
+          style={{ marginTop: 15 }}
+        >
           <Text style={{ color: "white" }}>CANCLE</Text>
         </TouchableOpacity>
       </View>
@@ -51,16 +78,16 @@ export const CustomNameModal = ({
   );
 };
 
-export const CustomInfoModal = ({
-  modalType,
-  modalVisible,
-  onChangeText,
-  onSaveInfo,
-}) => {
+export const CustomInfoModal = ({ onChangeText, onSaveInfo }) => {
+  const {
+    isUserInfoModalVisible,
+    setUserInfoModalVisible,
+  } = ModalVisibleHook();
+
   return (
     <Modal
       style={styles.modalPopup}
-      isVisible={modalType}
+      isVisible={isUserInfoModalVisible}
       backdropColor="#B4B3DB"
       backdropOpacity={0.8}
       animationIn="zoomInDown"
@@ -85,7 +112,10 @@ export const CustomInfoModal = ({
         <TouchableOpacity onPress={onSaveInfo}>
           <Text style={{ color: "white" }}>SAVE</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ marginTop: 15 }} onPress={modalVisible}>
+        <TouchableOpacity
+          style={{ marginTop: 15 }}
+          onPress={() => UserModalHandler()}
+        >
           <Text style={{ color: "white" }}>CANCLE</Text>
         </TouchableOpacity>
       </View>
