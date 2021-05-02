@@ -10,7 +10,7 @@ import {
 import storage from "@react-native-firebase/storage";
 import { UserModalHandler } from "./CustomModal";
 
-export const UserRelateHook = (currentUser) => {
+export function UserRelateHook(currentUser) {
   const { user } = useContext(AuthContext);
 
   const [userName, setUserName] = useState(currentUser);
@@ -18,9 +18,9 @@ export const UserRelateHook = (currentUser) => {
   const [picURL, setPicURL] = useState(getProfileImage(user.uid));
 
   return { userName, setUserName, userInfo, setUserInfo, picURL, setPicURL };
-};
+}
 
-export const handleUserInfo = (text, currentUser) => {
+export function handleUserInfo(text, currentUser) {
   let passedInfo = _convertToAscii(text);
   const { setUserInfo } = UserRelateHook(currentUser);
 
@@ -38,9 +38,9 @@ export const handleUserInfo = (text, currentUser) => {
 
   setUserInfo(text);
   UserModalHandler();
-};
+}
 
-export const readUserInfo = (currentUser) => {
+export function readUserInfo(currentUser) {
   const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo`);
   const { userInfo, setUserInfo } = UserRelateHook(currentUser);
 
@@ -59,9 +59,9 @@ export const readUserInfo = (currentUser) => {
     .catch(function (error) {
       setUserInfo(null);
     });
-};
+}
 
-function getProfileImage(currentUser) {
+export function getProfileImage(currentUser) {
   const profileRef = storage().ref(`UserProfile/${currentUser}/profileImage`);
   const { setPicURL } = UserRelateHook(currentUser);
 
@@ -74,7 +74,7 @@ function getProfileImage(currentUser) {
   }
 }
 
-export const UploadImage = async (source, currentUser) => {
+export async function UploadImage(source, currentUser) {
   const { uri } = source;
   const filename = `UserProfile/${currentUser}/profileImage`;
   const { user } = useContext(AuthContext);
@@ -85,9 +85,9 @@ export const UploadImage = async (source, currentUser) => {
     getProfileImage(user.uid);
     _SuccessHandler("Update Profile Image");
   });
-};
+}
 
-export const UpdateProfilePic = (source) => {
+export function UpdateProfilePic(source) {
   const { user } = useContext(AuthContext);
   const { picURL, setPicURL } = UserRelateHook(user.displayName);
 
@@ -101,9 +101,9 @@ export const UpdateProfilePic = (source) => {
     .catch(function (error) {
       _ErrorHandler(error, "Error");
     });
-};
+}
 
-export const NameSaveHandler = (newName) => {
+export function NameSaveHandler(newName) {
   const { user } = useContext(AuthContext);
   const { setUserName } = UserRelateHook(user.displayName);
 
@@ -119,4 +119,4 @@ export const NameSaveHandler = (newName) => {
     .catch(function (error) {
       _ErrorHandler("Update", error);
     });
-};
+}

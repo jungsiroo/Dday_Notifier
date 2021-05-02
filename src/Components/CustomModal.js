@@ -20,25 +20,14 @@ export function ModalVisibleHook() {
   };
 }
 
-export function UserModalHandler(data = "") {
-  const {
-    isUserInfoModalVisible,
-    setUserInfoModalVisible,
-    isUserNameModalVisible,
-    setUserNameModalVisible,
-  } = ModalVisibleHook();
-
-  if (data === "username") setUserNameModalVisible(!isUserNameModalVisible);
-  else setUserInfoModalVisible(!isUserInfoModalVisible);
-}
-
-export const CustomNameModal = ({ onChangeText, onSaveName }) => {
-  const { isUserNameModalVisible } = ModalVisibleHook();
-
+export const CustomModal = (
+  { modalType, modalVisible, onChangeText, onSaveFunc },
+  type
+) => {
   return (
     <Modal
       style={styles.modalPopup}
-      isVisible={isUserNameModalVisible}
+      isVisible={modalType}
       backdropColor="#B4B3DB"
       backdropOpacity={0.8}
       animationIn="zoomInDown"
@@ -48,69 +37,46 @@ export const CustomNameModal = ({ onChangeText, onSaveName }) => {
       backdropTransitionInTiming={600}
       backdropTransitionOutTiming={600}
     >
-      <View style={styles.nameCard}>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.inputText}
-            placeholder="Change UserName"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor="#a8a8a8"
-            onChangeText={onChangeText}
-          />
+      {type == "NAME" ? (
+        <View style={styles.nameCard}>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.inputText}
+              placeholder="Change UserName"
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholderTextColor="#a8a8a8"
+              onChangeText={onChangeText}
+            />
+          </View>
+          <TouchableOpacity onPress={onSaveFunc}>
+            <Text style={{ color: "white" }}>SAVE</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={modalVisible} style={{ marginTop: 15 }}>
+            <Text style={{ color: "white" }}>CANCLE</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={onSaveName}>
-          <Text style={{ color: "white" }}>SAVE</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => UserModalHandler("username")}
-          style={{ marginTop: 15 }}
-        >
-          <Text style={{ color: "white" }}>CANCLE</Text>
-        </TouchableOpacity>
-      </View>
-    </Modal>
-  );
-};
-
-export const CustomInfoModal = ({ onChangeText, onSaveInfo }) => {
-  const { isUserInfoModalVisible } = ModalVisibleHook();
-
-  return (
-    <Modal
-      style={styles.modalPopup}
-      isVisible={isUserInfoModalVisible}
-      backdropColor="#B4B3DB"
-      backdropOpacity={0.8}
-      animationIn="zoomInDown"
-      animationOut="zoomOutUp"
-      animationInTiming={600}
-      animationOutTiming={600}
-      backdropTransitionInTiming={600}
-      backdropTransitionOutTiming={600}
-    >
-      <View style={styles.infoCard}>
-        <View style={styles.infoInputView}>
-          <TextInput
-            style={styles.infoText}
-            placeholder="Change User Info"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor="#a8a8a8"
-            multiline={true}
-            onChangeText={onChangeText}
-          />
+      ) : (
+        <View style={styles.infoCard}>
+          <View style={styles.infoInputView}>
+            <TextInput
+              style={styles.infoText}
+              placeholder="Change User Info"
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholderTextColor="#a8a8a8"
+              multiline={true}
+              onChangeText={onChangeText}
+            />
+          </View>
+          <TouchableOpacity onPress={onSaveFunc}>
+            <Text style={{ color: "white" }}>SAVE</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ marginTop: 15 }} onPress={modalVisible}>
+            <Text style={{ color: "white" }}>CANCLE</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={onSaveInfo}>
-          <Text style={{ color: "white" }}>SAVE</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ marginTop: 15 }}
-          onPress={() => UserModalHandler()}
-        >
-          <Text style={{ color: "white" }}>CANCLE</Text>
-        </TouchableOpacity>
-      </View>
+      )}
     </Modal>
   );
 };

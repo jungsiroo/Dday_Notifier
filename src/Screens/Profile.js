@@ -23,31 +23,29 @@ import {
   statusbarheight,
   windowWidth,
   windowHeight,
+  userIcon,
 } from "../Components/Common";
 import { ProfileBack } from "../Components/Images";
 import { launchImageLibrary } from "react-native-image-picker";
 import storage from "@react-native-firebase/storage";
-import {
-  CustomNameModal,
-  CustomInfoModal,
-  ModalVisibleHook,
-} from "../Components/CustomModal";
+import { CustomModal, ModalVisibleHook } from "../Components/CustomModal";
 
 const ProfileScreen = () => {
-  let newName, newInfo;
-  const userIcon =
-    "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png";
-
-  const { user, logout } = useContext(AuthContext);
   const {
     isUserInfoModalVisible,
     setUserInfoModalVisible,
     isUserNameModalVisible,
     setUserNameModalVisible,
   } = ModalVisibleHook();
+
+  const NAMEMODAL = "NAME";
+  const INFOMODAL = "INFO";
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [picURL, setPicURL] = useState(getProfileImage(user.uid)); // set pic url (uri)
+  const { user, logout } = useContext(AuthContext);
+
+  let newName, newInfo;
 
   useEffect(() => {
     readUserInfo(user.uid);
@@ -215,10 +213,12 @@ const ProfileScreen = () => {
               )}
             </TouchableOpacity>
 
-            <CustomNameModal
+            <CustomModal
+              modalType={isUserNameModalVisible}
               modalVisible={() => modalHandler("username")}
               onChangeText={(text) => (newName = text)}
               onSaveName={() => nameSaveHandler()}
+              type={NAMEMODAL}
             />
 
             <TouchableOpacity
@@ -236,10 +236,12 @@ const ProfileScreen = () => {
               )}
             </TouchableOpacity>
 
-            <CustomInfoModal
+            <CustomModal
+              modalType={isUserInfoModalVisible}
               modalVisible={() => modalHandler()}
               onChangeText={(text) => (newInfo = text)}
               onSaveInfo={() => handleUserInfo(newInfo, user.uid)}
+              type={INFOMODAL}
             />
           </View>
         </View>
