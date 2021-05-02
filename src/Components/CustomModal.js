@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "react-native";
 
-export const ModalVisibleHook = () => {
+export function ModalVisibleHook() {
   const [isUserNameModalVisible, setUserNameModalVisible] = useState(false);
   const [isUserInfoModalVisible, setUserInfoModalVisible] = useState(false);
 
@@ -18,9 +18,9 @@ export const ModalVisibleHook = () => {
     isUserNameModalVisible,
     setUserNameModalVisible,
   };
-};
+}
 
-export const UserModalHandler = (data = "") => {
+export function UserModalHandler(data = "") {
   const {
     isUserInfoModalVisible,
     setUserInfoModalVisible,
@@ -30,7 +30,7 @@ export const UserModalHandler = (data = "") => {
 
   if (data === "username") setUserNameModalVisible(!isUserNameModalVisible);
   else setUserInfoModalVisible(!isUserInfoModalVisible);
-};
+}
 
 export const CustomNameModal = ({ onChangeText, onSaveName }) => {
   const { isUserNameModalVisible } = ModalVisibleHook();
