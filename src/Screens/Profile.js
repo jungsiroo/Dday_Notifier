@@ -217,7 +217,7 @@ const ProfileScreen = () => {
               modalType={isUserNameModalVisible}
               modalVisible={() => modalHandler("username")}
               onChangeText={(text) => (newName = text)}
-              onSaveName={() => nameSaveHandler()}
+              onSaveFunc={() => nameSaveHandler()}
               type={NAMEMODAL}
             />
 
@@ -240,7 +240,7 @@ const ProfileScreen = () => {
               modalType={isUserInfoModalVisible}
               modalVisible={() => modalHandler()}
               onChangeText={(text) => (newInfo = text)}
-              onSaveInfo={() => handleUserInfo(newInfo, user.uid)}
+              onSaveFunc={() => handleUserInfo(newInfo, user.uid)}
               type={INFOMODAL}
             />
           </View>
