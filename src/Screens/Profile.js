@@ -38,8 +38,6 @@ const ProfileScreen = () => {
     setUserNameModalVisible,
   } = ModalVisibleHook();
 
-  const NAMEMODAL = "NAME";
-  const INFOMODAL = "INFO";
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [picURL, setPicURL] = useState(getProfileImage(user.uid)); // set pic url (uri)
@@ -218,7 +216,7 @@ const ProfileScreen = () => {
               modalVisible={() => modalHandler("username")}
               onChangeText={(text) => (newName = text)}
               onSaveFunc={() => nameSaveHandler()}
-              type={NAMEMODAL}
+              type="NAME"
             />
 
             <TouchableOpacity
@@ -241,7 +239,7 @@ const ProfileScreen = () => {
               modalVisible={() => modalHandler()}
               onChangeText={(text) => (newInfo = text)}
               onSaveFunc={() => handleUserInfo(newInfo, user.uid)}
-              type={INFOMODAL}
+              type="INFO"
             />
           </View>
         </View>
