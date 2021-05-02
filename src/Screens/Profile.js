@@ -17,7 +17,6 @@ import {
   _NotiHandler,
   _convertToAscii,
   _exportFromAscii,
-  userIcon,
 } from "../Components/index";
 import Toast from "react-native-toast-message";
 import {
@@ -29,8 +28,11 @@ import { ProfileBack } from "../Components/Images";
 import { launchImageLibrary } from "react-native-image-picker";
 import storage from "@react-native-firebase/storage";
 import { CustomModal, ModalVisibleHook } from "../Components/CustomModal";
+import { UserRelateHook, handleUserInfo } from "../Components/FirebaseUser";
 
 const ProfileScreen = () => {
+  const userIcon =
+    "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png";
   let newName, newInfo;
 
   const { user, logout } = useContext(AuthContext);
@@ -40,38 +42,43 @@ const ProfileScreen = () => {
     isUserNameModalVisible,
     setUserNameModalVisible,
   } = ModalVisibleHook();
-  const [userName, setUserName] = useState(user.displayName);
-  const [userInfo, setUserInfo] = useState();
-  const [picURL, setPicURL] = useState(getProfileImage(user.uid)); // set pic url (uri)
+  const {
+    userName,
+    setUserName,
+    userInfo,
+    setUserInfo,
+    picURL,
+    setPicURL,
+  } = UserRelateHook();
 
   useEffect(() => {
     readUserInfo(user.uid);
 
     if (picURL == null) {
-      updateProfilePic({ userIcon });
+      updateProfilePic(userIcon);
       _NotiHandler("Profile Image", "You can pick your profile image");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleUserInfo(text, currentUser) {
-    let passedInfo = _convertToAscii(text);
+  // function handleUserInfo(text, currentUser) {
+  //   let passedInfo = _convertToAscii(text);
 
-    const task = storage()
-      .ref(`UserProfile/${currentUser}/UserInfo`)
-      .putString(passedInfo);
+  //   const task = storage()
+  //     .ref(`UserProfile/${currentUser}/UserInfo`)
+  //     .putString(passedInfo);
 
-    task
-      .then(() => {
-        _SuccessHandler("Update User Info");
-      })
-      .catch(function (err) {
-        alert(err.code);
-      });
+  //   task
+  //     .then(() => {
+  //       _SuccessHandler("Update User Info");
+  //     })
+  //     .catch(function (err) {
+  //       alert(err.code);
+  //     });
 
-    setUserInfo(text);
-    modalHandler();
-  }
+  //   setUserInfo(text);
+  //   modalHandler();
+  // }
 
   function readUserInfo(currentUser) {
     const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo`);
@@ -148,7 +155,7 @@ const ProfileScreen = () => {
                 "Profile Image Select",
                 "You Canceled pick a image"
               );
-              updateProfilePic({ userIcon });
+              updateProfilePic(userIcon);
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
@@ -236,7 +243,9 @@ const ProfileScreen = () => {
               modalType={isUserInfoModalVisible}
               modalVisible={() => modalHandler()}
               onChangeText={(text) => (newInfo = text)}
-              onSaveFunc={() => handleUserInfo(newInfo, user.uid)}
+              onSaveFunc={() =>
+                handleUserInfo(newInfo, user.uid, setUserInfo, modalHandler)
+              }
             />
           </View>
         </View>

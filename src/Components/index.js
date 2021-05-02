@@ -15,7 +15,7 @@ import {
 } from "./ToastMsg";
 import AuthStack from "./AuthStack";
 import AppStack from "./AppStack";
-import { statusbarheight, windowWidth, windowHeight, userIcon } from "./Common";
+import { statusbarheight, windowWidth, windowHeight } from "./Common";
 import {
   CustomNameModal,
   CustomInfoModal,
@@ -50,7 +50,6 @@ export {
   statusbarheight,
   windowWidth,
   windowHeight,
-  userIcon,
   CustomNameModal,
   CustomInfoModal,
   UserModalHandler,
