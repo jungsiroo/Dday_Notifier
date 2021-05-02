@@ -17,6 +17,7 @@ import {
   _NotiHandler,
   _convertToAscii,
   _exportFromAscii,
+  userIcon,
 } from "../Components/index";
 import Toast from "react-native-toast-message";
 import {
@@ -31,8 +32,6 @@ import { CustomModal, ModalVisibleHook } from "../Components/CustomModal";
 
 const ProfileScreen = () => {
   let newName, newInfo;
-  const userIcon =
-    "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png";
 
   const { user, logout } = useContext(AuthContext);
   const {
@@ -49,7 +48,7 @@ const ProfileScreen = () => {
     readUserInfo(user.uid);
 
     if (picURL == null) {
-      updateProfilePic(userIcon);
+      updateProfilePic({ userIcon });
       _NotiHandler("Profile Image", "You can pick your profile image");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,14 +141,14 @@ const ProfileScreen = () => {
         if (response.didCancel) {
           user
             .updateProfile({
-              photoURL: userIcon,
+              photoURL: { userIcon },
             })
             .then(function () {
               _ErrorHandler(
                 "Profile Image Select",
                 "You Canceled pick a image"
               );
-              updateProfilePic(userIcon);
+              updateProfilePic({ userIcon });
             })
             .catch(function (error) {
               _ErrorHandler(error, "Error");
