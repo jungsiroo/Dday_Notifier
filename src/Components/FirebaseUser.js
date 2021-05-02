@@ -10,7 +10,7 @@ import {
 import storage from "@react-native-firebase/storage";
 import { UserModalHandler } from "./CustomModal";
 
-export const UserRelateHook = (currentUser = null) => {
+export const UserRelateHook = (currentUser) => {
   const { user } = useContext(AuthContext);
 
   const [userName, setUserName] = useState(currentUser);
@@ -105,7 +105,7 @@ export const UpdateProfilePic = (source) => {
 
 export const NameSaveHandler = (newName) => {
   const { user } = useContext(AuthContext);
-  const { setUserName } = UserRelateHook();
+  const { setUserName } = UserRelateHook(user.displayName);
 
   user
     .updateProfile({

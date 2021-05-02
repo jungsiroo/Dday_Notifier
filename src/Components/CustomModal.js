@@ -1,12 +1,10 @@
 import Modal from "react-native-modal";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
-  Button,
   TextInput,
 } from "react-native";
 
@@ -35,10 +33,7 @@ export const UserModalHandler = (data = "") => {
 };
 
 export const CustomNameModal = ({ onChangeText, onSaveName }) => {
-  const {
-    isUserNameModalVisible,
-    setUserNameModalVisible,
-  } = ModalVisibleHook();
+  const { isUserNameModalVisible } = ModalVisibleHook();
 
   return (
     <Modal
@@ -79,10 +74,7 @@ export const CustomNameModal = ({ onChangeText, onSaveName }) => {
 };
 
 export const CustomInfoModal = ({ onChangeText, onSaveInfo }) => {
-  const {
-    isUserInfoModalVisible,
-    setUserInfoModalVisible,
-  } = ModalVisibleHook();
+  const { isUserInfoModalVisible } = ModalVisibleHook();
 
   return (
     <Modal
