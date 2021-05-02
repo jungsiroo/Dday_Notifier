@@ -141,7 +141,7 @@ const ProfileScreen = () => {
         if (response.didCancel) {
           user
             .updateProfile({
-              photoURL: { userIcon },
+              photoURL: userIcon,
             })
             .then(function () {
               _ErrorHandler(
