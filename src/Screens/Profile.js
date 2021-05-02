@@ -23,7 +23,6 @@ import {
   statusbarheight,
   windowWidth,
   windowHeight,
-  userIcon,
 } from "../Components/Common";
 import { ProfileBack } from "../Components/Images";
 import { launchImageLibrary } from "react-native-image-picker";
@@ -31,19 +30,20 @@ import storage from "@react-native-firebase/storage";
 import { CustomModal, ModalVisibleHook } from "../Components/CustomModal";
 
 const ProfileScreen = () => {
+  let newName, newInfo;
+  const userIcon =
+    "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png";
+
+  const { user, logout } = useContext(AuthContext);
   const {
     isUserInfoModalVisible,
     setUserInfoModalVisible,
     isUserNameModalVisible,
     setUserNameModalVisible,
   } = ModalVisibleHook();
-
   const [userName, setUserName] = useState(user.displayName);
   const [userInfo, setUserInfo] = useState();
   const [picURL, setPicURL] = useState(getProfileImage(user.uid)); // set pic url (uri)
-  const { user, logout } = useContext(AuthContext);
-
-  let newName, newInfo;
 
   useEffect(() => {
     readUserInfo(user.uid);
@@ -216,7 +216,6 @@ const ProfileScreen = () => {
               modalVisible={() => modalHandler("username")}
               onChangeText={(text) => (newName = text)}
               onSaveFunc={() => nameSaveHandler()}
-              type="NAME"
             />
 
             <TouchableOpacity
@@ -239,7 +238,6 @@ const ProfileScreen = () => {
               modalVisible={() => modalHandler()}
               onChangeText={(text) => (newInfo = text)}
               onSaveFunc={() => handleUserInfo(newInfo, user.uid)}
-              type="INFO"
             />
           </View>
         </View>
