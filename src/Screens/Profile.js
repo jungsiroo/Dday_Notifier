@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Text,
   View,
-  StyleSheet,
   Image,
   ImageBackground,
   SafeAreaView,
@@ -18,12 +17,8 @@ import {
   _convertToAscii,
   _exportFromAscii,
 } from "../Components/index";
+import { profileStyle } from "../Components/Style/ProfileStyle";
 import Toast from "react-native-toast-message";
-import {
-  statusbarheight,
-  windowWidth,
-  windowHeight,
-} from "../Components/Common";
 import { ProfileBack } from "../Components/Images";
 import { launchImageLibrary } from "react-native-image-picker";
 import storage from "@react-native-firebase/storage";
@@ -60,25 +55,6 @@ const ProfileScreen = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // function handleUserInfo(text, currentUser) {
-  //   let passedInfo = _convertToAscii(text);
-
-  //   const task = storage()
-  //     .ref(`UserProfile/${currentUser}/UserInfo`)
-  //     .putString(passedInfo);
-
-  //   task
-  //     .then(() => {
-  //       _SuccessHandler("Update User Info");
-  //     })
-  //     .catch(function (err) {
-  //       alert(err.code);
-  //     });
-
-  //   setUserInfo(text);
-  //   modalHandler();
-  // }
 
   function readUserInfo(currentUser) {
     const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo`);
@@ -194,26 +170,29 @@ const ProfileScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.savContainer}>
+    <SafeAreaView style={profileStyle.savContainer}>
       <StatusBar backgroundColor="#299af4" />
-      <ImageBackground source={ProfileBack} style={styles.imageBackground}>
-        <View style={styles.card}>
-          <View style={styles.profileImage}>
+      <ImageBackground
+        source={ProfileBack}
+        style={profileStyle.imageBackground}
+      >
+        <View style={profileStyle.card}>
+          <View style={profileStyle.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image style={styles.profileImg} source={{ uri: picURL }} />
+              <Image style={profileStyle.profileImg} source={{ uri: picURL }} />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.header}>
+          <View style={profileStyle.header}>
             <TouchableOpacity onPress={() => modalHandler("username")}>
               {userName == null || userName == "" ? (
                 <TextInput
-                  style={styles.userNameStyle}
+                  style={profileStyle.userNameStyle}
                   placeholder="Enter Your Name 🖊"
                   editable={false}
                 ></TextInput>
               ) : (
-                <Text style={styles.userNameStyle}>{userName} 🖊</Text>
+                <Text style={profileStyle.userNameStyle}>{userName} 🖊</Text>
               )}
             </TouchableOpacity>
 
@@ -225,17 +204,17 @@ const ProfileScreen = () => {
             />
 
             <TouchableOpacity
-              style={styles.descText}
+              style={profileStyle.descText}
               onPress={() => modalHandler()}
             >
               {userInfo == null ? (
                 <TextInput
-                  style={styles.descText}
+                  style={profileStyle.descText}
                   placeholder="Enter Your Info"
                   editable={false}
                 ></TextInput>
               ) : (
-                <Text style={styles.descText}>{userInfo}</Text>
+                <Text style={profileStyle.descText}>{userInfo}</Text>
               )}
             </TouchableOpacity>
 
@@ -251,7 +230,7 @@ const ProfileScreen = () => {
         </View>
 
         <TouchableOpacity onPress={() => logout()}>
-          <Text style={styles.logoutText}>Logout</Text>
+          <Text style={profileStyle.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
       <Toast ref={(ref) => Toast.setRef(ref)} />
@@ -260,56 +239,3 @@ const ProfileScreen = () => {
 };
 
 export default ProfileScreen;
-const styles = StyleSheet.create({
-  savContainer: {
-    backgroundColor: "#f9fafd",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  imageBackground: {
-    resizeMode: "cover",
-    width: windowWidth,
-    height: windowHeight + statusbarheight,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  profileImage: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  card: {
-    height: 150,
-    width: "85%",
-    backgroundColor: "white",
-    borderRadius: 15,
-    padding: 10,
-    flexDirection: "row",
-  },
-  profileImg: {
-    width: 85,
-    height: 85,
-    borderRadius: 50,
-    marginRight: 10,
-  },
-  header: {
-    flex: 2,
-  },
-  userNameStyle: {
-    fontWeight: "bold",
-    fontSize: 18,
-    textAlign: "center",
-  },
-  descText: {
-    color: "gray",
-    alignItems: "center",
-    padding: 10,
-    textAlign: "center",
-  },
-  logoutText: {
-    fontSize: 15,
-    color: "white",
-    paddingTop: 15,
-  },
-});
