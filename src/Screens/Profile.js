@@ -23,7 +23,11 @@ import { ProfileBack } from "../Components/Images";
 import { launchImageLibrary } from "react-native-image-picker";
 import storage from "@react-native-firebase/storage";
 import { CustomModal, ModalVisibleHook } from "../Components/CustomModal";
-import { UserRelateHook, handleUserInfo } from "../Components/FirebaseUser";
+import {
+  UserRelateHook,
+  handleUserInfo,
+  readUserInfo,
+} from "../Components/FirebaseUser";
 
 const ProfileScreen = () => {
   const userIcon =
@@ -47,7 +51,7 @@ const ProfileScreen = () => {
   } = UserRelateHook();
 
   useEffect(() => {
-    readUserInfo(user.uid);
+    readUserInfo(user.uid, setUserInfo);
 
     if (picURL == null) {
       updateProfilePic(userIcon);
@@ -56,25 +60,6 @@ const ProfileScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function readUserInfo(currentUser) {
-    const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo`);
-
-    stringRef
-      .getDownloadURL()
-      .then(function (url) {
-        let XMLHttp = new XMLHttpRequest();
-        XMLHttp.onreadystatechange = function () {
-          if (XMLHttp.readyState === 4 && XMLHttp.status === 200) {
-            setUserInfo(_exportFromAscii(String.raw`${XMLHttp.responseText}`));
-          } else setUserInfo(null);
-        };
-        XMLHttp.open("GET", url, true); // true for asynchronous
-        XMLHttp.send(null);
-      })
-      .catch(function (error) {
-        setUserInfo(null);
-      });
-  }
   const uploadImage = async (source, curretUser) => {
     const { uri } = source;
     const filename = `UserProfile/${curretUser}/profileImage`;

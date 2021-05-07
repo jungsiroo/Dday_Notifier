@@ -38,7 +38,7 @@ export function handleUserInfo(text, currentUser, userInfoFunc, modalFunc) {
   modalFunc();
 }
 
-export function readUserInfo(currentUser, userInfoFunc, value, value2 = null) {
+export function readUserInfo(currentUser, userInfoFunc) {
   const stringRef = storage().ref(`UserProfile/${currentUser}/UserInfo`);
 
   stringRef
@@ -47,15 +47,14 @@ export function readUserInfo(currentUser, userInfoFunc, value, value2 = null) {
       let XMLHttp = new XMLHttpRequest();
       XMLHttp.onreadystatechange = function () {
         if (XMLHttp.readyState === 4 && XMLHttp.status === 200) {
-          //setUserInfo(_exportFromAscii(String.raw`${XMLHttp.responseText}`));
-          userInfoFunc(value);
-        } else userInfoFunc(value2);
+          userInfoFunc(_exportFromAscii(String.raw`${XMLHttp.responseText}`));
+        } else userInfoFunc(null);
       };
       XMLHttp.open("GET", url, true); // true for asynchronous
       XMLHttp.send(null);
     })
     .catch(function (error) {
-      userInfoFunc(value2);
+      userInfoFunc(null);
     });
 }
 
