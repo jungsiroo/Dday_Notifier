@@ -20,10 +20,13 @@ export function ModalVisibleHook() {
   };
 }
 
-export const CustomModal = (
-  { modalType, modalVisible, onChangeText, onSaveFunc },
-  type
-) => {
+export const CustomModal = ({
+  modalType,
+  modalVisible,
+  onChangeText,
+  onSaveFunc,
+  type,
+}) => {
   return (
     <Modal
       style={styles.modalPopup}
@@ -37,7 +40,7 @@ export const CustomModal = (
       backdropTransitionInTiming={600}
       backdropTransitionOutTiming={600}
     >
-      {type == "NAME" ? (
+      {type == "nameModal" ? (
         <View style={styles.nameCard}>
           <View style={styles.inputView}>
             <TextInput

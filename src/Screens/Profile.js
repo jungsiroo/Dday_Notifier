@@ -21,17 +21,20 @@ import { profileStyle } from "../Components/Style/ProfileStyle";
 import Toast from "react-native-toast-message";
 import { ProfileBack } from "../Components/Images";
 import { launchImageLibrary } from "react-native-image-picker";
-import storage from "@react-native-firebase/storage";
 import { CustomModal, ModalVisibleHook } from "../Components/CustomModal";
 import {
   UserRelateHook,
   handleUserInfo,
+  handleUserName,
   readUserInfo,
+  uploadImage,
+  updateProfilePic,
 } from "../Components/FirebaseUser";
 
 const ProfileScreen = () => {
   const userIcon =
     "https://raw.githubusercontent.com/alpha-src/Dday_Notifier/main/assets/icons/profileIcon.png";
+  const nameModal = "nameModal";
   let newName, newInfo;
 
   const { user, logout } = useContext(AuthContext);
@@ -41,6 +44,7 @@ const ProfileScreen = () => {
     isUserNameModalVisible,
     setUserNameModalVisible,
   } = ModalVisibleHook();
+
   const {
     userName,
     setUserName,
@@ -48,54 +52,17 @@ const ProfileScreen = () => {
     setUserInfo,
     picURL,
     setPicURL,
-  } = UserRelateHook();
+  } = UserRelateHook(user.displayName, user.photoURL);
 
   useEffect(() => {
     readUserInfo(user.uid, setUserInfo);
 
     if (picURL == null) {
-      updateProfilePic(userIcon);
+      updateProfilePic(user, userIcon, setPicURL);
       _NotiHandler("Profile Image", "You can pick your profile image");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const uploadImage = async (source, curretUser) => {
-    const { uri } = source;
-    const filename = `UserProfile/${curretUser}/profileImage`;
-
-    const task = storage().ref(filename).putFile(uri);
-
-    task.then(() => {
-      getProfileImage(user.uid);
-      _SuccessHandler("Update Profile Image");
-    });
-  };
-
-  function updateProfilePic(source) {
-    user
-      .updateProfile({
-        photoURL: source,
-      })
-      .then(function () {
-        setPicURL(source);
-      })
-      .catch(function (error) {
-        _ErrorHandler(error, "Error");
-      });
-  }
-
-  function getProfileImage(curretUser) {
-    const profileRef = storage().ref(`UserProfile/${curretUser}/profileImage`);
-
-    try {
-      profileRef.getDownloadURL().then(function (url) {
-        updateProfilePic(url);
-      });
-    } catch (err) {
-      setPicURL(null);
-    }
-  }
 
   function cameraRollHandler() {
     launchImageLibrary(
@@ -107,47 +74,14 @@ const ProfileScreen = () => {
       },
       (response) => {
         if (response.didCancel) {
-          user
-            .updateProfile({
-              photoURL: userIcon,
-            })
-            .then(function () {
-              _ErrorHandler(
-                "Profile Image Select",
-                "You Canceled pick a image"
-              );
-              updateProfilePic(userIcon);
-            })
-            .catch(function (error) {
-              _ErrorHandler(error, "Error");
-            });
+          _ErrorHandler("Profile Image Select", "You Canceled pick a image");
         } else {
           let source = { uri: response.uri };
-          uploadImage(source, user.uid);
+          uploadImage(source, user, setPicURL);
         }
       }
     );
   }
-
-  function nameSaveHandler() {
-    user
-      .updateProfile({
-        displayName: newName,
-      })
-      .then(function () {
-        saveHandler(newName);
-        _SuccessHandler("Update");
-        modalHandler("username");
-      })
-      .catch(function (error) {
-        _ErrorHandler("Update", error);
-      });
-  }
-
-  const saveHandler = (name) => {
-    setUserName(name);
-    newName = name;
-  };
 
   function modalHandler(data = "") {
     if (data === "username") setUserNameModalVisible(!isUserNameModalVisible);
@@ -185,7 +119,10 @@ const ProfileScreen = () => {
               modalType={isUserNameModalVisible}
               modalVisible={() => modalHandler("username")}
               onChangeText={(text) => (newName = text)}
-              onSaveFunc={() => nameSaveHandler()}
+              onSaveFunc={() =>
+                handleUserName(newName, modalHandler, setUserName, user)
+              }
+              type={nameModal}
             />
 
             <TouchableOpacity
