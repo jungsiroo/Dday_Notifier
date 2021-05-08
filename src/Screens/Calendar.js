@@ -1,5 +1,12 @@
 import React, { useContext, useEffect } from "react";
-import { Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import { AuthContext } from "../Components/index";
 
 const CalendarScreen = () => {
@@ -8,6 +15,11 @@ const CalendarScreen = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
+        <StatusBar
+          translucent={true}
+          backgroundColor={"rgba(0, 0, 0, 0.3)"}
+          barStyle={"light-content"}
+        />
         <Text style={styles.text}>Calendar Screen</Text>
         <Button title="Logout" onPress={() => logout()} />
       </SafeAreaView>
