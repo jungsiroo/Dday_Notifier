@@ -17,7 +17,7 @@ import {
   _convertToAscii,
   _exportFromAscii,
 } from "../Components/index";
-import { styles } from "../Components/Style/profile.style";
+import { profileStyle } from "../Components/Style/profile.style";
 import Toast from "react-native-toast-message";
 import { ProfileBack } from "../Components/Images";
 import { launchImageLibrary } from "react-native-image-picker";
@@ -89,26 +89,29 @@ const ProfileScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.savContainer}>
+    <SafeAreaView style={profileStyle.savContainer}>
       <StatusBar backgroundColor="#299af4" />
-      <ImageBackground source={ProfileBack} style={styles.imageBackground}>
-        <View style={styles.card}>
-          <View style={styles.profileImage}>
+      <ImageBackground
+        source={ProfileBack}
+        style={profileStyle.imageBackground}
+      >
+        <View style={profileStyle.card}>
+          <View style={profileStyle.profileImage}>
             <TouchableOpacity onPress={() => cameraRollHandler()}>
-              <Image style={styles.profileImg} source={{ uri: picURL }} />
+              <Image style={profileStyle.profileImg} source={{ uri: picURL }} />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.header}>
+          <View style={profileStyle.header}>
             <TouchableOpacity onPress={() => modalHandler("username")}>
               {userName == null || userName == "" ? (
                 <TextInput
-                  style={styles.userNameStyle}
+                  style={profileStyle.userNameStyle}
                   placeholder="Enter Your Name 🖊"
                   editable={false}
                 ></TextInput>
               ) : (
-                <Text style={styles.userNameStyle}>{userName} 🖊</Text>
+                <Text style={profileStyle.userNameStyle}>{userName} 🖊</Text>
               )}
             </TouchableOpacity>
 
@@ -123,17 +126,17 @@ const ProfileScreen = () => {
             />
 
             <TouchableOpacity
-              style={styles.descText}
+              style={profileStyle.descText}
               onPress={() => modalHandler()}
             >
               {userInfo == null ? (
                 <TextInput
-                  style={styles.descText}
+                  style={profileStyle.descText}
                   placeholder="Enter Your Info"
                   editable={false}
                 ></TextInput>
               ) : (
-                <Text style={styles.descText}>{userInfo}</Text>
+                <Text style={profileStyle.descText}>{userInfo}</Text>
               )}
             </TouchableOpacity>
 
@@ -149,7 +152,7 @@ const ProfileScreen = () => {
         </View>
 
         <TouchableOpacity onPress={() => logout()}>
-          <Text style={styles.logoutText}>Logout</Text>
+          <Text style={profileStyle.logoutText}>Logout</Text>
         </TouchableOpacity>
       </ImageBackground>
       <Toast ref={(ref) => Toast.setRef(ref)} />
