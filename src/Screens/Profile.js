@@ -90,7 +90,7 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={profileStyle.savContainer}>
-      <StatusBar backgroundColor="#299af4" />
+      <StatusBar backgroundColor="#299af4" barStyle="light-content" />
       <ImageBackground
         source={ProfileBack}
         style={profileStyle.imageBackground}
