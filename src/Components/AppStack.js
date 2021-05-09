@@ -21,7 +21,8 @@ export default function AppStack() {
         style: {
           borderTopWidth: 0,
           borderBottomWidth: 0,
-          backgroundColor: "#f9fafd",
+          backgroundColor: "transparent",
+          position: "absolute",
           elevation: 0,
         },
       }}
@@ -44,7 +45,7 @@ export default function AppStack() {
               style={{
                 height: 24,
                 width: 24,
-                tintColor: focused ? "#74b7db" : "gray",
+                tintColor: focused ? "#1D2324" : "#7D7D7D",
               }}
             />
           );
