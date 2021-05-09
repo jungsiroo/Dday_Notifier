@@ -15,7 +15,7 @@ const CalendarScreen = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="light-content" />
+        <StatusBar translucent backgroundColor="transparent" />
         <Text style={styles.text}>Calendar Screen</Text>
         <Button title="Logout" onPress={() => logout()} />
       </SafeAreaView>
