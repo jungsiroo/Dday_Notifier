@@ -6,6 +6,7 @@ export const homeCircleOutline = require("../../assets/icons/home-circle-outline
 export const homeCircle = require("../../assets/icons/home-circle.png");
 export const menu = require("../../assets/icons/menu.png");
 export const userIcon = require("../../assets/icons/profileIcon.png");
+export const logout = require("../../assets/icons/logout.png");
 
 export default {
   accountCircleOutline,
@@ -16,4 +17,5 @@ export default {
   homeCircle,
   menu,
   userIcon,
+  logout,
 };
