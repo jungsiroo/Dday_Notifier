@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Image, ScrollView } from "react-native";
 import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
 import { DrawerBack } from "./Images";
 import { drawerStyle } from "./Style/drawer.style";
 import { logout } from "./Icons";
+import { AuthContext } from "./index";
 
-function CustomDrawerContent(props) {
+const CustomDrawerContent = (props) => {
+  const { logout } = useContext(AuthContext);
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView {...props}>
@@ -24,11 +27,12 @@ function CustomDrawerContent(props) {
           style={drawerStyle.bottomDrawer}
           icon={() => <Image source={logout} style={drawerStyle.logoutIcon} />}
           label="Sign Out"
+          onPress={() => logout()}
         />
       </View>
     </View>
   );
-}
+};
 
 const Drawer = createDrawerNavigator();
 
