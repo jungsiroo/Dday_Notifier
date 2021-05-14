@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, SafeAreaView, StatusBar } from "react-native";
+import { View, SafeAreaView, StatusBar, Text } from "react-native";
 import { AuthContext, _InfoHandler } from "../Components/index";
 import Toast from "react-native-toast-message";
 import LinearGradient from "react-native-linear-gradient";
@@ -24,7 +24,13 @@ const HomeScreen = () => {
         style={homeStyles.gradient}
       />
 
-      <View>
+      <Text style={homeStyles.logoText}>Dday-Notifier</Text>
+      <View style={{ marginTop: 20 }}>
+        <Text style={homeStyles.eventText}>Starred Events</Text>
+        <CustomCarousel />
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <Text style={homeStyles.eventText}>Upcoming Events</Text>
         <CustomCarousel />
       </View>
       <Toast ref={(ref) => Toast.setRef(ref)} />

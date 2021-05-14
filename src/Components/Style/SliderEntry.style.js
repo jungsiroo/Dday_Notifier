@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
-import { colors } from "./home.style";
+import { colors } from "./carousel.style";
 
 const IS_IOS = Platform.OS === "ios";
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
@@ -11,8 +11,8 @@ function wp(percentage) {
   return Math.round(value);
 }
 
-const slideHeight = viewportHeight * 0.36;
-const slideWidth = wp(75);
+const slideHeight = viewportHeight * 0.25;
+const slideWidth = wp(70);
 const itemHorizontalMargin = wp(2);
 
 export const sliderWidth = viewportWidth;
@@ -70,8 +70,8 @@ export default StyleSheet.create({
   },
   textContainer: {
     justifyContent: "center",
-    paddingTop: 20 - entryBorderRadius,
-    paddingBottom: 20,
+    paddingTop: 10 - entryBorderRadius,
+    paddingBottom: 5,
     paddingHorizontal: 16,
     backgroundColor: "white",
     borderBottomLeftRadius: entryBorderRadius,

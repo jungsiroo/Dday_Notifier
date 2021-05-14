@@ -4,7 +4,7 @@ import { View } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { sliderWidth, itemWidth } from "../Style/SliderEntry.style";
 import SliderEntry from "./SliderEntry";
-import { homeStyles, colors } from "../Style/home.style";
+import { carouselStyles, colors } from "../Style/carousel.style";
 import { ENTRIES1 } from "./entries";
 
 const SLIDER_1_FIRST_ITEM = 1;
@@ -32,7 +32,7 @@ export default class CustomCarousel extends Component {
     const { slider1ActiveSlide } = this.state;
 
     return (
-      <View style={homeStyles.exampleContainer}>
+      <View style={carouselStyles.exampleContainer}>
         <Carousel
           ref={(c) => (this._slider1Ref = c)}
           data={ENTRIES1}
@@ -44,8 +44,8 @@ export default class CustomCarousel extends Component {
           inactiveSlideScale={0.94}
           inactiveSlideOpacity={0.7}
           // inactiveSlideShift={20}
-          containerCustomStyle={homeStyles.slider}
-          contentContainerCustomStyle={homeStyles.sliderContentContainer}
+          containerCustomStyle={carouselStyles.slider}
+          contentContainerCustomStyle={carouselStyles.sliderContentContainer}
           loop={true}
           loopClonesPerSide={2}
           autoplay={true}
@@ -56,9 +56,9 @@ export default class CustomCarousel extends Component {
         <Pagination
           dotsLength={ENTRIES1.length}
           activeDotIndex={slider1ActiveSlide}
-          containerStyle={homeStyles.paginationContainer}
+          containerStyle={carouselStyles.paginationContainer}
           dotColor={"rgba(255, 255, 255, 0.92)"}
-          dotStyle={homeStyles.paginationDot}
+          dotStyle={carouselStyles.paginationDot}
           inactiveDotColor={colors.black}
           inactiveDotOpacity={0.4}
           inactiveDotScale={0.6}
