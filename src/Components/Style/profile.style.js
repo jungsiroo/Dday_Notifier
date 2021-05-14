@@ -30,10 +30,10 @@ export const profileStyle = StyleSheet.create({
     flexDirection: "row",
   },
   profileImg: {
-    width: 85,
-    height: 85,
+    width: 120,
+    height: 120,
     borderRadius: 50,
-    marginRight: 10,
+    marginLeft: 20,
   },
   header: {
     flex: 2,

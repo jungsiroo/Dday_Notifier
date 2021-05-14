@@ -69,8 +69,8 @@ const ProfileScreen = () => {
       {
         mediaType: "photo",
         includeBase64: false,
-        maxHeight: 300,
-        maxWidth: 300,
+        maxHeight: 700,
+        maxWidth: 700,
       },
       (response) => {
         if (response.didCancel) {
