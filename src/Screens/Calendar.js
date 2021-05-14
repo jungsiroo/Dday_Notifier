@@ -8,15 +8,16 @@ import {
   StatusBar,
 } from "react-native";
 import { AuthContext } from "../Components/index";
+import { calendarStyle } from "../Components/Style/calendar.style";
 
 const CalendarScreen = () => {
   const { user, logout } = useContext(AuthContext);
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={calendarStyle.container}>
         <StatusBar translucent backgroundColor="transparent" />
-        <Text style={styles.text}>Calendar Screen</Text>
+        <Text style={calendarStyle.text}>Calendar Screen</Text>
         <Button title="Logout" onPress={() => logout()} />
       </SafeAreaView>
     </>
@@ -24,17 +25,3 @@ const CalendarScreen = () => {
 };
 
 export default CalendarScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f9fafd",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  text: {
-    fontSize: 20,
-    color: "#333333",
-  },
-});
