@@ -4,22 +4,21 @@ import { statusbarheight, windowWidth, windowHeight } from "../Common";
 
 export const profileStyle = StyleSheet.create({
   savContainer: {
-    backgroundColor: "#f9fafd",
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   imageBackground: {
-    resizeMode: "cover",
-    width: windowWidth,
-    height: windowHeight + statusbarheight,
-    justifyContent: "center",
-    alignItems: "center",
+    flex: 1,
   },
   profileImage: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  cardContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 80,
   },
   card: {
     height: 150,
@@ -30,8 +29,8 @@ export const profileStyle = StyleSheet.create({
     flexDirection: "row",
   },
   profileImg: {
-    width: 120,
-    height: 120,
+    width: 105,
+    height: 105,
     borderRadius: 50,
     marginLeft: 20,
   },
@@ -48,6 +47,12 @@ export const profileStyle = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     textAlign: "center",
+  },
+  menuIcon: {
+    height: 30,
+    width: 30,
+    marginTop: 50,
+    marginLeft: 25,
   },
   logoutText: {
     fontSize: 15,
