@@ -5,7 +5,6 @@ export const calendarCheck = require("../../assets/icons/calendar-check.png");
 export const homeCircleOutline = require("../../assets/icons/home-circle-outline.png");
 export const homeCircle = require("../../assets/icons/home-circle.png");
 export const menu = require("../../assets/icons/menu.png");
-export const pencil = require("../../assets/icons/pencil.png");
 export const userIcon = require("../../assets/icons/profileIcon.png");
 
 export default {
@@ -16,6 +15,5 @@ export default {
   homeCircleOutline,
   homeCircle,
   menu,
-  pencil,
   userIcon,
 };
