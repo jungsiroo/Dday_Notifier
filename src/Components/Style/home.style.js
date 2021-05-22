@@ -27,5 +27,6 @@ export const homeStyles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     color: "#70d7c7",
+    fontFamily: "Caveat-Regular",
   },
 });

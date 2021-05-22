@@ -39,6 +39,7 @@ const CustomDrawerContent = (props) => {
           )}
           label="Sign Out"
           onPress={() => logout()}
+          labelStyle={drawerStyle.drawerItem}
         />
       </View>
     </View>
