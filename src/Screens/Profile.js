@@ -94,7 +94,11 @@ const ProfileScreenMain = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar translucent backgroundColor="transparent" />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
       <ImageBackground
         source={ProfileBack}
         style={profileStyle.imageBackground}

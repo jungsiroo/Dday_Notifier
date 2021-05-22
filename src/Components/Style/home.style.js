@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 
 export const colors = {
-  background1: "#1c92d2",
-  background2: "#f2fcfe",
+  background1: "#272b36",
+  background2: "#3E4C59",
 };
 
 export const homeStyles = StyleSheet.create({
@@ -21,11 +21,11 @@ export const homeStyles = StyleSheet.create({
     fontSize: 30,
     fontFamily: "Caveat-Semibold",
     letterSpacing: 7,
+    color: "white",
   },
   eventText: {
     textAlign: "center",
     fontSize: 20,
-    color: "#E0E4CC",
-    fontFamily: "Caveat-Regular",
+    color: "#70d7c7",
   },
 });

@@ -23,7 +23,7 @@ export const profileStyle = StyleSheet.create({
   card: {
     height: 150,
     width: "85%",
-    backgroundColor: "white",
+    backgroundColor: "#c2c2c2",
     borderRadius: 15,
     padding: 10,
     flexDirection: "row",

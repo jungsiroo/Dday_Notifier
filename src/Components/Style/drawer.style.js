@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
 
+export const colors = {
+  background1: "#272b36",
+  background2: "#3E4C59",
+};
+
 export const drawerStyle = StyleSheet.create({
   menuIcon: {
     height: 30,
@@ -20,5 +25,11 @@ export const drawerStyle = StyleSheet.create({
     height: 200,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+  },
+  gradient: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  drawerItem: {
+    color: "white",
   },
 });

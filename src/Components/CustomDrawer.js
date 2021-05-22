@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { View, Image, ScrollView } from "react-native";
 import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
 import { DrawerBack } from "./Images";
-import { drawerStyle } from "./Style/drawer.style";
+import { drawerStyle, colors } from "./Style/drawer.style";
+import LinearGradient from "react-native-linear-gradient";
 import { exitIcon } from "./Icons";
 import { AuthContext } from "./index";
 
@@ -11,14 +12,22 @@ const CustomDrawerContent = (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView {...props}>
+      <LinearGradient
+        colors={[colors.background1, colors.background2]}
+        startPoint={{ x: 1, y: 0 }}
+        endPoint={{ x: 0, y: 1 }}
+        style={drawerStyle.gradient}
+      />
+      <ScrollView>
         <Image source={DrawerBack} style={drawerStyle.drawerBack} />
         <DrawerItem
           label="Close drawer"
+          labelStyle={drawerStyle.drawerItem}
           onPress={() => props.navigation.closeDrawer()}
         />
         <DrawerItem
           label="Toggle drawer"
+          labelStyle={drawerStyle.drawerItem}
           onPress={() => props.navigation.toggleDrawer()}
         />
       </ScrollView>
