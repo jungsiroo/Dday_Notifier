@@ -1,15 +1,31 @@
 import { StyleSheet } from "react-native";
 
 export const calendarStyle = StyleSheet.create({
-  container: {
-    backgroundColor: "#f9fafd",
-    flex: 1,
+  savContainer: { flex: 1, backgroundColor: "#272b36" },
+  titleContainer: {
+    backgroundColor: "#272b36",
+    height: 90,
     justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
   },
-  text: {
-    fontSize: 20,
-    color: "#333333",
+  title: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 25,
+    fontFamily: "Caveat-Semibold",
+    letterSpacing: 7,
+  },
+  item: {
+    backgroundColor: "white",
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
+    height: 15,
+  },
+  emptyDate: {
+    height: 15,
+    flex: 1,
+    paddingTop: 30,
   },
 });

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   Alert,
-  StyleSheet,
   Text,
   View,
   TouchableOpacity,
@@ -9,8 +8,9 @@ import {
   StatusBar,
 } from "react-native";
 import { Agenda } from "react-native-calendars";
+import { calendarStyle } from "../Components/Style/calendar.style";
 
-export default class AgendaScreen extends Component {
+export default class CalendarScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -33,7 +33,10 @@ export default class AgendaScreen extends Component {
       <>
         <StatusBar translucent backgroundColor="transparent" />
 
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#272b36" }}>
+        <SafeAreaView style={calendarStyle.savContainer}>
+          <View style={calendarStyle.titleContainer}>
+            <Text style={calendarStyle.title}>Calendar</Text>
+          </View>
           <Agenda
             items={this.state.items}
             loadItemsForMonth={this.loadItems.bind(this)}
@@ -71,6 +74,13 @@ export default class AgendaScreen extends Component {
               agendaDayNumColor: "#a3a4d6",
               agendaTodayColor: "#f2c279",
               agendaKnobColor: "white",
+              "stylesheet.calendar.header": {
+                week: {
+                  marginTop: 0,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                },
+              },
             }}
             //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
             hideExtraDays={true}
@@ -109,7 +119,7 @@ export default class AgendaScreen extends Component {
   renderItem(item) {
     return (
       <TouchableOpacity
-        style={[styles.item, { height: item.height }]}
+        style={[calendarStyle.item, { height: item.height }]}
         onPress={() => Alert.alert(item.name)}
       >
         <Text>{item.name}</Text>
@@ -119,7 +129,7 @@ export default class AgendaScreen extends Component {
 
   renderEmptyDate() {
     return (
-      <View style={styles.emptyDate}>
+      <View style={calendarStyle.emptyDate}>
         <Text>This is empty date!</Text>
       </View>
     );
@@ -134,20 +144,3 @@ export default class AgendaScreen extends Component {
     return date.toISOString().split("T")[0];
   }
 }
-
-const styles = StyleSheet.create({
-  item: {
-    backgroundColor: "white",
-    flex: 1,
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
-    marginTop: 17,
-    height: 15,
-  },
-  emptyDate: {
-    height: 15,
-    flex: 1,
-    paddingTop: 30,
-  },
-});
