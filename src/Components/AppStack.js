@@ -21,7 +21,7 @@ export default function AppStack() {
         style: {
           borderTopWidth: 0,
           borderBottomWidth: 0,
-          backgroundColor: "transparent",
+          backgroundColor: "#272b36",
           position: "absolute",
           elevation: 0,
         },
@@ -34,7 +34,7 @@ export default function AppStack() {
             iconimg = focused ? homeCircle : homeCircleOutline;
           } else if (route.name === "Profile") {
             iconimg = focused ? accountCircle : accountCircleOutline;
-          } else {
+          } else if (route.name === "Calendar") {
             iconimg = focused ? calendarCheck : calendarCheckOutline;
           }
 
@@ -45,7 +45,7 @@ export default function AppStack() {
               style={{
                 height: 24,
                 width: 24,
-                tintColor: focused ? "#1D2324" : "#7D7D7D",
+                tintColor: focused ? "#ffffff" : "#80807e",
               }}
             />
           );

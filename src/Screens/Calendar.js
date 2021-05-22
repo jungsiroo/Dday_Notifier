@@ -1,27 +1,153 @@
-import React, { useContext, useEffect } from "react";
+import React, { Component } from "react";
 import {
-  Button,
+  Alert,
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
   SafeAreaView,
   StatusBar,
 } from "react-native";
-import { AuthContext } from "../Components/index";
-import { calendarStyle } from "../Components/Style/calendar.style";
+import { Agenda } from "react-native-calendars";
 
-const CalendarScreen = () => {
-  const { user, logout } = useContext(AuthContext);
+export default class AgendaScreen extends Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <>
-      <SafeAreaView style={calendarStyle.container}>
+    this.state = {
+      items: {},
+    };
+  }
+
+  selectToday() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
+  render() {
+    return (
+      <>
         <StatusBar translucent backgroundColor="transparent" />
-        <Text style={calendarStyle.text}>Calendar Screen</Text>
-        <Button title="Logout" onPress={() => logout()} />
-      </SafeAreaView>
-    </>
-  );
-};
 
-export default CalendarScreen;
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#272b36" }}>
+          <Agenda
+            items={this.state.items}
+            loadItemsForMonth={this.loadItems.bind(this)}
+            selected={this.selectToday()}
+            renderItem={this.renderItem.bind(this)}
+            renderEmptyDate={this.renderEmptyDate.bind(this)}
+            rowHasChanged={this.rowHasChanged.bind(this)}
+            markedDates={{
+              "2021-05-15": { marked: true, dotColor: "#50cebb" },
+              "2021-05-16": { marked: true, dotColor: "#50cebb" },
+              "2021-05-21": {
+                startingDay: true,
+                color: "#50cebb",
+                textColor: "white",
+              },
+              "2021-05-22": { color: "#70d7c7", textColor: "white" },
+              "2021-05-23": {
+                color: "#70d7c7",
+                textColor: "white",
+                marked: true,
+                dotColor: "white",
+              },
+              "2021-05-24": { color: "#70d7c7", textColor: "white" },
+              "2021-05-25": {
+                endingDay: true,
+                color: "#50cebb",
+                textColor: "white",
+              },
+            }}
+            // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+            markingType={"period"}
+            theme={{
+              calendarBackground: "#272b36",
+              agendaDayTextColor: "#7b7ee3",
+              agendaDayNumColor: "#a3a4d6",
+              agendaTodayColor: "#f2c279",
+              agendaKnobColor: "white",
+            }}
+            //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
+            hideExtraDays={true}
+          />
+        </SafeAreaView>
+      </>
+    );
+  }
+
+  loadItems(day) {
+    setTimeout(() => {
+      for (let i = -15; i < 85; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = this.timeToString(time);
+        if (!this.state.items[strTime]) {
+          this.state.items[strTime] = [];
+          const numItems = Math.floor(Math.random() * 3 + 1);
+          for (let j = 0; j < numItems; j++) {
+            this.state.items[strTime].push({
+              name: "Item for " + strTime + " #" + j,
+              height: Math.max(50, Math.floor(Math.random() * 150)),
+            });
+          }
+        }
+      }
+      const newItems = {};
+      Object.keys(this.state.items).forEach((key) => {
+        newItems[key] = this.state.items[key];
+      });
+      this.setState({
+        items: newItems,
+      });
+    }, 1000);
+  }
+
+  renderItem(item) {
+    return (
+      <TouchableOpacity
+        style={[styles.item, { height: item.height }]}
+        onPress={() => Alert.alert(item.name)}
+      >
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderEmptyDate() {
+    return (
+      <View style={styles.emptyDate}>
+        <Text>This is empty date!</Text>
+      </View>
+    );
+  }
+
+  rowHasChanged(r1, r2) {
+    return r1.name !== r2.name;
+  }
+
+  timeToString(time) {
+    const date = new Date(time);
+    return date.toISOString().split("T")[0];
+  }
+}
+
+const styles = StyleSheet.create({
+  item: {
+    backgroundColor: "white",
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
+    height: 15,
+  },
+  emptyDate: {
+    height: 15,
+    flex: 1,
+    paddingTop: 30,
+  },
+});

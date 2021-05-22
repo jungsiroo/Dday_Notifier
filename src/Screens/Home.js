@@ -29,7 +29,7 @@ const HomeScreen = () => {
         <Text style={homeStyles.eventText}>Starred Events</Text>
         <CustomCarousel />
       </View>
-      <View style={{ marginTop: 20 }}>
+      <View style={{ marginTop: 15 }}>
         <Text style={homeStyles.eventText}>Upcoming Events</Text>
         <CustomCarousel />
       </View>
