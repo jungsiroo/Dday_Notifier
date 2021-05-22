@@ -3,7 +3,7 @@ import { View, Image, ScrollView } from "react-native";
 import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
 import { DrawerBack } from "./Images";
 import { drawerStyle } from "./Style/drawer.style";
-import { logout } from "./Icons";
+import { exitIcon } from "./Icons";
 import { AuthContext } from "./index";
 
 const CustomDrawerContent = (props) => {
@@ -25,7 +25,9 @@ const CustomDrawerContent = (props) => {
       <View>
         <DrawerItem
           style={drawerStyle.bottomDrawer}
-          icon={() => <Image source={logout} style={drawerStyle.logoutIcon} />}
+          icon={() => (
+            <Image source={exitIcon} style={drawerStyle.logoutIcon} />
+          )}
           label="Sign Out"
           onPress={() => logout()}
         />

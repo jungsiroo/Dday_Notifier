@@ -93,81 +93,83 @@ const ProfileScreenMain = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={profileStyle.savContainer}>
+    <>
       <StatusBar translucent backgroundColor="transparent" />
       <ImageBackground
         source={ProfileBack}
         style={profileStyle.imageBackground}
       >
-        <View>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Image source={menu} style={profileStyle.menuIcon} />
-          </TouchableOpacity>
-        </View>
+        <SafeAreaView style={profileStyle.savContainer}>
+          <View>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Image source={menu} style={profileStyle.menuIcon} />
+            </TouchableOpacity>
+          </View>
 
-        <View style={profileStyle.cardContainer}>
-          <View style={profileStyle.card}>
-            <View style={profileStyle.profileImage}>
-              <TouchableOpacity onPress={() => cameraRollHandler()}>
-                <Image
-                  style={profileStyle.profileImg}
-                  source={{ uri: picURL }}
+          <View style={profileStyle.cardContainer}>
+            <View style={profileStyle.card}>
+              <View style={profileStyle.profileImage}>
+                <TouchableOpacity onPress={() => cameraRollHandler()}>
+                  <Image
+                    style={profileStyle.profileImg}
+                    source={{ uri: picURL }}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={profileStyle.header}>
+                <TouchableOpacity onPress={() => modalHandler("username")}>
+                  {userName == null || userName == "" ? (
+                    <TextInput
+                      style={profileStyle.userNameStyle}
+                      placeholder="Enter Your Name 🖊"
+                      editable={false}
+                    ></TextInput>
+                  ) : (
+                    <Text style={profileStyle.userNameStyle}>{userName} 🖊</Text>
+                  )}
+                </TouchableOpacity>
+
+                <CustomModal
+                  modalType={isUserNameModalVisible}
+                  modalVisible={() => modalHandler("username")}
+                  onChangeText={(text) => (newName = text)}
+                  onSaveFunc={() =>
+                    handleUserName(newName, modalHandler, setUserName, user)
+                  }
+                  type={nameModal}
                 />
-              </TouchableOpacity>
-            </View>
 
-            <View style={profileStyle.header}>
-              <TouchableOpacity onPress={() => modalHandler("username")}>
-                {userName == null || userName == "" ? (
-                  <TextInput
-                    style={profileStyle.userNameStyle}
-                    placeholder="Enter Your Name 🖊"
-                    editable={false}
-                  ></TextInput>
-                ) : (
-                  <Text style={profileStyle.userNameStyle}>{userName} 🖊</Text>
-                )}
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={profileStyle.descText}
+                  onPress={() => modalHandler()}
+                >
+                  {userInfo == null ? (
+                    <TextInput
+                      style={profileStyle.descText}
+                      placeholder="Enter Your Info"
+                      editable={false}
+                    ></TextInput>
+                  ) : (
+                    <Text style={profileStyle.descText}>{userInfo}</Text>
+                  )}
+                </TouchableOpacity>
 
-              <CustomModal
-                modalType={isUserNameModalVisible}
-                modalVisible={() => modalHandler("username")}
-                onChangeText={(text) => (newName = text)}
-                onSaveFunc={() =>
-                  handleUserName(newName, modalHandler, setUserName, user)
-                }
-                type={nameModal}
-              />
-
-              <TouchableOpacity
-                style={profileStyle.descText}
-                onPress={() => modalHandler()}
-              >
-                {userInfo == null ? (
-                  <TextInput
-                    style={profileStyle.descText}
-                    placeholder="Enter Your Info"
-                    editable={false}
-                  ></TextInput>
-                ) : (
-                  <Text style={profileStyle.descText}>{userInfo}</Text>
-                )}
-              </TouchableOpacity>
-
-              <CustomModal
-                modalType={isUserInfoModalVisible}
-                modalVisible={() => modalHandler()}
-                onChangeText={(text) => (newInfo = text)}
-                onSaveFunc={() =>
-                  handleUserInfo(newInfo, user.uid, setUserInfo, modalHandler)
-                }
-              />
+                <CustomModal
+                  modalType={isUserInfoModalVisible}
+                  modalVisible={() => modalHandler()}
+                  onChangeText={(text) => (newInfo = text)}
+                  onSaveFunc={() =>
+                    handleUserInfo(newInfo, user.uid, setUserInfo, modalHandler)
+                  }
+                />
+              </View>
             </View>
           </View>
-        </View>
+        </SafeAreaView>
       </ImageBackground>
       <Toast ref={(ref) => Toast.setRef(ref)} />
-    </SafeAreaView>
+    </>
   );
 };
 
