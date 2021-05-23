@@ -16,7 +16,7 @@ import {
 } from "../Components/index";
 import Toast from "react-native-toast-message";
 import { signupStyle } from "../Components/Style/signup.style";
-import { LoginBack } from "../Components/Images";
+import { AuthBack } from "../Components/Images";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState();
@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <SafeAreaView style={signupStyle.container}>
       <StatusBar translucent backgroundColor="transparent" />
-      <ImageBackground source={LoginBack} style={signupStyle.imageBackground}>
+      <ImageBackground source={AuthBack} style={signupStyle.imageBackground}>
         <Text style={signupStyle.logo}>Dday-Notifier</Text>
         <View style={signupStyle.inputView}>
           <TextInput
