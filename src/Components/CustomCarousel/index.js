@@ -36,6 +36,8 @@ export default class CustomCarousel extends Component {
         <Carousel
           ref={(c) => (this._slider1Ref = c)}
           data={ENTRIES1}
+          layout={"stack"}
+          layoutCardOffset={`18`}
           renderItem={this._renderItemWithParallax}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
