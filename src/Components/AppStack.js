@@ -1,7 +1,6 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home, Profile, Calendar } from "../Screens/";
-import { Image } from "react-native";
 import {
   homeCircleOutline,
   homeCircle,
@@ -10,6 +9,7 @@ import {
   calendarCheck,
   calendarCheckOutline,
 } from "./Icons";
+import FastImage from "react-native-fast-image";
 
 export const Tab = createBottomTabNavigator();
 
@@ -39,14 +39,14 @@ export default function AppStack() {
           }
 
           return (
-            <Image
+            <FastImage
               source={iconimg}
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 height: 24,
                 width: 24,
-                tintColor: focused ? "#ffffff" : "#80807e",
               }}
+              tintColor={focused ? "#ffffff" : "#80807e"}
             />
           );
         },

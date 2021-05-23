@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import FastImage from "react-native-fast-image";
 import PropTypes from "prop-types";
 import { ParallaxImage } from "react-native-snap-carousel";
 import styles from "../Style/SliderEntry.style";
@@ -34,7 +35,7 @@ export default class SliderEntry extends Component {
         {...parallaxProps}
       />
     ) : (
-      <Image source={{ uri: illustration }} style={styles.image} />
+      <FastImage source={{ uri: illustration }} style={styles.image} />
     );
   }
 

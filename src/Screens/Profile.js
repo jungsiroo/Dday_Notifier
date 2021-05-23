@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import {
   Text,
   View,
-  Image,
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
@@ -25,6 +24,7 @@ import { launchImageLibrary } from "react-native-image-picker";
 import { CustomModal, ModalVisibleHook } from "../Components/CustomModal";
 import { menu } from "../Components/Icons";
 import { CustomDrawer } from "../Components/CustomDrawer";
+import FastImage from "react-native-fast-image";
 import {
   UserRelateHook,
   handleUserInfo,
@@ -106,7 +106,7 @@ const ProfileScreenMain = ({ navigation }) => {
         <SafeAreaView style={profileStyle.savContainer}>
           <View>
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <Image source={menu} style={profileStyle.menuIcon} />
+              <FastImage source={menu} style={profileStyle.menuIcon} />
             </TouchableOpacity>
           </View>
 
@@ -114,7 +114,7 @@ const ProfileScreenMain = ({ navigation }) => {
             <View style={profileStyle.card}>
               <View style={profileStyle.profileImage}>
                 <TouchableOpacity onPress={() => cameraRollHandler()}>
-                  <Image
+                  <FastImage
                     style={profileStyle.profileImg}
                     source={{ uri: picURL }}
                   />

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { View, Image, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
+import FastImage from "react-native-fast-image";
 import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
 import { DrawerBack } from "./Images";
 import { drawerStyle, colors } from "./Style/drawer.style";
@@ -19,7 +20,7 @@ const CustomDrawerContent = (props) => {
         style={drawerStyle.gradient}
       />
       <ScrollView>
-        <Image source={DrawerBack} style={drawerStyle.drawerBack} />
+        <FastImage source={DrawerBack} style={drawerStyle.drawerBack} />
         <DrawerItem
           label="Close drawer"
           labelStyle={drawerStyle.drawerItem}
@@ -35,7 +36,7 @@ const CustomDrawerContent = (props) => {
         <DrawerItem
           style={drawerStyle.bottomDrawer}
           icon={() => (
-            <Image source={exitIcon} style={drawerStyle.logoutIcon} />
+            <FastImage source={exitIcon} style={drawerStyle.logoutIcon} />
           )}
           label="Sign Out"
           onPress={() => logout()}
