@@ -88,6 +88,7 @@ export function AgendaCalendar() {
         }}
         //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
         hideExtraDays={true}
+        knobCanCloseCalendar={true}
       />
     </View>
   );
