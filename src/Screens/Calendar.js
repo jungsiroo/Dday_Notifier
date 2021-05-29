@@ -18,6 +18,7 @@ export default class CalendarScreen extends Component {
             <Text style={calendarStyle.title}>Calendar</Text>
           </View>
           <AgendaCalendar />
+          <View style={calendarStyle.bottomTab} />
         </SafeAreaView>
       </>
     );

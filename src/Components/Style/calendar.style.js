@@ -28,4 +28,7 @@ export const calendarStyle = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
   },
+  bottomTab: {
+    height: 45,
+  },
 });

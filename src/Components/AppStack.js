@@ -19,6 +19,7 @@ export default function AppStack() {
       tabBarOptions={{
         showLabel: false,
         style: {
+          height: 45,
           borderTopWidth: 0,
           borderBottomWidth: 0,
           backgroundColor: "#272b36",
