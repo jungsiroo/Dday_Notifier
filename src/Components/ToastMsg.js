@@ -2,20 +2,17 @@ import Toast from "react-native-toast-message";
 
 export const _ErrorHandler = (status, Error) => {
   function ErrorSelect(ErrorMsg) {
-    if (ErrorMsg.includes("user-not-found")) {
-      return "User Not Found";
-    } else if (ErrorMsg.includes("wrong-password")) {
-      return "Invalid Email or Wrong Password";
-    } else if (ErrorMsg.includes("Blank")) {
+    if (ErrorMsg.includes("Blank")) {
       return "No Blank Allowed";
     } else if (ErrorMsg.includes("Equal")) {
       return "Passwords are not Same!";
     } else if (ErrorMsg.includes("Short")) {
-      return "Passwords is too short (At least 6 letters)";
+      return "Password is too short (At least 6 letters)";
     } else if (ErrorMsg.includes("Invalid")) {
       return "Invalid Email Address";
     } else {
-      return `${Error}`;
+      if (ErrorMsg.includes("[")) return `${ErrorMsg.split("]")[1].trim()}`;
+      else return `${ErrorMsg}`;
     }
   }
 

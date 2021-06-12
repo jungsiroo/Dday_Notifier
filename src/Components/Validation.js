@@ -10,7 +10,7 @@ export function _isBlank(email, password) {
   return false;
 }
 
-export const _arePasswordandconfirmPwSame = (password, confirmPw) => {
+export const _checkPwSame = (password, confirmPw) => {
   if (password === confirmPw) return true;
 
   return false;

@@ -1,7 +1,7 @@
 import { AuthContext } from "./AuthProvider";
 import {
   _isBlank,
-  _arePasswordandconfirmPwSame,
+  _checkPwSame,
   _checkEmail,
   _isPasswordLong,
   _convertToAscii,
@@ -36,7 +36,7 @@ import {
 export {
   AuthContext,
   _isBlank,
-  _arePasswordandconfirmPwSame,
+  _checkPwSame,
   _checkEmail,
   _isPasswordLong,
   _ErrorHandler,

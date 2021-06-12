@@ -12,7 +12,7 @@ import {
   AuthContext,
   _isBlank,
   _checkEmail,
-  _arePasswordandconfirmPwSame,
+  _checkPwSame,
   _isPasswordLong,
   _ErrorHandler,
 } from "../Components/index";
@@ -31,8 +31,8 @@ const SignupScreen = ({ navigation }) => {
       _ErrorHandler("Signup", "Blank");
     } else if (!_checkEmail(email)) {
       _ErrorHandler("Signup", "Invalid");
-    } else if (!_arePasswordandconfirmPwSame(password, confirmPw)) {
-      _ErrorHandler("Signup", "Eqaul");
+    } else if (!_checkPwSame(password, confirmPw)) {
+      _ErrorHandler("Signup", "Equal");
     } else if (!_isPasswordLong(password)) {
       _ErrorHandler("Signup", "Short");
     } else {
