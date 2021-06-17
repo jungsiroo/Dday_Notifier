@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { View, SafeAreaView, StatusBar, Text } from "react-native";
-import { AuthContext, _InfoHandler } from "../Components/index";
+import { AuthContext, _InfoHandler } from "../Components/Common";
 import Toast from "react-native-toast-message";
 import LinearGradient from "react-native-linear-gradient";
 import { homeStyles, colors } from "../Components/Style/home.style";

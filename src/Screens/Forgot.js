@@ -14,7 +14,7 @@ import {
   _checkEmail,
   _ErrorHandler,
   _SuccessHandler,
-} from "../Components/index";
+} from "../Components/Common";
 import { forgotStyle } from "../Components/Style/forgot.style";
 import { ForgotBack } from "../Components/Images";
 

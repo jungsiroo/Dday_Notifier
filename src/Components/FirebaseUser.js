@@ -5,7 +5,7 @@ import {
   _ErrorHandler,
   _convertToAscii,
   _exportFromAscii,
-} from "./index";
+} from "./Common";
 import storage from "@react-native-firebase/storage";
 
 export function UserRelateHook(displayName, userPhoto) {

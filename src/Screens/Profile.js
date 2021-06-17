@@ -15,7 +15,7 @@ import {
   _NotiHandler,
   _convertToAscii,
   _exportFromAscii,
-} from "../Components/index";
+} from "../Components/Common";
 import { NavigationContainer } from "@react-navigation/native";
 import { profileStyle } from "../Components/Style/profile.style";
 import Toast from "react-native-toast-message";

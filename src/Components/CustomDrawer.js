@@ -6,7 +6,7 @@ import { DrawerBack } from "./Images";
 import { drawerStyle, colors } from "./Style/drawer.style";
 import LinearGradient from "react-native-linear-gradient";
 import { exitIcon } from "./Icons";
-import { AuthContext } from "./index";
+import { AuthContext } from "./Common";
 
 const CustomDrawerContent = (props) => {
   const { logout } = useContext(AuthContext);

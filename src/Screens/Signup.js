@@ -15,7 +15,7 @@ import {
   _checkPwSame,
   _isPasswordLong,
   _ErrorHandler,
-} from "../Components/index";
+} from "../Components/Common";
 import Toast from "react-native-toast-message";
 import { signupStyle } from "../Components/Style/signup.style";
 import { AuthBack } from "../Components/Images";
